@@ -1,0 +1,12 @@
+.small {
+    min-width: 4em !important;
+}
+
+table{    
+    font-size: 0.9em !important;
+}
+
+thead > th {
+    vertical-align: middle !important;
+    font-size: x-small !important;
+}
