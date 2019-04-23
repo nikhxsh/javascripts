@@ -1,0 +1,19 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "valuesTypesAndOperators.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ch1": "node basics.js",
+    "ch2": "node datastructure.js",
+    "ch3": "node functions.js",
+    "ch4": "node objects.js",
+    "ch5": "node regexpression.js",
+    "ch6": "node modules.js",
+    "ch7": "node asyncprograms.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
