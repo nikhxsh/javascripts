@@ -1,6 +1,16 @@
 const console = require('./utils');
 
 console.h1('Objects');
+console.comment(`
+    - As we know from the Data types, there are seven data types in JavaScript. Six of them are called “primitive”, because their 
+      values contain only a single thing (be it a string or a number or whatever).
+    - In contrast, objects are used to store keyed collections of various data and more complex entities. We can imagine an object as a cabinet 
+      with signed files. Every piece of data is stored in its file by the key. It’s easy to find a file by its name or add/remove a file.
+`);
+console.code(`
+    let user = new Object(); // "object constructor" syntax
+    let user = {};  // "object literal" syntax
+`);
 let descriptions = {
     work: 'Went to work',
     'touched tree': 'Touched a tree',
@@ -20,6 +30,14 @@ let listall = function listAllProperties(o) {
     return result;
 }
 
+console.code(`
+    let descriptions = {
+        work: 'Went to work',
+        'touched tree': 'Touched a tree',
+        events: ['work', 'sleep', 'pizza', 'running'],
+        statement: \`I love fucking with people's mind! lol!\`
+    }
+`);
 console.log(`JSON.stringify(descriptions) = ${JSON.stringify(descriptions)}`);
 console.log(`descriptions.work = ${descriptions.work}`);
 console.log(`descriptions['work'] = ${descriptions['work']}`);
@@ -50,6 +68,7 @@ console.log(`Object.getPrototypeOf(Math.max) == Function.prototype > ${Object.ge
 console.log(`Object.getPrototypeOf([1,2]) == Array.prototype > ${Object.getPrototypeOf([1, 2]) == Array.prototype}`);
 
 let protoRabbit = {
+    age: undefined,
     speak(line) {
         console.log(`The ${this.type} rabbit says '${line}'`, 'You can use Object.create to create an object with a specific prototype');
     }
@@ -66,10 +85,22 @@ console.code(`
 
     let killerRabbit = Object.create(protoRabbit);
     killerRabbit.type = "killer";
-    killerRabbit.speak("SKREEEE!");
 `);
-killerRabbit.speak("SKREEEE!");
-
+console.log(`killerRabbit.speak("SKREEEE!") >> ${killerRabbit.speak("SKREEEE!")}`);
+console.comment(`
+    - __proto__ is a historical getter/setter for [[Prototype]]
+    - It exists for historical reasons, in modern language it is replaced with functions Object.getPrototypeOf/Object.setPrototypeOf 
+      that also get/set the prototype. 
+`);
+protoRabbit.__proto__ = {
+    fly: true
+};
+console.code(`
+    protoRabbit.__proto__ = {
+        fly : true
+    };
+`);
+console.log(`killerRabbit.fly >> ${killerRabbit.fly}`);
 
 console.h2('Classes');
 console.comment(`
@@ -109,8 +140,12 @@ let blackRabbit = new Rabbit('Black');
 console.code(`
     let blackRabbit = new Rabbit('Black');
     console.log(String(blackRabbit));
+    console.log(blackRabbit.toString());
+    
 `);
-console.log(`${String(blackRabbit)}`);
+console.log(String(blackRabbit));
+console.log(blackRabbit.toString());
+
 Rabbit.prototype.toString = function () {
     return ` A ${this.type} rabbit`;
 };
@@ -119,29 +154,96 @@ console.code(`
          return \`A \${this.type} rabbit\`;
     };
     console.log(String(blackRabbit));
+    console.log(blackRabbit.toString());
 `);
 console.log(String(blackRabbit));
+console.log(blackRabbit.toString());
 
 console.h2('Symbols');
 console.comment(`
-    - It is possible for multiple interfaces to use the same property name for different things. For example, I could define an interface 
-      in which the toString method is supposed to convert the object into a piece of yarn. 
-    - It would not be possible for an object to conform to both that interface and the standard use of toString
-    - Property names are strings, that wasn’t entirely accurate. They usually are, but they can also be symbols. 
+    - By specification, object property keys may be either of string type, or of symbol type. 
+      Not numbers, not booleans, only strings or symbols, these two types.
+    - “Symbol” value represents a unique identifier.
     - Symbols are values created with the Symbol function. Unlike strings, newly created symbols are unique—you cannot create the same symbol twice.
 `);
-let sym = Symbol("name");
+let id1 = Symbol("id");
+let id2 = Symbol("id");
 console.code(`
-    let sym = Symbol("name");
-    console.log(sym == Symbol("name"));
+    let id1 = Symbol("id");
+    let id2 = Symbol("id");
+    console.log(id1 == id2);
+    console.log(id1.toString());
 `);
-console.log(sym == Symbol("name"));
-Rabbit.prototype[sym] = 55;
+console.log(id1 == id2);
+console.log(id1.toString());
+console.comment(`
+    - Symbols allow us to create “hidden” properties of an object, that no other part of code can occasionally access or overwrite.
+`);
+let user = {
+    name: "John",
+    age: 30
+};
+let id = Symbol("id");
+user[id] = "Secret";
 console.code(`
-    Rabbit.prototype[sym] = 55;
-    console.log(blackRabbit[sym]);
+    let user = {
+        name: "John",
+        age: 30
+    };
+    let id = Symbol("id");
+    user[id] = "Secret";
+    console.log(user[id]);
 `);
-console.log(blackRabbit[sym]);
+console.log(user[id]);
+console.comment(`
+    - Now note that if we used a string "id" instead of a symbol for the same purpose, then there would be a conflict
+`);
+user[id] = "Secret 123";
+console.code(`
+    user[id] = "Secret 123";
+    console.log(user[id]);
+`);
+console.log(user[id], 'overwritten! it did not mean to harm the colleague, but did it!');
+console.comment(`
+    - If we want to use a symbol in an object literal, we need square brackets
+`);
+console.code(`
+    let user = {
+        name: "John",
+        age: 30,
+        [test]: 123 // not just "test: 123"
+    };
+`);
+console.comment(`
+    - Symbolic properties do not participate in for..in loop
+    - In contrast, Object.assign copies both string and symbol properties
+`);
+console.code(`
+    for (let key in user) console.log(key);
+`);
+for (let key in user) console.log(key);
+console.comment(`
+    - If different parts of our application want to access symbol "id" meaning exactly the same property
+    - To achieve that, there exists a global symbol registry. We can create symbols in it and access them later, 
+      and it guarantees that repeated accesses by the same name return exactly the same symbol.
+    - Symbol.for call checks the global registry, and if there’s a symbol described as key, then returns it, otherwise creates 
+      a new symbol Symbol(key) and stores it in the registry by the given key.
+    -  Symbol.keyFor(sym) returns a name by a global symbol.
+    - Well know system symbols:
+        Symbol.hasInstance
+        Symbol.isConcatSpreadable
+        Symbol.iterator
+        Symbol.toPrimitive
+        …and so on.
+`);
+console.code(`
+    let id = Symbol.for("id"); // if the symbol did not exist, it is created
+
+    let idAgain = Symbol.for("id");
+
+    id === idAgain >> true
+    Symbol.keyFor(idAgain) >> id
+`);
 console.comment(`
     - Being both unique and usable as property names makes symbols suitable for defining interfaces that can peacefully live alongside other properties, 
       no matter what their names are.
@@ -159,6 +261,32 @@ console.code(`
 console.log(`[1, 2].toString() >> ${[1, 2].toString()}`);
 console.log(`[1, 2][toStringSymbol]() >> ${[1, 2][toStringSymbol]()}`);
 
+user[Symbol.toPrimitive] = function (hint) {
+    return hint == 'string' ? `Hint: ${this.name}` : this.age;
+}
+console.code(`
+    user[Symbol.toPrimitive] = function(hint){
+        return hint == 'string' ? \`Hint: \${this.name}\` : this.age; 
+    }
+`);
+console.log(`user >> ${user}`);
+console.log(`+user >> ${+user}`);
+console.log(`user + 15 >> ${user + 15}`);
+
+let obj = {
+    toString() { // toString handles all conversions in the absence of other methods
+        return "2";
+    }
+};
+console.code(`
+    let obj = {
+        toString() { // toString handles all conversions in the absence of other methods
+            return "2";
+        }
+    };
+`);
+console.log(`obj * 2 >> ${obj * 2}`);
+
 console.h2('Iterator');
 console.comment(`
     - The object given to a for/of loop is expected to be iterable. This means it has a method named with the Symbol.iterator symbol
@@ -167,7 +295,7 @@ console.comment(`
 `);
 let okIterator = "OKAY"[Symbol.iterator]();
 console.code(`
-    let okIterator = "OK"[Symbol.iterator]();
+    let okIterator = "OKAY"[Symbol.iterator]();
 `);
 console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
 console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
@@ -297,11 +425,11 @@ class AlbumShelf extends Shelf {
         super(size, element);
     }
 
-    set (loc, value) {
+    set(loc, value) {
         let name = super.get(loc);
         super.set(loc, `${name} | Artist:${value}`);
     }
-}   
+}
 let musicShelf = new AlbumShelf(5, (z) => `Album ${z}`);
 console.code(`
     class AlbumShelf extends Shelf {
@@ -332,7 +460,7 @@ console.code(`
 `);
 console.log(musicShelf.get(1));
 
-console.log(`musicShelf instanceof(Shelf) >> ${musicShelf instanceof(Shelf)}`,'The instanceof operator');
+console.log(`musicShelf instanceof(Shelf) >> ${musicShelf instanceof (Shelf)}`, 'The instanceof operator');
 
 console.h2('Persistent data');
 console.comment(`
@@ -342,7 +470,7 @@ console.comment(`
       some restraint. There is a function called Object.freeze that changes an object so that writing to its properties is ignored.
 `);
 
-let object = Object.freeze({value: 5});
+let object = Object.freeze({ value: 5 });
 object.value = 10;
 console.code(`
     let object = Object.freeze({value: 5});
@@ -350,3 +478,135 @@ console.code(`
     console.log(object.value);
 `);
 console.log(object.value);
+
+console.h2('Decorators and forwarding, call/apply');
+user.say = function (line) {
+    return `${this.name} says ${line}`;
+}
+let xcachingDecorator = function (func) {
+    let cache = new Map();
+    return function (x) {
+        if (cache.has(x))
+            return cache.get(x);
+        let result = func(x);
+        cache.set(x.result);
+        return result;
+    }
+}
+console.code(`
+    user.say = function (line) {
+        console.log(\`\${this.name} says \${line}\`)
+    }
+    let xcachingDecorator = function (func) {
+        let cache = new Map();
+        return function (x) {
+            if (cache.has(x))
+                return cache.get(x); 
+            let result = func.call(this, x);
+            cache.set(x.result);
+            return result;
+        }
+    }
+`);
+
+console.log(`user.say('Bye') >> ${user.say('Bye')}`);
+console.log(`user.say = xcachingDecorator(user.say);`);
+user.say = xcachingDecorator(user.say);
+console.log(`user.say('Hey') >> ${user.say('Hey')}`);
+console.log(`user.say('Hey') >> ${user.say('Hey')}`);
+
+console.comment(`
+    - you can see the second call after calling xcachingDecorator return undefined
+    - The reason is that the wrapper calls the original function as func(x) in the line (**). And, when called like that, 
+      the function gets this = undefined
+    - So, the wrapper passes the call to the original name property, but without the context this.Hence the error.
+    - There’s a special built-in function method func.call(context, …args) that allows to call a function explicitly setting this.
+`);
+
+user.say = function (line) {
+    return `${this.name} says ${line}`;
+}
+let ycachingDecorator = function (func) {
+    let cache = new Map();
+    return function (x) {
+        if (cache.has(x))
+            return cache.get(x);
+        let result = func.call(this, x);
+        cache.set(x.result);
+        return result;
+    }
+}
+console.code(`
+    user.say = function (line) {
+        console.log(\`\${this.name} says \${line}\`)
+    }
+    let ycachingDecorator = function (func) {
+        let cache = new Map();
+        return function (x) {
+            if (cache.has(x))
+                return cache.get(x); 
+            let result = func.call(this, x);
+            cache.set(x.result);
+            return result;
+        }
+    }
+`);
+
+console.log(`user.say('Bye') >> ${user.say('Bye')}`);
+console.log(`user.say = ycachingDecorator(user.say);`);
+user.say = ycachingDecorator(user.say);
+console.log(`user.say('Hey') >> ${user.say('Hey')}`);
+console.log(`user.say('Hey') >> ${user.say('Hey')}`, 'Cached Call');
+
+console.comment(`
+    - To make it all clear, let’s see more deeply how this is passed along:
+      > After the decoration user.say is now the wrapper function (x) { ... }.
+      > So when user.say('Hello') is executed, the wrapper gets 'Hello' as an argument and this=user (it’s the object before dot).
+      > Inside the wrapper, assuming the result is not yet cached, func.call(this, x) passes the current this (=user) and the 
+        current argument (='Hello') to the original method.
+`);
+
+user.translate = function (source, result) {
+    return `If ${this.name} says ${source} then its ${result}`;
+}
+let zcachingDecoratorApply = function (func) {
+    let cache = new Map();
+    return function () {
+        let key = hash(arguments);
+        if (cache.has(key))
+            return cache.get(key);
+        let result = func.apply(this, arguments);
+        cache.set(key, result);
+        return result;
+    }
+}
+function hash(args) {
+    return args[0] + ',' + args[1];
+}
+console.code(`
+    user.translate = function (source, result) {
+        return \`>> If \${this.name} says \${source} then its \${result}\`;
+    }
+
+    let zcachingDecoratorApply = function (func) {
+        let cache = new Map();
+        return function () {
+            let key = hash(arguments);
+            if (cache.has(key))
+                return cache.get(key);
+            let result = func.apply(this, arguments);
+            cache.set(key, result);
+            return result;
+        }
+    }
+
+    function hash(args) {
+        return args[0] + ',' + args[1];
+    }
+`);
+
+console.log(`user.translate('Hi','Oh God!') >> ${user.translate('Hi', 'Oh God!')}`);
+console.log(`user.translate = ycachingDecorator(user.translate);`);
+user.translate = zcachingDecoratorApply(user.translate);
+console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`);
+console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`, 'Cached Call');

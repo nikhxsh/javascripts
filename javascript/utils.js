@@ -19,7 +19,7 @@ exports.code = function (input) {
 }
 
 exports.comment = function (input) {
-    console.log(gen.colors.FgYellow, `   /**\n${input}\n    **/\n`, gen.colors.Reset);
+    console.log(gen.colors.FgYellow, `   Note:\n${input}`, gen.colors.Reset);
 }
 
 exports.promt = readline.createInterface({

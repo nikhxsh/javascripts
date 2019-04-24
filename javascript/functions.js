@@ -27,28 +27,53 @@ console.code(`
 
 
 console.h2('Normal Functions');
-const square1 = function (x) {
+const square = function (x) {
     return x * x;
 };
-console.log(`${square1(12)}`); //Prints 144
+console.code(`
+    const square = function (x) {
+        return x * x;
+    };
+ `);
+console.log(`square.name >> ${square.name}`,'returns function name');
+console.log(`square.length >> ${square.length}`,'returns the number of function parameters');
+console.log(`square(12) >> ${square(12)}`);
 
-const square2 = function (x) {
+const squarex = function (x) {
     return;
 };
-console.log(`${square2(12)}`, 'A return keyword without an expression after it will cause the function to return undefined');
+console.code(`
+    const squarex = function (x) {
+        return;
+    };
+ `);
+console.log(`squarex(12) >> ${squarex(12)}`, 'A return keyword without an expression after it will cause the function to return undefined');
 //Prints undefined
 
 console.h2('Lexical Scoping & Function Closure');
-
 const outerFunction1 = function () {
     let parentVarible = 10;
     const innerFunction = function () {
         let localVarible = 10;
         parentVarible += localVarible;
-        console.log(`Value 10 Increamented by ${localVarible}, new value ${parentVarible}`);
+        console.log(`>> Value 10 Increamented by ${localVarible}, new value ${parentVarible}`);
     }
     innerFunction();
 }
+console.code(`
+    const outerFunction1 = function () {
+        let parentVarible = 10;
+        const innerFunction = function () {
+            let localVarible = 10;
+            parentVarible += localVarible;
+            console.log(\`Value 10 Increamented by \${localVarible}, new value \${parentVarible}\`);
+        }
+        innerFunction();
+    }
+
+    outerFunction1();
+    outerFunction1();
+ `);
 outerFunction1();
 outerFunction1();
 
@@ -60,14 +85,30 @@ console.comment(`
     - This approach to binding visibility is called lexical scoping.
 `);
 const outerFunction2 = function () {
-    let parentVarible = 10;
+    let parentVarible = 11;
     const innerFunction = function () {
-        let localVarible = 10;
+        let localVarible = 11;
         parentVarible += localVarible;
-        console.log(`Value 10 Increamented by ${localVarible}, new value ${parentVarible}`);
+        console.log(`>> Value 10 Increamented by ${localVarible}, new value ${parentVarible}`);
     }
     return innerFunction;
 }
+console.code(`
+    const outerFunction2 = function () {
+        let parentVarible = 11;
+        const innerFunction = function () {
+            let localVarible = 11;
+            parentVarible += localVarible;
+            console.log(\`Value 11 Increamented by \${localVarible}, new value \${parentVarible}\`);
+        }
+        return innerFunction;
+    }
+
+    var functionClosure1 = outerFunction2();
+    functionClosure1();
+    var functionClosure2 = outerFunction2();
+    functionClosure2();
+ `);
 
 var functionClosure1 = outerFunction2();
 functionClosure1();
@@ -101,15 +142,12 @@ console.code(`
         launchMissiles = function() {/* do nothing */};
    }
  `);
-
-
 console.comment(`
     - It is possible to store a function value in a new binding, pass it as an argument to a function, and so on. Similarly, 
       a binding that holds a function is still just a regular binding and can, if not constant, be assigned a new value
 `);
 
 console.h2('Arrow Function');
-
 console.comment(`
     - There’s a third notation for functions, which looks very different from the others. Instead of the function keyword, 
       it uses an arrow (=>) made up of an equal sign and a greater-than character (not to be confused with the greaterthan-
@@ -137,7 +175,6 @@ console.code(`
 `);
 
 console.h2('Higher-order functions');
-
 console.comment(`
     - Functions that operate on other functions, either by taking them as arguments or by returning them, are called higher-order functions.
       Higher-order functions allow us to abstract over actions, not just values 
@@ -147,7 +184,7 @@ console.comment(`
 let noisy = function (f) {
     return (...args) => {
         let result = f(...args);
-        console.log(`Called with ${args} & returned result ${result}`);
+        console.log(`>> Called with ${args} & returned result ${result}`);
         return result;
     }
 };
@@ -160,9 +197,8 @@ console.code(`
             return result;
         }
     };
-    noisy(Math.min)(4,7,9);
 `);
-noisy(Math.min)(4, 7, 9);
+console.log(`noisy(Math.min)(4, 7, 9) >> ${noisy(Math.min)(4, 7, 9)}`);
 
 let reduce = function (array, combine, start) {
     let current = start;
@@ -179,12 +215,10 @@ console.code(`
         }
         return current;
     };
-    reduce([1,2,3,4,5], (a, b) => a + b, 0); //(a, b) => a + b is higher order operation
 `);
-console.log(`Output: ${reduce([1, 2, 3, 4, 5], (a, b) => a + b, 0)}`);
+console.log(`reduce([1, 2, 3, 4, 5], (a, b) => a + b, 0) >> ${reduce([1, 2, 3, 4, 5], (a, b) => a + b, 0)}`,'(a, b) => a + b is higher order operation');
 
 console.h2('Constructor functions');
-
 console.comment(`
     - to create an instance of a given class, you have to make an object that derives from the proper prototype, but you also have to make sure it, 
       itself, has the properties that instances of this class are supposed to have. This is what a constructor function does.
@@ -195,17 +229,27 @@ function Rabbit(type) {
     this.type = type;
 }
 Rabbit.prototype.speak = function (line) {
-    console.log(`The ${this.type} rabbit says '${line}'`);
+    console.log(`>> The ${this.type} rabbit says '${line}'`);
 };
+console.comment(`
+    - The value of "this" is defined at run-time.
+        > When a function is declared, it may use this, but that this has no value until the function is called.
+        > That function can be copied between objects.
+        > When a function is called in the “method” syntax: object.method(), the value of this during the call is object.
+        > Please note that arrow functions are special: they have no this. When this is accessed inside an arrow function, 
+          it is taken from outside.
+`);
 
 let weirdRabbit = new Rabbit("weird");
 console.code(`
     function Rabbit(type) {
         this.type = type;
     }
+
     Rabbit.prototype.speak = function (line) {
         console.log(\`The \${this.type} rabbit says '\${line}\'\`);
     };
+
     let weirdRabbit = new Rabbit("weird");
 `);
 weirdRabbit.speak('SKREEEE!!');

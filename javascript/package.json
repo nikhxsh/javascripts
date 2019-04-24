@@ -10,7 +10,7 @@
     "ch3": "node functions.js",
     "ch4": "node objects.js",
     "ch5": "node regexpression.js",
-    "ch6": "node modules.js",
+    "ch6": "node info.js",
     "ch7": "node asyncprograms.js"
   },
   "keywords": [],
