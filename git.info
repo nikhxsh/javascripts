@@ -1,0 +1,4 @@
+ - Rename all commit's author info
+ git filter-branch -f --env-filter "GIT_AUTHOR_NAME='nikxsh'; GIT_AUTHOR_EMAIL='shinde.nikhilesh90@gmail.com'; GIT_COMMITTER_NAME='nikxsh'; GIT_COMMITTER_EMAIL='shinde.nikhilesh90@gmail.com';" HEAD
+ - Rename last commit
+ git commit --amend --reset-author
