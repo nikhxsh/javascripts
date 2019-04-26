@@ -1,0 +1,34 @@
+<!--
+  > The syntax translates to let <name-i-want-to-call-each-item> of <array-property-on-component>
+  > This is what we call in Angular a Directive. Specifically it’s a structural directive
+    since it changes the structure of the DOM.
+  > The built-in directives we are using such as NgFor are all defined in CommonModule
+    which is again included in BrowserModule which we have already added to our
+    NgModule imports.
+-->
+<div class="card" [ccCardHover]="{querySelector:'.card-text', outline:'class.border-success'}">
+  <div class="card-body">
+    <h4 class="card-title">{{data.setup}}</h4>
+    <!---
+      > So when we write [hidden] we are manipulating the DOM property and not the HTML attribute.
+      This is why the above is called Input Property Binding and not Input Attribute Binding.
+    -->
+    <p class="card-text" [hidden]="data.hide">{{data.punchline}}</p>
+    <!--
+      Output Event Binding > We have some new syntax with (). The target inside the () is an event we want to listen 
+      for, we are listening for the click event.
+    -->
+    <!-- 
+     <h6 class="rating">{{j.rating}}</h6>
+     <h6 class="version"> Joke version {{j.version()}}</h6>
+     If we add the tag <ng-content></ng-content> anywhere in our template HTML for our component.
+     The inner content of the tags that defined in other component are then projected into this space.
+     -->
+    <ng-content select=".rating"></ng-content>
+    <ng-content select=".version"></ng-content>    
+    <!-- To make angular ignore an element we simply add the ngNonBindable directive to the element -->
+    <p class="card-text" ngNonBindable>{{data.ngNonBindable}}</p>
+    <a href="javascript:void(0)" class="btn btn-primary" (click)="data.toggle()">Tell me</a>
+  </div>
+</div>
+<br />

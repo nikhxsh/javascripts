@@ -1,0 +1,44 @@
+<joke-form (jokeCreated)="addJoke($event)" (jokeCleared)="deleteJokes()"></joke-form>
+<!--
+  $event is a special variable and holds whatever was emitted by the jokeCreated EventEmitter,
+  in our case its an instance of a Joke.
+-->
+<h4 #header>View Jokes</h4>
+<!-- ViewChild referencing a template local variable #header -->
+<!-- 
+  > Nesting Components & Inputs
+  > We’ve broken out a joke into its own JokeComponent so now we change the JokeListComponent
+    template to contain multiple JokeComponent components instead. 
+  > <joke *ngFor="let j of jokes"></joke> will give:  'joke' is not a known element
+  > And we are looping and creating JokeComponents in our JokeListComponent but But we are not setting the property 
+    joke of our JokeComponent to anything, which is why it’s undefined.
+  > Ideally we want to write something like below and also We do this by pre-pending the joke property in the component with a new 
+    annotation called @Input
+-->
+<joke *ngFor="let j of jokes;let i = index" [joke]="j">
+  <h6 class="rating">{{j.rating}}</h6>
+  <h6 class="version"> Joke version {{j.version()}}</h6>
+  <!-- 
+    <h6 class="rating">{{j.rating}}</h6>
+    <h6 class="version"> Joke version {{j.version()}}</h6>
+      defined in the parent JokeListComponent, replaces the 
+    <ng-content select=".rating"></ng-content>
+    <ng-content select=".version"></ng-content>
+      tag in the JokeComponent. 
+  -->
+</joke>
+<!-- 
+- looking at the more complex NgFor example from above, these two snippets of code are also
+equivalent:
+- They take advantage of the HTML5 <template> tag to define the element they want to insert into the
+DOM.
+- We can prepend the directive name with * to skip having to define a <template> and have the
+directive use the element it’s attached to as the template.
+
+<ng-template ngFor let-j [ngForOf]="jokes">
+  <joke *ngFor="let j of jokes;let i = index" [joke]="j">
+    <h6 class="rating">{{j.rating}}</h6>
+    <h6 class="version"> Joke version {{j.version()}}</h6>
+  </joke>
+</ng-template> 
+-->

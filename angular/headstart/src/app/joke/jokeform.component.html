@@ -1,0 +1,34 @@
+<!--
+  To create a custom output event on our component we need to do two things:
+  1. Create an EventEmitter property on the JokeFormComponent class.
+  2. Similar to when we created a custom input property binding, we need to annotate that property
+     with the @Output decorator.
+  3. We also need to bind to the output event property on our parent JokeListComponent so we can add
+     the joke that gets output to the list of jokes
+-->
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Create Joke</h4>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Enter the setup" #setup>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Enter the punchline" #punchline>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="createJoke(setup.value, punchline.value)">Create
+    </button>
+    &nbsp;
+    <button type="button" class="btn btn-primary" (click)="deleteJokes()">Clear
+    </button>
+  </div>
+</div>
+<br />
+<!--
+  Template Reference Variables
+  We want to actually get the value of the setup and punchline input fields and pass them to the createJoke 
+   function when the user clicks the Create button.
+  We add the string #setup to our setup input control, This tells Angular to bind this <input> control to the 
+   variable setup.
+  setup now points to the DOM element that represents an <input> control, which is an instance of the type 
+    HTMLInputElement
+-->

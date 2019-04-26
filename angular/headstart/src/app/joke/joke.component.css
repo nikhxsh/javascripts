@@ -1,0 +1,7 @@
+/*
+* > Even though we changed the background color of .card and we have multiple cards on the page
+* only the joke component card was rendered with a gray background.
+*/
+.card {
+    background-color: lightcyan;
+}

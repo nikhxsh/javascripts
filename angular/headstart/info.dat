@@ -1,0 +1,117 @@
+1. TypeScript vs JavaScript
+    • The reason the file ends in .ts instead of .js is that Angular is written in a superset of JavaScript
+     called TypeScript.
+    • TypeScript is the ES6 version of JavaScript plus a few other TypeScript only features which Angular
+     needs in order to work.
+
+    A: Transpilation
+    • Browsers don’t support TypeScript. Browsers barely support ES6 JavaScript.
+    We use something called a transpiler which converts from one language to another.
+    • At at the tsconfig.json file you can see the target is set to ES5.
+    • The process of converting TypeScript into ES5 is called transpilation and we use a tool called tsc to
+    compile on the command line.
+
+2.  • We are using the term module for two different concepts. In JavaScript the term
+      module generally refers to code which exists in a single file. 
+    • An NgModule is a different concept, it combines code from different files together into one package.
+    • An NgModule therefore contains functionality from multiple files a module refers
+      to functionality in a single file.
+
+3.  HTML is a set of written instructions for how to display a web page.
+    The browser reads the HTML and creates something called a DOM, a Document Object Model. This is
+    the manifestation of those HTML instructions in memory.
+    Changing the HTML doesn’t automatically update the webpage unless the user refreshes the
+    browser, changing the DOM however instantly updates the webpage.
+
+4.  • With the [] we are binding to an input of a Component.
+    • With the () we are binding to an output of a Component.
+    This is what we call one-way data binding, since data only flows one way, either into or out of a
+    component.
+
+4.  There is only ever a single page returned from the server, all further modifications of the page are
+    handled by the client and that’s why it’s called a Single Page Application.
+    The advantagesThe advantages of an SPA are:
+    • Can be faster. Instead of making a time-consuming request to a far away server every time the
+       URL changes the client app updates the page much faster.
+    • Less bandwidth required. We don’t send over a big html page for every URL change, instead we
+       might just call a smaller API which returns just enough data to render the change in the page.
+    • Convenience. Now a single developer can build most of the functionality of a site instead of
+      splitting the effort between a front end and server side developer.
+      Angular has a couple of modules which let us implement our application as an SPA, the concept as a
+      whole in Angular is called the Component Router and in this section you will learn how to build an
+      SPA in Angular using the component router.
+
+5. TypeScript
+    • npm install -g typescript 
+    • tsc –v
+         And it should print something like >  Version 1.8.0
+    • We can compile a typescript file into a javascript file by calling: tsc hello.ts
+    • We can watch a typescript file for changes and compile it automatically with: tsc -w hello.ts
+    • TypeScript is a super-set of ES6
+
+6. Reactive Programming with RxJS
+    • Streams
+      - Streams are a sequence of values over time
+      - For example a number that goes up by 1 every second might have a stream that looks like
+        [0,1,2,3,4]
+      - Another stream might be a sequence of x and y positions of mouse click events, like so:
+        [(12,34), (345,22), (1,993)]
+    • Reactive programming is the idea that you can create your entire program just by defining the different 
+      streams and the operations that are performed on those streams.
+    • With reactive programming we stop thinking about variables, instead we think in terms of streams 
+      and how those streams are connected together.
+    • Reactive programming is the idea we can define an application as a series of different streams with
+      operations that connect the different streams together and which are automatically called when
+      new values are pushed onto those streams.
+    • Observables
+      - Observables is a new primitive type which acts as a blueprint for how we want to create streams,
+        subscribe to them, react to new values, and combine streams together to build new ones.
+      - RxJS stands for *R*eactive E*x*tensions for *J*ava*S*cript, and its a library that gives us an
+        implementation of Observables for JavaScript.
+      - Observables might become a core part of the JavaScript language in the future, so
+        we can think of RxJS as a placeholder for when that arrives.
+        An observable isn’t a stream. An observable is a blueprint which describes a set of streams and how
+        they are connected together with operations.
+
+        a. interval
+
+          > let obs = Rx.Observable.interval(1000);
+
+          The operation interval takes as the first param the number of milliseconds between each push of
+          the number onto the stream.
+
+        b. subscriber
+         This observable is cold, that means it’s not currently pushing out numbers.
+         The observable will become hot and start pushing numbers onto it’s first stream, when it gets it’s
+         first subscriber
+
+          > obs.subscribe(value => console.log("Subscriber: " + value));
+
+         By calling subscribe onto an observable it:
+          Turns the observable hot so it starts producing.
+          Lets us pass in a callback function so we react when anything is pushed onto the final stream in
+          the observable chain.
+
+        c. take
+         We pass to that operator the number of items we want to take from the first stream. It creates a
+         second stream and only pushes onto it the number of items we’ve requested,
+
+          > let obs = Rx.Observable
+                  .interval(1000)
+                  .take(3);
+
+        d. map
+         Finally I want to add another operator called map, this takes as input the output stream from take,
+         convert each value to a date and pushes that out onto a third stream
+
+          > let obs = Rx.Observable
+                  .interval(1000)
+                  .take(3)
+                  .map((v) => Date.now());
+
+7. RxJS & Angular
+    • Angular observables
+      - EventEmitter > Under the hood this works via Observables.
+      - Http > HTTP requests in Angular are all handled via Observables.
+      - Forms > Reactive forms in Angular expose an observable, a stream of all the input fields in the form
+         combined.

@@ -1,0 +1,59 @@
+<!-- 
+    NgFor is a structural directive, meaning that it changes the structure of the DOM. 
+    This directive is the successor of Angular 1s ng-repeat directive. 
+-->
+<h6>NgFor</h6>
+<ul *ngFor="let person of people;let i=index;">
+  <!-- NgIf directive removes the li element from the DOM if person.age is greater than 30. -->
+  <li *ngIf="person.age > 30">
+    {{ person.name }}
+  </li>
+</ul>
+<h6>NgFor Grouping</h6>
+<ul *ngFor="let group of peopleByCountry">
+  <li>{{ group.country }}</li>
+  <ul *ngFor="let person of group.people">
+    <li>{{ person.name }}</li>
+  </ul>
+</ul>
+
+<h6>NgSwitch</h6>
+<!-- This directive allows us to render different elements depending on a given condition, in fact the
+NgSwitch directive is actually a number of directives working in conjunction -->
+<ul *ngFor="let person of people" [ngSwitch]="person.country">
+  <li *ngSwitchCase="'UK'" class="text-success">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchCase="'USA'" class="text-primary">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchCase="'HK'" class="text-danger">{{ person.name }} ({{ person.country }})
+  </li>
+  <li *ngSwitchDefault class="text-warning">{{ person.name }} ({{ person.country }})
+  </li>
+</ul>
+
+<h6>NgStyle</h6>
+<ul *ngFor="let person of people">
+  <li [ngStyle]="{'background-color':getColor(person.country)}"> {{ person.name }} ({{
+    person.country }})
+  </li>
+</ul>
+
+<h6>NgClass</h6>
+<ul *ngFor="let person of people">
+  <li [ngClass]="{
+  'text-success':person.country === 'UK',
+  'text-primary':person.country === 'USA',
+  'text-danger':person.country === 'HK'
+  }">
+    {{ person.name }} ({{ person.country }})
+  </li>
+</ul>
+<!-- 
+ Alternate Approach 
+<ul *ngFor="let person of people">
+  <li [class.text-success]="person.country === 'UK'" [class.text-primary]="person.country === 'USA'"
+    [class.text-danger]="person.country === 'HK'">{{ person.name }} ({{
+    person.country }})
+  </li>
+</ul> 
+-->
