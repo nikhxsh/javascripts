@@ -1,0 +1,53 @@
+# Angular Custom Data table V 1.0.1
+
+Data tabel plugin. Gives you easy way to integrate Sort, serach, filter and pagination options. 
+
+## installation
+
+`npm install angular-custom-datatable --save` 
+
+## Importing Module
+
+``` typescript
+
+
+import { AngularDataTableModule } from 'angular-custom-datatable'
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+	BrowserModule,
+    AngularDataTableModule,
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+```
+
+## Adding datatable in HTML
+
+``` HTML
+<app-datatable 
+  [totalItems]="totalItems" 
+  [records]="mappedData" 
+  [headers]="headers" 
+  [showLinks]="true"
+  (onPageChange)="pageChanged($event)" 
+  (onPageSizeChange)="updatePageSize($event)"
+  (onSearch)="search($event)"
+  (onSort)="sort($event)"
+  (onFilter)="filterRecord($event)"
+  (onReset)="resetAll()"
+  (onView)="openModal(ViewTemplate, 1, $event)"
+  (onEdit)="openModal(EditTemplate, 2, $event)"
+  (onDelete)="openModal(DeleteTemplate, 3, $event)">
+</app-datatable>
+
+```
+
+## Further help
+[Github Repository](https://github.com/ihavrka/angular-libraries)

@@ -18,6 +18,30 @@ console.code(`
       setTimeout(() => console.log("Tick"), 500);
 `);
 
+console.h2('Callbacks');
+console.comment(`    
+    - One way to program asynchronously is to use callbacks. We pass to an asynchronous function a
+      function which it will call when the task is completed.
+    - To get notified when the async task completes we pass to callbackTask a function which it will call
+      when the task completes.
+`);
+function callbackTask(cb) {
+  setTimeout(() => {
+    console.log(">> Async Task Calling Callback");
+    cb();
+  }, 1000);
+}
+console.code(`
+    function callbackTask(cb) {
+      setTimeout(() => {
+        console.log("Async Task Calling Callback");
+        cb();
+      }, 1000);
+    }
+    callbackTask(() => console.log("Callback Called"));
+`);
+callbackTask(() => console.log(">> Callback Called"));
+
 console.h2('Promises');
 console.comment(`    
     - A promise is a special JavaScript object that links the “producing code” and the “consuming code” together. In terms of our analogy: this is 

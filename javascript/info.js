@@ -6,6 +6,8 @@ console.h2('Modules');
 console.comment(`
     - The phrase “big ball of mud” is often used for large, structureless programs. Everything sticks together, and when you try to pick out a piece, 
       the whole thing comes apart, and your hands get dirty
+    - In JavaScript the term module generally refers to code which exists in a single file. 
+    - An NgModule is a  different concept, it combines code from different files together into one package.
     - Modules are an attempt to avoid these problems. A module is a piece of program that specifies which other pieces it relies on and which 
       functionality it provides for other modules to use (its interface).
     - The relations between modules are called dependencies. When a module needs a piece from another module, it is said to depend on that module.

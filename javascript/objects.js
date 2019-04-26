@@ -610,3 +610,56 @@ console.log(`user.translate = ycachingDecorator(user.translate);`);
 user.translate = zcachingDecoratorApply(user.translate);
 console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`);
 console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`, 'Cached Call');
+
+console.h2('Calling context');
+let cc = {
+    name: "calling context",
+    sayLater: function () {
+        setTimeout(function () {
+            console.log('Normal Function >> ' + this.name);
+        }, 1000);
+    }
+};
+console.code(`
+    let cc = {
+        name: "calling context",
+        sayLater: function () {
+            setTimeout(function () {
+                console.log(this.name);
+            }, 1000);
+        }
+    };
+    cc.sayLater();
+`);
+cc.sayLater();
+console.comment(`
+    - In fact we get undefined printed out to the console.The reason for this is that the value of this in a function 
+      depends on how the function is called.
+    - In the browser it’s either undefined or the global object depending on if you are running in strict
+      mode or not. In node it’s an internal timeout object.
+    - In all cases however it isn’t going to be obj, so this.name is not going to return "calling context", it’s going 
+      to return undefined or raise an error.
+    - In ES5 there are a number of methods we can use to stabilise the value of this. One common solution is to assign 
+      this to another variable at the top, usually called self or vm, and then always use self in the function body, 
+      like so:
+      let self = this;
+      console.log(self.name});
+    - But in ES6 we can do better, if we use fat arrow functions the value of this inside a fat arrow
+      function will be the same as the value of this outside the fat arrow function.
+`);
+let cc1 = {
+    name: "calling context",
+    sayLater: function () {
+        setTimeout(() => console.log('Fat Arrow Function >> ' + this.name), 1000);
+    }
+};
+console.code(`
+    let cc = {
+        name: "calling context",
+        sayLater: function () {
+            setTimeout(() => console.log(this.name), 1000);
+        }
+    };
+    cc.sayLater();
+`);
+cc1.sayLater();

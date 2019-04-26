@@ -1,0 +1,37 @@
+{
+  "name": "angular-custom-datatable",
+  "version": "1.0.1",
+  "description": "Angular Data table with required sort, filter, search and pagination functionality",
+  "main": "bundles/datatable.umd.js",
+  "module": "index.js",
+  "typings": "index.d.ts",
+  "keywords": [
+    "angular",
+    "angular2",
+    "angular 2",
+    "angular 4",
+    "angular4",
+    "angular5",
+    "angular 5",
+	  "custom datatable",
+	  "custom angular datatable",
+	  "angular datatable",
+	  "angular data table",
+	  "data table",
+	  "datatable"
+  ],
+  "author": "Nikhilesh Shinde",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ihavrka/angular-libraries"
+  },
+  "homepage": "#",
+  "bugs": {
+    "url": "https://github.com/ihavrka/angular-libraries/issues"
+  },
+  "peerDependencies": {
+    "@angular/core": "^5.2.0",
+    "rxjs": "^5.5.6"
+  }
+}

@@ -1,0 +1,103 @@
+​
+<div class="row">
+  <div class="col-md-10 form-inline">
+    <input class="form-control form-control-sm" type="text" placeholder="Enter text here" [(ngModel)]="searchToken" (keyup.enter)="searchClick(searchToken)"
+    />
+    <button class="btn btn-sm btn-outline-success" type="button" (click)="searchClick(searchToken)">
+      Search
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-sm btn-outline-info" type="button" (click)="filterSelected = !filterSelected" data-toggle="button">
+      <i class="fa fa-filter"></i>
+    </button>
+    <button class="btn btn-sm btn-outline-warning" type="button" (click)="onResetClick()">
+      <i class="fa fa-refresh"></i>
+    </button>
+    <div class="btn-group float-right" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        Show {{ pageSize }}
+        <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu small" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem">
+          <a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(10)">10</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(20)">20</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(50)">50</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(100)">100</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <br/>
+    <table class="table table-bordered table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" *ngFor="let item of headers; let i = index" [attr.data-index]="i" width="{{item.width}}%">
+            <span *ngIf="item.sortable">
+              <a href="javascript:void(0);" (click)="sortClick(item.key, i)">
+                <i [ngClass]="item.sort === 0 ? 'fa fa-sort' : (item.sort === 1 ? 'fa fa-sort-asc' : 'fa fa-sort-desc')"></i> {{ item.key }}
+              </a>
+            </span>
+            <span *ngIf="!item.sortable">
+              {{item.key}}
+            </span>
+          </th>
+          <th *ngIf="showLinks" width="5%">
+          </th>
+        </tr>
+        <tr *ngIf="filterSelected">
+          <th *ngFor="let item of headers; let i = index" [attr.data-index]="i">
+            <input *ngIf="item.filterable" type="text" class="form-control form-control-sm" [(ngModel)]="headers[i].filterToken" (keyup.enter)="filterClick(i)">
+          </th>
+          <th *ngIf="showLinks" width="5%">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of records; let i = index" [attr.data-index]="i">
+          <ng-template ngFor let-key [ngForOf]="item | keyvalue" let-j="index">
+            <td>
+              <div *ngIf="showLinks && j === 0;else elseBlock">
+                <a href="javascript:void(0)" (click)="onViewClick(item)" title="View Record">{{item[key]}}</a>
+              </div>
+              <ng-template #elseBlock>
+                {{item[key]}}
+              </ng-template>
+            </td>
+          </ng-template>
+          <td *ngIf="showLinks">
+            <div class="form-inline">
+              <a  href="javascript:void(0);" (click)="onEditClick(item)" title="Edit Record" >
+                <i class="fa fa-edit"></i>
+              </a>
+              &nbsp;
+              <a  href="javascript:void(0);" (click)="onDeleteClick(item)" title="Delete Record" >
+                <i class="fa fa-remove"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <pagination class="h-100 align-items-center float-right" [boundaryLinks]="true" previousText="&lsaquo;" nextText="&rsaquo;"
+      firstText="&laquo;" lastText="&raquo;" [maxSize]="10" [itemsPerPage]="pageSize" [totalItems]="totalItems" [(ngModel)]="currentPage"
+      (pageChanged)="onPageChanged($event)">
+    </pagination>
+  </div>
+</div>
+​
