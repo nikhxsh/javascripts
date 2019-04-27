@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { JokelistComponent } from './joke/jokelist.component';
-import { HomeComponent } from './home/home.component';
 import { BasicComponent } from './basic/basic.component';
 import { FormsComponent } from './forms/forms.component';
+import { HolderComponent } from './providers/holder.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
   { path: 'jokes', component: JokelistComponent },
   { path: 'ngfor', component: BasicComponent },
   { path: 'forms', component: FormsComponent },
-  { path: '**', component: HomeComponent } //catch all route by using the path **
+  { path: 'providers', component: HolderComponent },
+  { path: '**', component: JokelistComponent } //catch all route by using the path **
 ];
 /**
  * We then install these routes into our application by importing RouterModule.forRoot(routes) into

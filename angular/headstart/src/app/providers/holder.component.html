@@ -1,0 +1,108 @@
+<div class="container">
+  <tabset>
+    <tab heading="Provider Types" id="tab1">
+      <div class="card card-body">
+        <div class="row">
+          <div class="col-5">
+            <!-- <parent>
+                    <child></child>
+                  </parent> -->
+            <parent></parent>
+          </div>
+          <div class="col-5">
+            <!-- <parent>
+                    <child></child>
+                  </parent> -->
+            <parent></parent>
+          </div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="Http">
+      <div class="card card-body">
+        <div class="row mx-md-n5">
+          <div class="col py-3 px-md-5 bordered">
+            <button class="btn btn-primary" (click)="doGET()">GET</button>
+            &nbsp;
+            <button class="btn btn-primary" (click)="doPOST()">POST</button>
+            &nbsp;
+            <button class="btn btn-primary" (click)="doPUT()">PUT</button>
+            &nbsp;
+            <button class="btn btn-primary" (click)="doDELETE()">DELETE</button>
+          </div>
+        </div>
+        <div class="row mx-md-n5">
+          <div class="col py-3 px-md-5 bordered">
+            <button class="btn btn-secondary" (click)="doGETAsPromise()">As Promise</button>
+            &nbsp;
+            <button class="btn btn-secondary" (click)="doGETAsPromiseError()">Error as
+              Promise</button>
+            &nbsp;
+            <button class="btn btn-secondary" (click)="doGETAsObservableError()">Error as
+              Observable</button>
+          </div>
+        </div>
+        <div class="row mx-md-n5">
+          <div class="col py-3 px-md-5 bordered">
+            <button class="btn btn-danger" (click)="doGETWithHeaders()">With Headers</button>
+          </div>
+        </div>
+        <div class="card-text">
+          <pre>{{response | json}}</pre>
+        </div>
+      </div>
+    </tab>
+    <tab heading="iTunes (Rxjs)">
+      <div class="card card-body">
+        <form class="form-inline">
+          <div class="form-group">
+            <input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
+          </div>
+        </form>
+        <hr />
+        <div class="text-center">
+          <p class="lead" *ngIf="loading">Loading...</p>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let track of results1 | async">
+            <img src="{{track.artworkUrl100}}">
+            &nbsp;
+            <a target="_blank" href="{{track.collectionViewUrl}}">{{ track.trackName }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </tab>
+    <tab heading="iTunes (Normal)">
+      <div class="card card-body">
+        <form class="form-inline">
+          <div class="form-group">
+            <input type="search" class="form-control" placeholder="Enter search string" #search>
+          </div>
+          &nbsp;
+          <button type="button" class="btn btn-primary" (click)="doSearch(search.value)">Search</button>
+        </form>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4" *ngFor="let track of results">
+              <div class="card mb-3" style="width: 18rem;">
+                <img class="card-img-top" src="{{track.artworkUrl100}}" alt="Card image cap">
+                <div class="card-body">
+                  <h6 class="card-title">{{track.trackName}}</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">{{track.artistName}}</li>
+                  <li class="list-group-item">{{track.collectionName}}</li>
+                  <li class="list-group-item">{{track.country}}</li>
+                </ul>
+                <div class="card-body">
+                  <a href="{{track.collectionViewUrl}}" class="btn btn-primary">Go to collection</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+</div>

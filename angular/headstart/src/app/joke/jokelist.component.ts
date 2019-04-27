@@ -31,12 +31,9 @@ export class JokelistComponent implements AfterViewInit, AfterContentInit {
 
   constructor() {
     this.jokes = [
-      new Joke(`What did the cheese say when it looked in the mirror?`, `Hello-me
-        (Halloumi)`),
-      new Joke(`What kind of cheese do you use to disguise a small horse?`, `Mask-apony
-          (Mascarpone)`),
-      new Joke(`A kid threw a lump of cheddar at me`, `I thought ‘That’s not very
-      mature’`),
+      new Joke(`Why rivers can not hear??`, `Becuase wo behari hoti hai!`),
+      new Joke(`What will people call "Burj Khalifa" after 100 years?`, `Bujurg Khalifa`),
+      new Joke(`What do you call a group of farmers stuck at one place?`, `KISSAN JAM`),
     ];
   }
 

@@ -154,3 +154,211 @@
 
         This would be true if the control was invalid and false if it was valid.
 
+8 Dependency Injection ＆ Providers
+
+    • What is a dependency?
+      When module A in an application needs module B to run, then module B is a
+      dependency of module A.
+    • The DI framework in Angular consists of 4 concepts working together:
+      > Token
+        This uniquely identifies something that we want injected. A dependancy of our code.
+      > Dependancy
+        The actual code we want injected.
+      > Provider
+        This is a map between a token and a list of dependancies.
+      > Injector
+        This is a function which when passed a token returns a dependancy
+
+    • Injectors
+      > At the core of the DI framework is an injector.
+        An injector is passed a token and returns a dependency (or list of).
+        We say that an injector resolves a token into a dependency.
+
+        //We import our injector class.
+        import { ReflectiveInjector } from '@angular/core'; 
+
+        // We create two service classes, a MandrillService which sends email via the Mandrill platform
+        // and the SendGridService which sends email via the SendGrid platform.
+        class MandrillService {}; 
+        class SendGridService {};
+
+        //We configure our injector by providing an array of classes.
+        let injector = ReflectiveInjector.resolveAndCreate([ 
+          MandrillService,
+          SendGridService
+        ]);
+
+        //We pass in a token, the class name, into our injector and ask it to resolve to a dependency. In this
+        //case it simply returns an instance of MandrillService
+        let emailService = injector.get(MandrillService); 
+        console.log(emailService);
+        //The injector doesn’t return the class, but an instance of the class instantiated with new, like so:
+        emailService = new MandrillService()
+
+      > The dependencies returned from injectors are cached. So multiple calls to the same injector for the
+        same token will return the same instance
+        (A different injector for the same token might return a different instance of a
+         dependency but the same injector will always return the same instance.)
+
+    • Child Injectors
+      > Injectors can have one or more child injectors. These behave just like the parent injector with a few
+        additions.
+
+        a. Each injector creates it’s own instance of a dependency
+
+            import { ReflectiveInjector } from '@angular/core';
+            class EmailService {}
+            let injector = ReflectiveInjector.resolveAndCreate([EmailService]); 
+            let childInjector = injector.resolveAndCreateChild([EmailService]);
+            console.log(injector.get(EmailService) === childInjector.get(EmailService)); // false
+        
+              ① The childInjector and parent injector are both configured with the same providers.
+              ② The childInjector resolves to a different instance of the dependency compared to the parent
+                injector.
+
+        b. Child injectors forward requests to their parent injector if they can’t resolve the token locally.
+
+            import { ReflectiveInjector } from '@angular/core';
+            class EmailService {}
+            let injector = ReflectiveInjector.resolveAndCreate([EmailService]); 
+            let childInjector = injector.resolveAndCreateChild([]); 
+            console.log(injector.get(EmailService) === childInjector.get(EmailService)); // true
+
+              ① We configure a parent injector with EmailService.
+              ② We create a child injector from the parent injector, this child injector is not configured with any
+                providers.
+              ③ The parent and child injectors resolve the same token and both return the same instance of the
+                 dependency.
+
+    • Providers
+      > we can configure injectors with providers and a provider links token to a dependency
+
+        let injector = ReflectiveInjector.resolveAndCreate([
+            MandrillService,
+            SendGridService
+        ]);
+
+        is in fact a shortcut for:
+
+        let injector = ReflectiveInjector.resolveAndCreate([
+            { provide: MandrillService, useClass: MandrillService },
+            { provide: SendGridService, useClass: SendGridService },
+        ]);
+
+      > The provide property is the token and can either be a type, a string or an instance of something
+        called an InjectionToken.
+
+      > If we wanted to re-use our application and move from Mandrill to SendGrid without using DI we
+        would have to search through all the code for where we have requested MandrillService to be
+        injected and replace with SendGridService.
+        A better solution is to configure the DI framework to return either MandrilService or
+        SendGridService depending on the context,
+
+        import { ReflectiveInjector } from '@angular/core';
+
+        class MandrillService {};
+        class SendGridService {};
+        let injector = ReflectiveInjector.resolveAndCreate([
+        { provide: "EmailService", useClass: MandrillService }
+        ]);
+
+        let emailService = injector.get("EmailService");
+        console.log(emailService); // new MandrillService()
+
+        To switch to using the SendGridService throughout our application we can just configure our
+        injector with a different provider,
+
+        let injector = ReflectiveInjector.resolveAndCreate([
+        { provide: "EmailService", useClass: SendGridService }
+        ]);
+
+      > Provider configurations
+        a. useClass
+          We can have a provider which maps a token to a class,
+          let injector = ReflectiveInjector.resolveAndCreate([
+          { provide: Car, useClass: Car },
+          ]);
+
+        b. useExisting
+          We can make two tokens map to the same thing
+
+          let injector = ReflectiveInjector.resolveAndCreate([
+            //The token GenericEmailService resolves to an instance of GenericEmailService.
+            { provide: GenericEmailService, useClass: GenericEmailService }, 
+            //maps the token MandrillService to whatever the existing GenericEmailService provider points to.
+            { provide: MandrillService, useExisting: GenericEmailService }, 
+            //maps the token MandrillService to whatever the existing GenericEmailService provider points to.
+            { provide: SendGridService, useExisting: GenericEmailService } 
+          ]);
+
+        b. useValue
+          If the intention however is to pass around read-only constant values then passing an object is a
+          problem since any code in your application will be able to change properties on that object. What
+          Config points to can’t be changed but the properties of Config can be changed.
+
+            import { ReflectiveInjector } from '@angular/core';
+            let injector = ReflectiveInjector.resolveAndCreate([
+              { provide: "Config", useValue: Object.freeze({
+                  'APIKey': 'XYZ1234ABC',
+                  'APISecret': '555-123-111'
+                  });
+               }
+            ]);
+
+            let config = injector.get("Config");
+            console.log(config); // Object {APIKey: "XYZ1234ABC", APISecret: "555-123-111"}
+
+        c. useFactory
+           We can also configure a provider to call a function every-time a token is requested, leaving it to the
+           provider to figure out what to return, like so:
+
+              const isProd = true;
+              let injector = ReflectiveInjector.resolveAndCreate([
+               {
+                provide: "EmailService",
+                  useFactory: () => { 
+                    if (isProd) {
+                      return new MandrillService();
+                    } else {
+                      return new SendGridService();
+                    }
+                 }
+               },
+              ]);
+
+              let emailService1 = injector.get("EmailService");
+              console.log(emailService1); // MandrillService {}
+
+           When the injector resolves to this provider, it calls the useFactory function and returns whatever
+           is returned by this function as the dependency.
+
+      > Tokens
+        a. String token
+
+        let injector = ReflectiveInjector.resolveAndCreate([
+          { provide: "EmailService", useClass: MandrillService } 
+        ]);
+        let emailService = injector.get("EmailService");
+        console.log(emailService); // new MandrillService()
+
+        b. Type token
+
+        let injector = ReflectiveInjector.resolveAndCreate([
+          { provide: EmailService, useClass: SendGridService }
+        ]);
+        let emailService = injector.get(EmailService);
+        console.log(emailService);
+
+        b. Injection token
+        let EmailService = new InjectionToken<string>("EmailService"); 
+        let injector = ReflectiveInjector.resolveAndCreate([
+          { provide: EmailService, useClass: SendGridService } 
+        ]);
+        let emailService = injector.get(EmailService);
+        console.log(emailService);
+
+      > The Injector Tree
+        We have a top level parent injector which is attached to our NgModule.
+        Then we have child injectors descending in a hierarchy matching the component tree. So a parent component will have a 
+         child injector stemming from NgModule.
+        A child component of parent component will have a child injector stemming from Parent.
