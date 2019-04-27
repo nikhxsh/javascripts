@@ -3,14 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { JokelistComponent } from './joke/jokelist.component';
 import { HomeComponent } from './home/home.component';
 import { BasicComponent } from './basic/basic.component';
-import { RxjsComponent } from './rxjs/rxjs.component';
+import { FormsComponent } from './forms/forms.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'jokes', component: JokelistComponent },
   { path: 'ngfor', component: BasicComponent },
-  { path: 'rxjs', component: RxjsComponent },
+  { path: 'forms', component: FormsComponent },
   { path: '**', component: HomeComponent } //catch all route by using the path **
 ];
 /**

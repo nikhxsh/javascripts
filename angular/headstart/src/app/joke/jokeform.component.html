@@ -9,17 +9,40 @@
 <div class="card">
   <div class="card-body">
     <h4 class="card-title">Create Joke</h4>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Enter the setup" #setup>
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Enter the punchline" #punchline>
-    </div>
-    <button type="button" class="btn btn-primary" (click)="createJoke(setup.value, punchline.value)">Create
-    </button>
-    &nbsp;
-    <button type="button" class="btn btn-primary" (click)="deleteJokes()">Clear
-    </button>
+    <form novalidate [formGroup]="jokeForm">
+      <div class="form-group">
+        <label>Enter the setup</label>
+        <input type="text" class="form-control" formControlName="setup" [ngClass]="{
+              'is-invalid': setup.touched && setup.invalid,
+              'is-valid': setup.touched && setup.valid
+              }">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a the setup.
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" formControlName="punchline" [ngClass]="{
+              'is-invalid': punchline.invalid && punchline.touched,
+              'is-valid': punchline.valid && punchline.touched
+              }">
+        <div class="valid-feedback">
+          Looks great!
+        </div>
+        <div class="invalid-feedback">
+          Please provide a punchline.
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" [disabled]="isFormValid()"
+        (click)="createJoke()">Create
+      </button>
+      &nbsp;
+      <button type="button" class="btn btn-primary" (click)="deleteJokes()">Clear jokes
+      </button>
+    </form>
   </div>
 </div>
 <br />

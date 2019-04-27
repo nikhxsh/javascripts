@@ -4,8 +4,7 @@ import { JokeComponent } from './joke.component';
 
 @Component({
   selector: 'jokelist',
-  templateUrl: './jokelist.component.html',
-  styleUrls: ['./jokelist.component.css']
+  templateUrl: './jokelist.component.html'
 })
 export class JokelistComponent implements AfterViewInit, AfterContentInit {
   jokes: Joke[];

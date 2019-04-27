@@ -55,13 +55,13 @@ export class CardHoverDirective {
    */
   @HostListener('mouseover') onMouseOver() {
     let part = this.el.nativeElement.querySelector(this.config.querySelector);
-    this.renderer.setElementStyle(part, 'display', 'block');
+    //this.renderer.setElementStyle(part, 'display', 'block');
     this.ishovering = true;
   }
 
   @HostListener('mouseout') onMouseOut() {
     let part = this.el.nativeElement.querySelector(this.config.querySelector);
-    this.renderer.setElementStyle(part, 'display', 'none');
+    //this.renderer.setElementStyle(part, 'display', 'none');
     this.ishovering = false;
   }
 }

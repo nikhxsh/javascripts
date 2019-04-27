@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Joke } from "./Joke";
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'joke-form',
-  templateUrl: './jokeform.component.html',
-  styleUrls: ['./jokeform.component.css']
+  templateUrl: './jokeform.component.html'
 })
 export class JokeformComponent implements OnInit {
   /**
@@ -15,13 +15,28 @@ export class JokeformComponent implements OnInit {
    */
   @Output() jokeCreated = new EventEmitter<Joke>();
   @Output() jokeCleared = new EventEmitter();
-  constructor() { }
-
-  ngOnInit() {
+  jokeForm: FormGroup;
+  setup: FormControl;
+  punchline: FormControl;
+  constructor() {
   }
 
-  createJoke(setup, punchline) {
-    this.jokeCreated.emit(new Joke(setup, punchline));
+  ngOnInit() {
+    this.setup = new FormControl('', Validators.required);
+    this.punchline = new FormControl('', Validators.required);
+    this.jokeForm = new FormGroup({
+      setup: this.setup,
+      punchline: this.punchline
+    });
+  }
+
+  createJoke() {
+    this.jokeCreated.emit(new Joke(this.jokeForm.get("setup").value, this.jokeForm.get("punchline").value));
+    this.jokeForm.reset();
+  }
+
+  isFormValid() : boolean{
+    return this.jokeForm.invalid;
   }
 
   deleteJokes() {

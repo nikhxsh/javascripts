@@ -115,3 +115,42 @@
       - Http > HTTP requests in Angular are all handled via Observables.
       - Forms > Reactive forms in Angular expose an observable, a stream of all the input fields in the form
          combined.
+
+8 Form control state
+    • The form control instance on our model encapsulates state about the control itself, such as if it is
+      currently valid or if it’s been touched
+
+      a. Dirty & Pristine
+        through the controls property of our myform model, for example we can print out the the dirty state of the 
+        email field like
+
+        >> <pre>Dirty? {{ myform.controls.email.dirty }}</pre>
+
+        dirty is true if the user has changed the value of the control
+
+        The opposite of dirty is pristine so if we wrote
+
+        >> <pre>Pristine? {{ myform.controls.email.pristine }}</pre>
+
+        This would be true if the user hasn’t changed the value, and false if the user has
+
+      b. Touched & Untouched
+        Said to be touched if the the user focused on the control and then focused on something else.
+        The difference between touched and dirty is that with "touched" the user doesn’t need to actually
+        change the value of the input control
+
+        >> <pre>Touched? {{ myform.controls.email.touched }}</pre>
+
+        touched is true of the field has been touched by the user,The opposite of touched is the property untouched.
+
+      c. Valid & Invalid
+
+        >> <pre>Valid? {{ myform.controls.email.valid }}</pre>
+
+        valid is true of the field doesn’t have any validators or if all the validators are passing.
+        Again the opposite of valid is invalid,
+
+        >> <pre>Invalid? {{ myform.controls.email.invalid }}</pre>
+
+        This would be true if the control was invalid and false if it was valid.
+

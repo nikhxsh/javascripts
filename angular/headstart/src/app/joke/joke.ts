@@ -41,6 +41,7 @@ class Joke implements IJoke {
         this.setup = setup;
         this.punchline = punchline;
         this.hide = true;
+        this.rating = Rating.Good;
     }
 
     toggle() {
@@ -67,10 +68,11 @@ interface IJoke {
  * behave as constants. Enums were introduced in ES6.
  */
 enum Rating {
-    Worst,
+    Worst = 1,
     Good,
     Nice,
-    Best
+    Best,
+    Excellent
 }
 
 /**
@@ -85,4 +87,4 @@ enum Rating {
  *   }
  *   import square from './utils';
  */
-export { Joke }
+export { Joke, Rating }

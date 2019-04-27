@@ -1,0 +1,7 @@
+<!-- We use the formControl directive to link the searchField FormControl to the template form
+control. -->
+<input type="search" class="form-control" placeholder="Please enter search term" [formControl]="searchField">
+<hr />
+<ul>
+  <li *ngFor="let search of searches">{{ search }}</li>
+</ul>

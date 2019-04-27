@@ -16,8 +16,8 @@
     annotation called @Input
 -->
 <joke *ngFor="let j of jokes;let i = index" [joke]="j">
-  <h6 class="rating">{{j.rating}}</h6>
-  <h6 class="version"> Joke version {{j.version()}}</h6>
+  <h6 class="rating small">Rated {{j.rating}}</h6>
+  <h6 class="version small"> version {{j.version()}}</h6>
   <!-- 
     <h6 class="rating">{{j.rating}}</h6>
     <h6 class="version"> Joke version {{j.version()}}</h6>
