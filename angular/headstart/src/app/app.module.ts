@@ -12,6 +12,8 @@ import { BasicComponent } from './basic/basic.component';
 import { CardHoverDirective } from './directives/card-hover.directive';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DefaultPipe } from './pipes/default.pipe';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -30,7 +32,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     BasicComponent,
     CardHoverDirective,
-    RxjsComponent
+    RxjsComponent,
+    DefaultPipe
   ],
   /**
    * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -40,7 +43,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule, 
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TabsModule.forRoot()
   ],
   providers: [],
   /**

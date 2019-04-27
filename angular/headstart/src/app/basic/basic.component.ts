@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, interval } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'basic',
   templateUrl: './basic.component.html'
 })
 export class BasicComponent implements OnInit {
+  private dateVal: Date = new Date();
+  private jsonVal: Object = { moo: 'foo', goo: { too: 'new' } };
+  promise: Promise<string>;
+  observable: Observable<number>;
   people: any[] = [
     {
       "name": "Douglas Pace",
@@ -60,7 +66,11 @@ export class BasicComponent implements OnInit {
       ]
     }
   ];
-  constructor() { }
+
+  constructor() {
+    this.promise = this.getPromise();
+    this.observable = this.getObservable();
+  }
 
   ngOnInit() {
   }
@@ -74,5 +84,19 @@ export class BasicComponent implements OnInit {
       case 'HK':
         return 'red';
     }
+  }
+
+  getObservable() {
+    return interval(1000)
+      .pipe(
+        take(100),
+        map((v) => v * v)
+      );
+  }
+
+  getPromise() : Promise<string> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve("Promise complete!"), 3000);
+    });
   }
 }
