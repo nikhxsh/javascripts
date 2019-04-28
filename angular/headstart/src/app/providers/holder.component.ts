@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimpleService } from './simple.service';
-import { SearchService } from './search.service';
-import { SearchItem } from './searchitem';
-import { FormControl } from '@angular/forms';
-import {  distinctUntilChanged, debounceTime, tap, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { SimpleService } from '../services/simple.service';
 
 @Component({
   selector: 'app-holder',
@@ -12,52 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class HolderComponent implements OnInit {
   response: any;
-  results: SearchItem[];
-  results1: Observable<SearchItem[]>;
-  searchField: FormControl;
-  loading: boolean = false;
 
-  constructor(private service: SimpleService, private itunes: SearchService) { }
+  constructor(private service: SimpleService) { }
 
   ngOnInit() {
-    this.searchField = new FormControl();
-    this.results1 = this.searchField.valueChanges
-      .pipe(
-        //Emits a value from the source Observable only after a particular time span has passed without 
-        //another source emission.
-        debounceTime(400),
-        //Returns an Observable that emits all items emitted by the source Observable that are distinct 
-        //by comparison from the previous item.
-        distinctUntilChanged(),
-        //Perform a side effect for every emission on the source Observable, but return an Observable that 
-        //is identical to the source.
-        tap(() => this.loading = true),
-        //Projects each source value to an Observable which is merged in the output Observable, emitting values 
-        //only from the most recently projected Observable.
-        switchMap(term => this.itunes.find(term)),
-        tap(() => this.loading = false)
-      );
-  }
-
-  doSearch(term: string) {
-    this.itunes.search(term, 'music', '10')
-      .subscribe(
-        res => {
-          this.results = res.map(element => {
-            return new SearchItem(
-              element.trackName,
-              element.artistName,
-              element.artworkUrl100,
-              element.collectionName,
-              element.collectionViewUrl,
-              element.country
-            )
-          });
-        },
-        msg => {
-          // Error
-        }
-      )
   }
 
   doGET() {

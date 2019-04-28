@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, interval } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'basic',
@@ -67,9 +68,10 @@ export class BasicComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.promise = this.getPromise();
     this.observable = this.getObservable();
+    this.route.params.subscribe(params => console.log(params));
   }
 
   ngOnInit() {
@@ -94,9 +96,25 @@ export class BasicComponent implements OnInit {
       );
   }
 
-  getPromise() : Promise<string> {
+  getPromise(): Promise<string> {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve("Promise complete!"), 3000);
     });
+  }
+
+  goJokes() {
+    this.router.navigate(['jokes']);
+  }
+
+  goJokesbyparams(term:string) {
+    this.router.navigate(['jokes', { term: term }]);
+  }
+
+  goForms() {
+    this.router.navigate(['forms']);
+  }
+
+  goUnknow() {
+    this.router.navigate(['a', 'b', 'c']);
   }
 }

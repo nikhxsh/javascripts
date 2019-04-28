@@ -18,10 +18,14 @@ import { ReactivemodelformComponent } from './forms/reactivemodelform.component'
 import { TemplateformComponent } from './forms/templateform.component';
 import { ChildComponent } from './providers/child.component';
 import { ParentComponent } from './providers/parent.component';
-import { SimpleService } from './providers/simple.service';
+import { SimpleService } from './services/simple.service';
 import { HolderComponent } from './providers/holder.component';
-import { HttpClientModule } from '@angular/common/http';
-import { SearchService } from './providers/search.service';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { SearchService } from './services/search.service';
+import { ArtistComponent } from './itunes/artist.component';
+import { ItuneSearchComponent } from './itunes/itune-search.component';
+import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
+import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -46,7 +50,11 @@ import { SearchService } from './providers/search.service';
     TemplateformComponent,
     ChildComponent,
     ParentComponent,
-    HolderComponent
+    HolderComponent,
+    ArtistComponent,
+    ItuneSearchComponent,
+    ArtistTrackListComponent,
+    ArtistAlbumListComponent
   ],
   /**
    * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -56,6 +64,7 @@ import { SearchService } from './providers/search.service';
     BrowserModule,
     FormsModule, 
     HttpClientModule,
+    HttpClientJsonpModule,
     ReactiveFormsModule,
     AppRoutingModule,
     TabsModule.forRoot()

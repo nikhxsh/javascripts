@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimpleService } from './simple.service';
+import { SimpleService } from '../services/simple.service';
 
 /**
  * The ParentComponent has just one input box which reads and writes to the SimpleService value

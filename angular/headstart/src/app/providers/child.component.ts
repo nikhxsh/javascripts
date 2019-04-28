@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SimpleService } from './simple.service';
+import { SimpleService } from '../services/simple.service';
 
 @Component({
   selector: 'child',
