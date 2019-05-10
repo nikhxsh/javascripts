@@ -417,3 +417,84 @@
        requested path to generate the URL.
 
          <base href='/my/app'/>
+
+
+10 Testing
+    • Unit Testing
+	  This is sometimes also called Isolated testing. It’s the practice of testing small isolated pieces of
+	  code. If your test uses some external resource, like the network or a database, it’s not a unit test.
+    • Functional Testing
+	  This is defined as the testing of the complete functionality of an application. In practice with web
+	  apps, this means interacting with your application as it’s running in a browser just like a user
+	  would interact with it in real life, i.e. via clicks on a page.
+	  This is also called End To End or E2E testing.
+
+	  > Jasmine
+	    Jasmine is a javascript testing framework that supports a software development practice called
+		Behaviour Driven Development, or BDD for short. It’s a specific flavour of Test Driven Development(TDD).
+		Jasmine, and BDD in general, attempts to describe tests in a human readable format so that nontechnical
+		people can understand what is being tested.
+
+		For example if we wanted to test this function:
+
+		function helloWorld() {
+			return 'Hello world!';
+		}
+
+		We would write a jasmine test spec like so:
+
+		describe('Hello world', () => {  //Test Suit
+			it('says hello', () => { //Test spec
+				expect(helloWorld()). //expect(actual)
+				 toEqual('Hello world!'); // matcher(expected) 
+			});
+		});
+
+		- Setup & Teardown
+			beforeAll
+			 This function is called once, before all the specs in describe test suite are run.
+			afterAll
+			 This function is called once after all the specs in a test suite are finished.
+			beforeEach
+			 This function is called before each test specification, it function, has been run.
+			afterEach
+			 This function is called after each test specification has been run.
+
+	    describe('Hello world', () => {
+		  let expected = "";
+			beforeEach(() => {
+			  expected = "Hello World";
+			});
+
+			afterEach(() => {
+			  expected = "";
+			});
+
+			it('says hello', () => {
+			 expect(helloWorld())
+			 .toEqual(expected);
+			});
+		});
+
+		- Disabled and focused tests
+		xdescribe('Hello world', () => { //These tests will not be run.
+			xit('says hello', () => { //These tests will not be run.
+				expect(helloWorld())
+					.toEqual('Hello world!');
+			});
+		});
+
+		- Conversely you can also focus on specific tests by pre-pending with f, like so:
+		fdescribe('Hello world', () => { //Out of all the tests in all the tests suites and tests specs, these are the only ones that will be run.
+			fit('says hello', () => { 
+				expect(helloWorld())
+					.toEqual('Hello world!');
+			});
+		});
+
+	  > Karma
+	    - Manually running Jasmine tests by refreshing a browser tab repeatedly in different browsers
+		every-time we edit some code can become tiresome.
+		- Karma is a tool which lets us spawn browsers and run jasmine tests inside of them all from the
+		command line.
+	  

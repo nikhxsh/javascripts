@@ -41,7 +41,7 @@ export class SearchService {
       );
   }
 
-  search2(term: string) {
+  search2(term: string): Observable<SearchItem[]>  {
     let apiURL = `${this.apiRoot}/search?term=${term}&media=music&limit=20`;
     return this.http.jsonp(apiURL, 'callback')
       .pipe(
@@ -64,7 +64,7 @@ export class SearchService {
       );
   }
 
-  search3(term: string) {
+  search3(term: string): Observable<SearchItem[]>  {
     let params = new HttpParams({
       fromObject: {
         term: term,

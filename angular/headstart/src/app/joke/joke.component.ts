@@ -1,4 +1,15 @@
-import { Component, OnInit, Input, ViewEncapsulation, OnChanges, DoCheck, OnDestroy, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { 
+	Component, 
+	OnInit, 
+	Input, 
+	ViewEncapsulation, 
+	OnChanges, 
+	DoCheck, 
+	OnDestroy, 
+	AfterContentInit, 
+	AfterContentChecked, 
+	AfterViewInit, 
+	AfterViewChecked } from '@angular/core';
 import { Joke } from "./Joke";
 
 /**
