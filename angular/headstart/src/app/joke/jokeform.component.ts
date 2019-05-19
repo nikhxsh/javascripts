@@ -22,7 +22,7 @@ export class JokeformComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setup = new FormControl('', Validators.required);
+    this.setup = new FormControl('', [Validators.required]);
     this.punchline = new FormControl('', Validators.required);
     this.jokeForm = new FormGroup({
       setup: this.setup,
@@ -31,12 +31,12 @@ export class JokeformComponent implements OnInit {
   }
 
   createJoke() {
-    this.jokeCreated.emit(new Joke(this.jokeForm.get("setup").value, this.jokeForm.get("punchline").value));
+    this.jokeCreated.emit(
+      new Joke(
+        this.jokeForm.get("setup").value,
+        this.jokeForm.get("punchline").value)
+    );
     this.jokeForm.reset();
-  }
-
-  isFormValid() : boolean{
-    return this.jokeForm.invalid;
   }
 
   deleteJokes() {

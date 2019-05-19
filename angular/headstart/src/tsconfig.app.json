@@ -6,6 +6,7 @@
   },
   "exclude": [
     "test.ts",
+    "mocks",
     "**/*.spec.ts"
   ]
 }

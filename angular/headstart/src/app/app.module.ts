@@ -26,6 +26,8 @@ import { ArtistComponent } from './itunes/artist.component';
 import { ItuneSearchComponent } from './itunes/itune-search.component';
 import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
 import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
+import { LoginComponent } from './_ui/login.component';
+import { AuthService } from './services/auth.service';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -54,7 +56,8 @@ import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
     ArtistComponent,
     ItuneSearchComponent,
     ArtistTrackListComponent,
-    ArtistAlbumListComponent
+    ArtistAlbumListComponent,
+    LoginComponent
   ],
   /**
    * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -91,7 +94,8 @@ import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
    */
   providers: [
     SimpleService,
-    SearchService
+    SearchService,
+    AuthService
   ],
   /**
    * Identifies the root component that Angular should bootstrap when it starts the application.

@@ -497,4 +497,8 @@
 		every-time we edit some code can become tiresome.
 		- Karma is a tool which lets us spawn browsers and run jasmine tests inside of them all from the
 		command line.
+
+    ** by default the cli installs the karma-chrome-launcher. you could try installing a headless browser like phantomjs or
+       karma-spec-reporter
+       (https://github.com/angular/angular-cli/issues/2013)
 	  
