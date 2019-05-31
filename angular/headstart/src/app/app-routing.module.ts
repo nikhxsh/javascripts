@@ -8,6 +8,7 @@ import { ArtistComponent } from './itunes/artist.component';
 import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
 import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
 import { ItuneSearchComponent } from './itunes/itune-search.component';
+import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,6 +32,7 @@ const routes: Routes = [
         }
     ]   
   },
+  { path: 'ngrx', component: NgrxstoreComponent },
   { path: '**', component: JokelistComponent } //catch all route by using the path **
 ];
 /**

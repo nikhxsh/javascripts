@@ -28,6 +28,13 @@ import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
 import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
 import { LoginComponent } from './_ui/login.component';
 import { AuthService } from './services/auth.service';
+import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
+import { StoreModule } from '@ngrx/store';
+import { appReducers } from './ngrxstore/reducers/app.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './ngrxstore/effects/user.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { UserService } from './services/user.service';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -57,7 +64,8 @@ import { AuthService } from './services/auth.service';
     ItuneSearchComponent,
     ArtistTrackListComponent,
     ArtistAlbumListComponent,
-    LoginComponent
+    LoginComponent,
+    NgrxstoreComponent
   ],
   /**
    * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -68,7 +76,10 @@ import { AuthService } from './services/auth.service';
     FormsModule, 
     HttpClientModule,
     HttpClientJsonpModule,
-    ReactiveFormsModule,
+	ReactiveFormsModule,
+	StoreModule.forRoot(appReducers),
+	EffectsModule.forRoot([UserEffects]),
+	StoreRouterConnectingModule.forRoot({stateKey:'router'}),
     AppRoutingModule,
     TabsModule.forRoot()
   ],
@@ -95,7 +106,8 @@ import { AuthService } from './services/auth.service';
   providers: [
     SimpleService,
     SearchService,
-    AuthService
+	AuthService,
+	UserService
   ],
   /**
    * Identifies the root component that Angular should bootstrap when it starts the application.
