@@ -16,6 +16,10 @@ export class UserEffects {
 		private store: Store<IAppState>
 	) { }
 
+	/**
+	 * Using the Actions provided by ngrx/effects we are going to start piping our operator's for this effect.
+	 * in the last operator, the Effect is going to dispatch another action
+	 */
 	@Effect()
 	getUsers$ = this.action$.pipe(
 		ofType<GetUsers>(UsersActions.GetUsers),

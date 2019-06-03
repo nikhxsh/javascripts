@@ -9,6 +9,9 @@ export enum UsersActions {
 	AddUser = '[User] Add User'
 }
 
+/**
+ * Action creators are precisely the functions/classes that create actions.
+ */
 export class GetUsers implements Action {
 	public readonly type = UsersActions.GetUsers;
 }
