@@ -415,7 +415,7 @@
 	2. We can only use it for GET requests, it doesn't work for PUT/POST/DELETE and so on.
 
 ## Routing Strategies
-* HashLocationStrategy
+* __HashLocationStrategy__
  1. To enable HashLocationStrategy in an Angular application we pass {useHash: true} when we are providing our routes with RouterModule
 
     `RouterModule.forRoot(routes, {useHash: true})`
@@ -429,7 +429,7 @@
 
 	• It can be programmatically changed via JavaScript.
 
-* PathLocationStrategy
+* __PathLocationStrategy__
 
  1. This is the default strategy in Angular so we need to do nothing to enable it. It takes advantage of a relatively new HTML5 API called pushstate. 
     By using pushstate we can change the URL and not have the browser request the page from the server and without needing to use a hash fragment.
@@ -443,7 +443,7 @@
 	• Unfortunately it has one big downside, if we then reloaded the page or bookmarked and opened it later the browser would make a request to the server 
 	  for `e.g. localhost:4040/artist/1234/tracks`
 
-* base href
+* __base href__
 
  1. When using the PathLocationStrategy we need to tell the browser what will be prefixed to the  requested path to generate the URL.
 
@@ -459,7 +459,7 @@
   with your application as it is running in a browser just like a user would interact with it in real life, i.e. via clicks on a page. This is also called 
   End To End or E2E testing.
   
-* Jasmine:
+* __Jasmine__:
 
  1. Jasmine is a javascript testing framework that supports a software development practice called. Behaviour Driven Development, or BDD for short. It is a specific
    flavour of Test Driven Development(TDD). Jasmine, and BDD in general, attempts to describe tests in a human readable format so that nontechnical	people can understand 
@@ -469,9 +469,7 @@
 		function helloWorld() {
 			return 'Hello world!';
 		}
-
 		//We would write a jasmine test spec like so:
-
 		describe('Hello world', () => {  //Test Suit
 			it( isays hello', () => { //Test spec
 				expect(helloWorld()). //expect(actual)
@@ -507,23 +505,25 @@
 		});
   	  ```
  3. Disabled and focused tests
- 	- You can disable and focus test as per will:
+
+	- You can disable and focus test as per will:
+
   	  ```javascript
 		xdescribe('Hello world', () => { //These tests will not be run.
 			xit( isays hello', () => { //These tests will not be run.
-				expect(helloWorld())
-					.toEqual('Hello world!');
+			  expect(helloWorld())
+				 .toEqual('Hello world!');
 			});
 		});
 		//Conversely you can also focus on specific tests by pre-pending with f, like so:
 		fdescribe('Hello world', () => { //Out of all the tests in all the tests suites and tests specs, these are the only ones that will be run.
 			fit( isays hello', () => { 
-				expect(helloWorld())
-					.toEqual('Hello world!');
+			  expect(helloWorld())
+				 .toEqual('Hello world!');
 			});
 		});
   	  ```
-4. Karma
+4. __Karma__
  - Manually running Jasmine tests by refreshing a browser tab repeatedly in different browsers every-time we edit some code can become tiresome.
  - Karma is a tool which lets us spawn browsers and run jasmine tests inside of them all from the command line.
 
