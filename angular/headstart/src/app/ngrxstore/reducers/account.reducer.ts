@@ -1,6 +1,6 @@
-import { intialUserState } from '../state/user.state';
-import { UsersActionsType, UsersActions } from '../actions/users.action';
-import { IUserState } from '../state/user.state'
+import { intialAccountState } from '../state/account.state';
+import { AccountActionsType, AccountActions } from '../actions/account.action';
+import { IAccountState } from '../state/account.state'
 
 /**
  * Actions describe the fact that something happened but don’t specify how the application’s state changes in response. 
@@ -8,27 +8,27 @@ import { IUserState } from '../state/user.state'
  * state of your application. The reducers will take the previous state from your store and apply a pure function to it and
  * transform into a new state.
  */
-export const userReducers = (
-	state = intialUserState,
-	action: UsersActionsType
-): IUserState => {
+export const accountReducer = (
+	state = intialAccountState,
+	action: AccountActionsType
+): IAccountState => {
 	switch (action.type) {
-		case UsersActions.GetUsersResponse: {
+		case AccountActions.GetAccountsResponse: {
 			return {
 				...state,
-				users: action.payload
+				accounts: action.payload
 			}
 		}
-		case UsersActions.GetUserResponse: {
+		case AccountActions.GetAccountResponse: {
 			return {
 				...state,
-				selctedUser: action.payload
+				account: action.payload
 			}
 		}
-		case UsersActions.AddUser: {
+		case AccountActions.CreateAccount: {
 			return {
 				...state,
-				selctedUser: action.payload
+				account: action.payload
 			}
 		}
 		default:

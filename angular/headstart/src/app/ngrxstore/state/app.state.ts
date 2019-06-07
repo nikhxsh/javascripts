@@ -1,13 +1,13 @@
 import { RouterReducerState } from "@ngrx/router-store"
-import { IUserState, intialUserState } from './user.state';
+import { IAccountState, intialAccountState } from './account.state';
 
 export interface IAppState {
 	router?: RouterReducerState,
-	users: IUserState
+	accounts: IAccountState
 }
 
 export const initialAppState: IAppState = {
-	users: intialUserState
+	accounts: intialAccountState
 };
 
 export function GetInitialState(): IAppState {

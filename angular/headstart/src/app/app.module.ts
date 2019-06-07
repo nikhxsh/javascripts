@@ -32,9 +32,9 @@ import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
 import { StoreModule } from '@ngrx/store';
 import { appReducers } from './ngrxstore/reducers/app.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { UserEffects } from './ngrxstore/effects/user.effects';
+import { AccountEffects } from './ngrxstore/effects/account.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { UserService } from './services/user.service';
+import { AccountService } from './services/account.service';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -78,7 +78,7 @@ import { UserService } from './services/user.service';
     HttpClientJsonpModule,
 	ReactiveFormsModule,
 	StoreModule.forRoot(appReducers),
-	EffectsModule.forRoot([UserEffects]),
+	EffectsModule.forRoot([AccountEffects]),
 	StoreRouterConnectingModule.forRoot({stateKey:'router'}),
     AppRoutingModule,
     TabsModule.forRoot()
@@ -107,7 +107,7 @@ import { UserService } from './services/user.service';
     SimpleService,
     SearchService,
 	AuthService,
-	UserService
+	AccountService
   ],
   /**
    * Identifies the root component that Angular should bootstrap when it starts the application.

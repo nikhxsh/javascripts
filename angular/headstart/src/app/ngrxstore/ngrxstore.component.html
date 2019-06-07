@@ -1,18 +1,53 @@
-<table class="table table-hover">
-	<thead class="thead-light">
+<div class="card">
+	<div class="card-body">
+		<form novalidate [formGroup]="accountForm">
+			<div class="form-row">
+				<div class="col">
+					<label>Account Number</label>
+					<input type="text" class="form-control" formControlName="accountNumber" [ngClass]="{
+								'is-invalid': accountNumberControl.touched && accountNumberControl.invalid,
+								'is-valid': accountNumberControl.touched && accountNumberControl.valid
+								}">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide an account number.
+					</div>
+				</div>
+				<div class="col">
+					<label>Opening Amount</label>
+					<input type="text" class="form-control" formControlName="openingAmount" [ngClass]="{
+								'is-invalid': openingAmountControl.touched && openingAmountControl.invalid,
+								'is-valid': openingAmountControl.touched && openingAmountControl.valid
+								}">
+					<div class="valid-feedback">
+						Looks good!
+					</div>
+					<div class="invalid-feedback">
+						Please provide an opening amount.
+					</div>
+				</div>
+			</div>
+			<br/>
+			<button id="CreateAccountButton" type="button" class="btn btn-primary" [disabled]="accountForm.invalid"
+			  (click)="createAccount()">Create
+			</button>
+		</form>
+	</div>
+</div>
+<hr/>
+<table class="table table-sm table-bordered table-hover">
+	<thead>
 		<tr>
-			<th scope="col">#</th>
-			<th scope="col">Name</th>
+			<th scope="col">Account</th>
+			<th scope="col">Balance</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let item of users | async" (click)="getUser(item.id)">
-			<td>{{ item.id }}</td>
-			<td>{{ item.name }}</td>
+		<tr *ngFor="let item of accounts | async" (click)="getAccount(item.accountNumber)">
+			<td>{{ item.accountNumber }}</td>
+			<td>{{ item.amount }}</td>
 		</tr>
 	</tbody>
 </table>
-<div>
-	<p><b>Card Number: </b> {{ user.cardNumber }}</p>
-	<p><b>Card Type: </b> {{ user.cardType }}</p>
-</div>
