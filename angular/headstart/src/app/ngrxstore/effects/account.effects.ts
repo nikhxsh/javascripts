@@ -41,9 +41,8 @@ export class AccountEffects {
 	@Effect()
 	createAccount$ = this.action$.pipe(
 		ofType<CreateAccount>(AccountActions.CreateAccount),
-		map(action => action.payload),	
-		map(account => {
-			this.accountService.addAccount(account);
-		})
+		map(action => this.accountService.addAccount(action.payload)),
+		switchMap(() => this.accountService.getAccounts()),
+		switchMap(accounts => of(new GetAccountsResponse(accounts)))
 	)
 }

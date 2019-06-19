@@ -40,11 +40,12 @@ export class NgrxstoreComponent implements OnInit {
 	}
 
 	createAccount() {
-		this.store.dispatch(new CreateAccount(
+		let account = new CreateAccount(
 			{
-				accountNumber: this.accountForm.get("accountNumber").value,
-				amount: this.accountForm.get("openingAmount").value
+				accountNumber: +this.accountForm.get("accountNumber").value,
+				amount: +this.accountForm.get("openingAmount").value
 			}
-		));
+		);
+		this.store.dispatch(account);
 	}
 }
