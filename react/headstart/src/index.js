@@ -1,21 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import KbcApp from './Kbc';
 import * as serviceWorker from './serviceWorker';
 
-//Create Models
-let model = {
-    clicks: 0
-}
-
-function render() {
-    ReactDOM.render(
-        <App clicks={model.clicks} onClick={() => { model.clicks += 1; render(); }} />,
-        document.getElementById('root')
-    );
-}
-render();
+ReactDOM.render(<KbcApp />,	document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
