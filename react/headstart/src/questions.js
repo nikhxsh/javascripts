@@ -1,0 +1,150 @@
+const questions = [
+	{
+		id: 1,
+		name: 'Approximately how many stars does the Andromeda Nebula contain?',
+		imageUrl: require('./images/question1.jpg'),
+		correctOption: 3,
+		options: [
+			'100,000',
+			'100,000,000',
+			'1,000,000,000,000',
+			'100,000,000,000,000'
+		],
+		note: `The Andromeda Nebula (Galaxy) is often considered a twin of the Milky Way although it is a little larger. From the speed 
+		at which a star near the edge circles the center, we estimate that its mass is equal to that of 100,000,000,000 to 
+		1,000,000,000,000 stars like the sun.`
+	},
+	{
+		id: 2,
+		name: 'To reach another planet, a spacecraft must be aimed:',
+		imageUrl: require('./images/question2.jpg'),
+		correctOption: 2,
+		options: [
+			'At the planet', 
+			'Where the planet will be when the spacecraft reaches it', 
+			'Midway between the two', 
+			'I Dont know'
+		],
+		note: `A spacecraft traveling to another planet becomes a miniature planet itself, traveling in an orbit around the sun. 
+		The shape of that orbit depends both on the direction and on the speed with which it leaves the earth. These must be adjusted 
+		so that the orbits of the spacecraft and the planet cross at a time when both bodies at that point.`
+	},
+	{
+		id: 3,
+		name: 'A brown dwarf:',
+		imageUrl: require('./images/question3.jpg'),
+		correctOption: 2,
+		options: [
+			'Is a small star that is somewhat cooler than a red dwarf', 
+			'Is a very large planet', 
+			'Is similar to each of the above', 
+			'Is a neutron star'
+		],
+		note: `A brown dwarf is a star-like body that is too light to have enough density in its center to transform hydrogen into helium. 
+		It may transform lithium, beryllium, and boron that can be transformed at lower temperatures and densities. The difference between a 
+		brown dwarf and a planet is harder to define observationally. Normally, it is considered that a planet is created by the accretion of
+		material around a star that has already formed. A brown dwarf can form independently of another star.`
+	},
+	{
+		id: 4,
+		name: 'How far have spacecraft from Earth traveled into space?',
+		imageUrl: require('./images/question4.jpg'),
+		correctOption: 2,
+		options: [
+			'Well over 10 Lightyears', 
+			'A bit less than one Lightyear', 
+			'Somewhat less than one Lightday', 
+			'11 kms'
+		],
+		note: `The planetary exploration missions Pioneer and Voyager have barely traveled beyond our Solar System. These are the fastest 
+		spacecraft ever launched from Earth. Even these spacecraft will take a very long time to travel one light-year. We don't have the 
+		knowledge or technology to send space probes or manned craft to even the nearest stars!`
+	},
+	{
+		id: 5,
+		name: 'How have astronomers learned most of what they know about the stars, galaxies, and the universe?',
+		imageUrl: require('./images/question5.jpg'),
+		correctOption: 2,
+		options: [
+			'By sending robotic space probes out to explore the depths of space', 
+			'By analyzing light and other electromagnetic radiation from space', 
+			'Through controlled laboratory and in situ experiments', 
+			'From POGO'
+		],
+		note: `We haven't been able to travel to the stars to observe them up close. We rely on electromagnetic radiation in the form of 
+		light, radio waves, x-rays, etc. that reachs the Earth or spacecraft orbits near Earth for most of what we know about the Universe.
+		This is analyzed, and evaluated with what we know about physics.`
+	},
+	{
+		id: 6,
+		name: 'How fast does the sun travel around the center of the galaxy?',
+		imageUrl: require('./images/question6.jpg'),
+		correctOption: 1,
+		options: [
+			'150 milessecond', 
+			'150 milesminute', 
+			'150 mileshour', 
+			'150 milesday'
+		],
+		note: `Although it takes more than 10,000,000 years for the sun to make one circuit of the galaxy, the galaxy is so large that 
+		it must travel at almost 150 miles/second to cover the distance in that time.`
+	},
+	{
+		id: 7,
+		name: 'Where do most of the known asteroids orbit the Sun?',
+		imageUrl: require('./images/question7.jpg'),
+		correctOption: 3,
+		options: [
+			'Between the orbits of Venus and Earth', 
+			'Between the orbits of Earth and Mars', 
+			'Between the orbits of Mars and Jupiter', 
+			'Between the orbits of Jupiter and Saturn'
+		],
+		note: `The so-called "Asteroid Belt" lies between the orbits of Jupiter and Mars. Most of the known asteroids, including most of the 
+		large asteroids are found in this region of the Solar System`
+	},
+	{
+		id: 8,
+		name: 'How old is the earth?',
+		imageUrl: require('./images/question8.jpg'),
+		correctOption: 3,
+		options: [
+			'7.543 billion years', 
+			'6.543 billion years', 
+			'4.543 billion years', 
+			'8.543 billion years'
+		],
+		note: `Rocks returned from the Moon have been dated at a maximum of 4.51 billion years old. Martian meteorites that have landed upon Earth have also 
+		been dated to around 4.5 billion years old by lead-lead dating.`
+	},
+	{
+		id: 9,
+		name: 'The point thought to represent the center of black hole is know as a?',
+		imageUrl: require('./images/question9.jpg'),
+		correctOption: 2,
+		options: [
+			'Infinitum', 
+			'Singularity', 
+			'Centrilaty', 
+			'SPA'
+		],
+		note: `A gravitational singularity, spacetime singularity or simply singularity is a location in spacetime where the gravitational field of a celestial
+		body is predicted to become infinite by general relativity in a way that does not depend on the coordinate system. `
+	},
+	{
+		id: 10,
+		name: 'Wormholes are?',
+		imageUrl: require('./images/question10.jpg'),
+		correctOption: 3,
+		options: [
+			'A hole of matter that is very hard to escape from', 
+			'Cool', 
+			'A hole through spacetime', 
+			'A hole with a worm in it'
+		],
+		note: `The wormhole theory postulates that a theoretical passage through space-time could create shortcuts for long journeys across the universe. 
+		Wormholes are predicted by the theory of general relativity.`
+	}
+];
+
+export default questions;

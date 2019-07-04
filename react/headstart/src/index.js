@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import KbcApp from './Kbc';
+import SpaceQuiz from './spaceQuiz';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<KbcApp />,	document.getElementById('root'));
+ReactDOM.render(<SpaceQuiz/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
