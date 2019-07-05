@@ -14,12 +14,39 @@ import './bootstrap.min.css'
  */
 
 class Header extends Component {
+
+	mappingColor = {
+		true: 'text-success',
+		false: 'text-danger'
+	}
+
+	mappingText = {
+		true: 'Correct Answer!',
+		false: 'Wrong Answer!'
+	}
+
+	getValues(choice) {
+		if (this.props.attempted) {
+			switch (choice) {
+				case 1:
+					return this.mappingColor[this.props.correct];
+				case 2:
+					return this.mappingText[this.props.correct];
+			}
+		}
+		return '';
+	}
+
 	render() {
 		return <div className="row">
 			<div className="col-10 offset-1">
 				<h1 className="display-4">Space Quiz</h1>
-				<p className="lead">You scored {this.props.score}%</p>
 				<hr className="my-4" />
+				<div class="alert col-8 offset-2">
+					<p class={this.getValues(1)}>
+						{this.getValues(2)} <strong>Total Score: {this.props.score}%</strong>
+					</p>
+				</div>
 			</div>
 		</div>
 	};
@@ -27,26 +54,25 @@ class Header extends Component {
 
 class QuizPanel extends Component {
 	optionRefs = {};
-
 	constructor(props) {
 		super(props);
+		this.init(this.props);
+		this.optionRefs = Array(this.props.question.options.length).fill(0).map(() => React.createRef());
+	}
+
+	init(props) {
 		this.state = {
-			questionId: this.props.question.id,
+			questionId: props.question.id,
 			isCorrectAnswer: false,
 			isAttempted: false,
 			attempts: 0
 		};
-		this.optionRefs = Array(this.props.question.options.length).fill(0).map(() => React.createRef());
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.state.questionId !== nextProps.question.id)
-			this.state = {
-				questionId: this.props.question.id,
-				isCorrectAnswer: false,
-				isAttempted: false,
-				attempts: 0
-			};
+		if (this.state.questionId !== nextProps.question.id) {
+			this.init(nextProps);
+		}
 	}
 
 	getChildReference(index) {
@@ -55,16 +81,17 @@ class QuizPanel extends Component {
 		return this.optionRefs[index];
 	}
 
-	handleAnswerSelected = (isCorrect) => {
+	handleAnswerSelected(isCorrect) {
+		this.highlightRightAnswer();
 		const attempts = this.state.attempts + 1;
 		this.setAnswerStatus(isCorrect, attempts);
+		this.props.toggleNextButton(isCorrect, attempts);
+	}
+
+	highlightRightAnswer() {
 		const correctOption = this.props.question.correctOption;
 		let optionRef = this.getChildReference(correctOption);
-		if (optionRef) {
-			optionRef.current.highlightRightAnswer(correctOption);
-		}
-		console.log(attempts);
-		this.props.toggleNextButton(isCorrect, attempts);
+		if (optionRef) optionRef.current.highlightRightAnswer(correctOption);
 	}
 
 	setAnswerStatus(isCorrect, attempts) {
@@ -82,8 +109,6 @@ class QuizPanel extends Component {
 					{this.props.question.note}
 				</div>
 			</div>
-		else
-			return <div></div>
 	}
 
 	render() {
@@ -120,6 +145,7 @@ class Option extends Component {
 		this.state = {
 			highlight: ''
 		}
+		this.onAnswerSelected = this.onAnswerSelected.bind(this);
 	}
 
 	mapping = {
@@ -145,7 +171,7 @@ class Option extends Component {
 	render() {
 		return <div
 			className='option'
-			onClick={() => { this.onAnswerSelected() }}
+			onClick={this.onAnswerSelected}
 			style={{ backgroundColor: this.state.highlight }}>
 			<strong>{this.props.value}</strong>
 		</div >
@@ -153,16 +179,6 @@ class Option extends Component {
 }
 
 class Continue extends Component {
-
-	getFinishButton() {
-		if (this.props.stop)
-			return <button
-				type="button"
-				className="btn btn-outline-primary"
-				onClick={() => { this.props.restartQuiz() }}>
-				Finish
-			</button>;
-	}
 
 	render() {
 		return <div className="row">
@@ -176,7 +192,15 @@ class Continue extends Component {
 					Next
 				</button>
 				&nbsp;
-				{this.getFinishButton()}
+				{
+					this.props.stop ? 
+					<button
+						type="button"
+						className="btn btn-outline-primary"
+						onClick={() => { this.props.restartQuiz() }}>
+						Finish
+					</button> : ''
+				}
 			</div>
 		</div>
 	};
@@ -203,6 +227,7 @@ class SpaceQuiz extends Component {
 			totalQuestions: questions.length,
 			answeredCorrect: false,
 			disableNext: true,
+			isAttempted: false,
 			score: 0
 		};
 	}
@@ -210,8 +235,7 @@ class SpaceQuiz extends Component {
 	getQuizData(id) {
 		let data = questions.find(x => x.id === id);
 		return {
-			question: data,
-			enablePanel: true
+			question: data
 		};
 	}
 
@@ -220,7 +244,8 @@ class SpaceQuiz extends Component {
 		this.setState({
 			answeredCorrect: isCorrect,
 			disableNext: false,
-			score: score
+			score: score,
+			isAttempted: true
 		})
 	}
 
@@ -236,7 +261,8 @@ class SpaceQuiz extends Component {
 				questionNumber: next,
 				quizData: this.getQuizData(next),
 				answeredCorrect: false,
-				disableNext: true
+				disableNext: true,
+				isAttempted: false
 			});
 		}
 	}
@@ -247,13 +273,17 @@ class SpaceQuiz extends Component {
 			quizData: this.getQuizData(1),
 			answeredCorrect: false,
 			finished: false,
+			isAttempted: false,
 			score: 0
 		});
 	}
 
 	render() {
 		return <div className="App">
-			<Header score={this.state.score} />
+			<Header
+				score={this.state.score}
+				correct={this.state.answeredCorrect}
+				attempted={this.state.isAttempted} />
 			<QuizPanel
 				{...this.state.quizData}
 				toggleNextButton={(isCorrect, attempts) => { this.toggleNextButton(isCorrect, attempts) }} />
