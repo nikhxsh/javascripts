@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import AddQuestionForm from './addQuestionForm';
 import questions from './questions'
 import './spaceQuiz.css';
 import './bootstrap.min.css'
@@ -16,36 +18,21 @@ import './bootstrap.min.css'
 class Header extends Component {
 
 	mappingColor = {
-		true: 'text-success',
-		false: 'text-danger'
+		true: 'alert alert-success',
+		false: 'alert alert-danger'
 	}
 
-	mappingText = {
-		true: 'Correct Answer!',
-		false: 'Wrong Answer!'
-	}
-
-	getValues(choice) {
-		if (this.props.attempted) {
-			switch (choice) {
-				case 1:
-					return this.mappingColor[this.props.correct];
-				case 2:
-					return this.mappingText[this.props.correct];
-			}
-		}
-		return '';
+	getValues() {
+		if (this.props.attempted)
+			return this.mappingColor[this.props.correct];
+		return 'alert alert-info';
 	}
 
 	render() {
 		return <div className="row">
 			<div className="col-10 offset-1">
-				<h1 className="display-4">Space Quiz</h1>
-				<hr className="my-4" />
-				<div class="alert col-8 offset-2">
-					<p class={this.getValues(1)}>
-						{this.getValues(2)} <strong>Total Score: {this.props.score}%</strong>
-					</p>
+				<div className={this.getValues()}>
+					<strong>Total Score: {this.props.score}%</strong>
 				</div>
 			</div>
 		</div>
@@ -114,7 +101,7 @@ class QuizPanel extends Component {
 	render() {
 		return <div className="row">
 			<div className="col-4 offset-1">
-				<img src={this.props.question.imageUrl} className="img-thumbnail" />
+				<img src={this.props.question.imageUrl} className="img-thumbnail image" />
 			</div>
 			<div className="col-6">
 				<div className="alert alert-primary">
@@ -173,7 +160,7 @@ class Option extends Component {
 			className='option'
 			onClick={this.onAnswerSelected}
 			style={{ backgroundColor: this.state.highlight }}>
-			<strong>{this.props.value}</strong>
+			{this.props.value}
 		</div >
 	}
 }
@@ -193,12 +180,12 @@ class Continue extends Component {
 				</button>
 				&nbsp;
 				{
-					this.props.stop ? 
-					<button
-						type="button"
-						className="btn btn-outline-primary"
-						onClick={() => { this.props.restartQuiz() }}>
-						Finish
+					this.props.stop ?
+						<button
+							type="button"
+							className="btn btn-outline-primary"
+							onClick={() => { this.props.restartQuiz() }}>
+							Finish
 					</button> : ''
 				}
 			</div>
@@ -206,21 +193,9 @@ class Continue extends Component {
 	};
 }
 
-function Footer() {
-	return <div id="footer" className="row">
-		<div className="col-12">
-			<br />
-			<p className="text-muted credit">
-				Source: NASA Astronomical Data Center
-				</p>
-		</div>
-	</div>
-}
-
 class SpaceQuiz extends Component {
-
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			questionNumber: 1,
 			quizData: this.getQuizData(1),
@@ -230,6 +205,7 @@ class SpaceQuiz extends Component {
 			isAttempted: false,
 			score: 0
 		};
+		console.log(this.props.match)
 	}
 
 	getQuizData(id) {
@@ -279,7 +255,7 @@ class SpaceQuiz extends Component {
 	}
 
 	render() {
-		return <div className="App">
+		return <div>
 			<Header
 				score={this.state.score}
 				correct={this.state.answeredCorrect}
@@ -292,12 +268,23 @@ class SpaceQuiz extends Component {
 				nextQuestion={() => { this.handleNextQuestion() }}
 				stop={this.state.finished}
 				restartQuiz={() => { this.handleRestartQuiz() }} />
-			<Footer />
 		</div>
 	}
 }
 
-export default SpaceQuiz;
+function SpaceQuizApp({match}){
+	return (
+		<div>
+			<Link to={`${match.url}/add`}>Add new question</Link> |&nbsp;	
+			<Link to={`${match.url}`}>Back</Link>	
+			<hr />
+			<Route exact path={`${match.url}`} component={SpaceQuiz}/>		
+			<Route path={`${match.url}/add`} component={AddQuestionForm}/>
+		</div>
+	);
+}
+
+export default SpaceQuizApp;
 
 
 /*
