@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import './bootstrap.min.css'
 import './index.css';
+
+import logo from './logo.svg';
 import SpaceQuizApp from './spaceQuiz';
 import * as serviceWorker from './serviceWorker';
 
@@ -14,8 +17,8 @@ ReactDOM.render(
     <section>
         <BrowserRouter>
             <header>
-                <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                    <a className="navbar-brand" href="#">React Headstart</a>
+                <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">                    
+                    <Link to="/" className="navbar-brand">React Headstart</Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -37,7 +40,12 @@ ReactDOM.render(
                 </nav>
             </header>
             <main className="container">
-                <Route exact path="/" render={() => <div>Home</div>}/>
+                <Route exact path="/" render={() => <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <div>Welcome to React Headstart!</div>
+                    </header>
+                </div>} />
                 <Route path="/spacequiz" component={SpaceQuizApp} />
             </main>
         </BrowserRouter>

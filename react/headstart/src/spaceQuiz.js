@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import AddQuestionForm from './addQuestionForm';
-import questions from './questions'
+import { Route, Link, withRouter } from 'react-router-dom';
 import './spaceQuiz.css';
-import './bootstrap.min.css'
+
+import AddQuestionForm from './addQuestionForm';
+import questions from './quizData.json'
 /**
  * Props + State => Model
  * Model + Component => DOM (Virtual)
@@ -32,7 +32,7 @@ class Header extends Component {
 		return <div className="row">
 			<div className="col-10 offset-1">
 				<div className={this.getValues()}>
-					<strong>Total Score: {this.props.score}%</strong>
+					<strong>Total Score: {this.props.score}</strong>
 				</div>
 			</div>
 		</div>
@@ -255,7 +255,7 @@ class SpaceQuiz extends Component {
 	}
 
 	render() {
-		return <div>
+		return <div className="spaceQuiz">
 			<Header
 				score={this.state.score}
 				correct={this.state.answeredCorrect}
@@ -272,17 +272,30 @@ class SpaceQuiz extends Component {
 	}
 }
 
-function SpaceQuizApp({match}){
-	return (
-		<div>
-			<Link to={`${match.url}/add`}>Add new question</Link> |&nbsp;	
-			<Link to={`${match.url}`}>Back</Link>	
+class SpaceQuizApp extends Component {
+
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return <div>
+			<Link to={`${this.props.match.url}/add`}>Add new question</Link> |&nbsp;
+			<Link to={`${this.props.match.url}`}>Back</Link>
 			<hr />
-			<Route exact path={`${match.url}`} component={SpaceQuiz}/>		
-			<Route path={`${match.url}/add`} component={AddQuestionForm}/>
+			<Route exact path={`${this.props.match.url}`} component={SpaceQuiz} />
+			<Route path={`${this.props.match.url}/add`} component={QuizDataWrapper} />
 		</div>
-	);
+	};
 }
+
+
+const QuizDataWrapper = withRouter(({ history }) =>
+	<AddQuestionForm onAddQuestion={(question) => {
+		question.id = questions.length + 1;
+		questions.push(question);
+		history.push('/spacequiz')
+	}} />);
 
 export default SpaceQuizApp;
 
