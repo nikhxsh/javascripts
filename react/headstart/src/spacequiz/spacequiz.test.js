@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SpaceQuiz from './SpaceQuiz';
+import SpaceQuiz from './spacequiz';
 
 describe('SpaceQuiz', () => {
 	it('renders without crashing', () => {

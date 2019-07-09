@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom';
-import './spaceQuiz.css';
+import './spacequiz.css';
 
-import AddQuestionForm from './addQuestionForm';
-import questions from './quizData.json'
+import AddQuestionForm from './addquestion.form';
+import questions from './data.json'
 /**
  * Props + State => Model
  * Model + Component => DOM (Virtual)
@@ -45,6 +45,7 @@ class QuizPanel extends Component {
 		super(props);
 		this.init(this.props);
 		this.optionRefs = Array(this.props.question.options.length).fill(0).map(() => React.createRef());
+		this.handleAnswerSelected = this.handleAnswerSelected.bind(this);
 	}
 
 	init(props) {
@@ -115,7 +116,7 @@ class QuizPanel extends Component {
 								key={option}
 								optionIndex={index + 1}
 								answer={this.props.question.correctOption}
-								onAnswerSelected={(value) => { this.handleAnswerSelected(value) }}
+								onAnswerSelected={this.handleAnswerSelected}
 								ref={this.getChildReference(index + 1)} />
 					)}
 				</ul>
@@ -165,34 +166,6 @@ class Option extends Component {
 	}
 }
 
-class Continue extends Component {
-
-	render() {
-		return <div className="row">
-			<div className="col-10 offset-1">
-				<hr className="my-4" />
-				<button
-					type="button"
-					className="btn btn-outline-primary"
-					disabled={this.props.continue || this.props.stop}
-					onClick={() => { this.props.nextQuestion() }}>
-					Next
-				</button>
-				&nbsp;
-				{
-					this.props.stop ?
-						<button
-							type="button"
-							className="btn btn-outline-primary"
-							onClick={() => { this.props.restartQuiz() }}>
-							Finish
-					</button> : ''
-				}
-			</div>
-		</div>
-	};
-}
-
 class SpaceQuiz extends Component {
 	constructor(props) {
 		super(props);
@@ -205,7 +178,9 @@ class SpaceQuiz extends Component {
 			isAttempted: false,
 			score: 0
 		};
-		console.log(this.props.match)
+		this.toggleNextButton = this.toggleNextButton.bind(this);
+		this.handleNextQuestion = this.handleNextQuestion.bind(this);
+		this.handleRestartQuiz = this.handleRestartQuiz.bind(this);
 	}
 
 	getQuizData(id) {
@@ -262,12 +237,29 @@ class SpaceQuiz extends Component {
 				attempted={this.state.isAttempted} />
 			<QuizPanel
 				{...this.state.quizData}
-				toggleNextButton={(isCorrect, attempts) => { this.toggleNextButton(isCorrect, attempts) }} />
-			<Continue
-				continue={this.state.disableNext}
-				nextQuestion={() => { this.handleNextQuestion() }}
-				stop={this.state.finished}
-				restartQuiz={() => { this.handleRestartQuiz() }} />
+				toggleNextButton={this.toggleNextButton} />
+			<div className="row">
+				<div className="col-10 offset-1">
+					<hr className="my-4" />
+					<button
+						type="button"
+						className="btn btn-outline-primary"
+						disabled={this.state.disableNext || this.state.finished}
+						onClick={this.handleNextQuestion}>
+						Next
+					</button>
+					&nbsp;
+					{
+						this.state.finished ?
+							<button
+								type="button"
+								className="btn btn-outline-primary"
+								onClick={this.handleRestartQuiz}>
+								Finish
+							</button> : ''
+					}
+				</div>
+			</div>
 		</div>
 	}
 }

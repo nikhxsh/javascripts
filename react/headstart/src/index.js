@@ -5,7 +5,7 @@ import './bootstrap.min.css'
 import './index.css';
 
 import logo from './logo.svg';
-import SpaceQuizApp from './spaceQuiz';
+import SpaceQuizApp from './spacequiz/spacequiz';
 import * as serviceWorker from './serviceWorker';
 
 /**
