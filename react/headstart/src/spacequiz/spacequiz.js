@@ -4,16 +4,6 @@ import './spacequiz.css';
 
 import AddQuestionForm from './addquestion.form';
 import questions from './data.json'
-/**
- * Props + State => Model
- * Model + Component => DOM (Virtual)
- * DOM Events => Sends back to State and trigger another render cycle
- * 
- * React:
- *  1. Renders UI and Handles event
- *  2. Uses plain javascript for view logic
- *  3. Written in plain javascript
- */
 
 class Header extends Component {
 
@@ -290,34 +280,3 @@ const QuizDataWrapper = withRouter(({ history }) =>
 	}} />);
 
 export default SpaceQuizApp;
-
-
-/*
-<header className="App-header">
-<img src={logo} className="App-logo" alt="logo" />
-<div onClick={this.props.onClick}>This div clicked {this.props.clicks} times.</div>
-</header>
-
-JSX to Javascript
-
-<h1>
- <Sum a={4} b={5} />
-</h1>
-
-will be converted as
-
-React.createElement(
-	'h1',
-	null,
-	React.createElement(
-		Sum, //Component
-		{a:4,B;5}, //props or model
-		null //Child component
-	)
-)
-
-spread attribute
-
-const props = {a:4,B;5};
-const element = <Sum {...props} />;
-*/

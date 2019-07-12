@@ -7,6 +7,7 @@ import './index.css';
 import logo from './logo.svg';
 import SpaceQuizApp from './spacequiz/spacequiz';
 import * as serviceWorker from './serviceWorker';
+import DemoLifeCycle from './lifeCycle';
 
 /**
  * Install react-router-dom
@@ -29,7 +30,7 @@ ReactDOM.render(
                                 <Link to="/spacequiz" className="nav-link">Space Quiz <span className="sr-only">(current)</span></Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/add" className="nav-link">Add</Link>
+                                <Link to="/lifecycle" className="nav-link">Lifecycle</Link>
                             </li>
                         </ul>
                         <form className="form-inline mt-2 mt-md-0">
@@ -47,6 +48,7 @@ ReactDOM.render(
                     </header>
                 </div>} />
                 <Route path="/spacequiz" component={SpaceQuizApp} />
+				<Route path="/lifecycle" component={DemoLifeCycle} />
             </main>
         </BrowserRouter>
     </section>,
