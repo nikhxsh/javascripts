@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom';
-import './spacequiz.css';
+import './SpaceQuiz.css';
 
-import AddQuestionForm from './addquestion.form';
-import questions from './data.json'
+import AddQuestionForm from './AddQuestionForm';
+import questions from './Data.json'
 
 class Header extends Component {
 
@@ -170,7 +170,7 @@ class SpaceQuiz extends Component {
 		};
 		this.toggleNextButton = this.toggleNextButton.bind(this);
 		this.handleNextQuestion = this.handleNextQuestion.bind(this);
-		this.handleRestartQuiz = this.handleRestartQuiz.bind(this);
+		this.handleRestartQuiz = this.handleRestartQuiz.bind(this);	
 	}
 
 	getQuizData(id) {
