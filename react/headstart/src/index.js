@@ -8,7 +8,7 @@ import logo from './logo.svg';
 import SpaceQuizApp from './spaceQuiz/SpaceQuiz'
 import * as serviceWorker from './serviceWorker';
 import DemoLifeCycle from './LifeCycle';
-import HookExamples from './ReactHooks';
+import HookExamples from './reactHooks';
 
 
 export const AppContext = React.createContext();

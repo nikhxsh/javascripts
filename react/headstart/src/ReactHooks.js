@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback, useReducer, useContext, useMemo, memo } from 'react'
 import { NavLink, Route } from 'react-router-dom'
 import { AppContext } from './index'
 
@@ -107,7 +107,7 @@ const UseEffectExample = () => {
  */
 const UseContextExample = () => {
 
-	const Context = React.useContext(AppContext);
+	const Context = useContext(AppContext);
 
 	return <div>
 		{Context.searchToken}!!
@@ -138,7 +138,7 @@ const reducer = (state, action) => {
 const UseReducerExample = () => {
 
 	const initialState = { count: 0 }
-	const [state, dispatch] = React.useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return <>
 		Count is <b>{state.count}</b>
@@ -147,6 +147,66 @@ const UseReducerExample = () => {
 		<button className="btn btn-sm btn-warning" onClick={() => dispatch({ type: Actions.DECREAMENT })}>-</button>
 	</>
 }
+
+
+function CountButton({ onClick, count }) {
+	return <button className="btn btn-sm btn-outline-info" onClick={onClick}>Notmal : {count}</button>
+}
+
+/**
+ * 1. Returns a memoized value.
+ * 2. useMemo will only recompute the memoized value when one of the dependencies has changed.
+ * 3. This optimization helps to avoid expensive calculations on every render.
+ */
+function UseMemoExample() {
+
+	const [count1, setCount1] = React.useState(10)
+	const increment1 = () => setCount1(c => c + 1)
+
+	const [count2, setCount2] = React.useState(10)
+	const increment2 = () => setCount2(c => c + 1)
+
+	const MemoidButton = useMemo(() => <button className="btn btn-sm btn-outline-info" onClick={increment2}>Using Memo : {count2}</button>, [])
+
+	return <div>
+		<CountButton count={count1} onClick={increment1} />&nbsp;
+		{MemoidButton}
+	</div>
+}
+
+/**
+ * 1. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. 
+ * 2. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary 
+ * 	  renders (e.g. shouldComponentUpdate).
+ * 3. useCallback(fn, deps) is equivalent to useMemo(() => fn, deps).
+ */
+const UseCallbackExample = () => {
+
+	const [counter1, setCounter1] = useState(0);
+	const [counter2, setCounter2] = useState(0);
+
+	// const increamentAlpha = () => setCounter1(counter1 + 1);
+	// const increamentDelta = () => setCounter2(counter2 + 1);
+	const increamentAlpha = useCallback(() => setCounter1(counter1 + 1), [counter1]);
+	const increamentDelta = useCallback(() => setCounter2(counter2 + 1), [counter2]);
+
+	return <div>
+		<Seat onClick={increamentAlpha} seatNumber={counter1} />&nbsp;
+		<Seat onClick={increamentDelta} seatNumber={counter2} />
+	</div>
+}
+
+
+const randomNumber = () => Math.floor(Math.random() * 1000);
+const randomColour = () => '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+
+const Seat = memo((props) => {
+	return <button
+		type="button"
+		className="btn btn-outline-secondary"
+		onClick={props.onClick}>{props.seatNumber} ({randomNumber()})
+	</button>;
+})
 
 class HookExamples extends React.Component {
 
@@ -171,6 +231,12 @@ class HookExamples extends React.Component {
 						<NavLink to={`${this.props.match.url}/usereducer`} className="nav-link" activeClassName="active">useReducer</NavLink>
 					</li>
 					<li className="nav-item">
+						<NavLink to={`${this.props.match.url}/usememo`} className="nav-link" activeClassName="active">useMemo</NavLink>
+					</li>
+					<li className="nav-item">
+						<NavLink to={`${this.props.match.url}/usecallback`} className="nav-link" activeClassName="active">useCallback</NavLink>
+					</li>
+					<li className="nav-item">
 						<NavLink to={`${this.props.match.url}/usecontext`} className="nav-link" activeClassName="active">useContext</NavLink>
 					</li>
 				</ul>
@@ -180,6 +246,8 @@ class HookExamples extends React.Component {
 				<Route path={`${this.props.match.url}/useref`} component={UseRefExample} />
 				<Route path={`${this.props.match.url}/useeffect`} component={UseEffectExample} />
 				<Route path={`${this.props.match.url}/usereducer`} component={UseReducerExample} />
+				<Route path={`${this.props.match.url}/usememo`} component={UseMemoExample} />
+				<Route path={`${this.props.match.url}/usecallback`} component={UseCallbackExample} />
 				<Route path={`${this.props.match.url}/usecontext`} component={UseContextExample} />
 			</div>
 		</div>;

@@ -1,4 +1,4 @@
-## Different Styles
+### Different Styles
 
 ### SCSS (Sassy CSS):
 * We are gonna use SCSS for a few reasons:
@@ -98,23 +98,23 @@ module.exports = {
 * Let's adjust our package.json by adding an npm script:
 ```javascript
 {
-	 "name": "webpack-demo",
- 	"version": "1.0.0",
- 	"description": "",
- 	"private": true,
- 	"scripts": {
-   		"test": "echo \"Error: no test specified\" && exit 1",
-   		"build": "webpack"
- 		},
+	"name": "webpack-demo",
+	"version": "1.0.0",
+	"description": "",
+	"private": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "webpack"
+	},
 	"keywords": [],
- 	"author": "",
- 	"license": "ISC",
- 	"devDependencies": {
-   		"webpack": "^4.29.3",
-   		"webpack-cli": "^3.2.3"
- 		},
- 	"dependencies": {
- 	}
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"webpack": "^4.29.3",
+		"webpack-cli": "^3.2.3"
+	},
+	"dependencies": {
+	}
 }
 ```
 * Now run `npm run build`
@@ -133,12 +133,12 @@ module.exports = {
 ```javascript
 	const path = require('path');
 	module.exports = {
- 		entry: './src/index.js',
-		 output: {
- 			  filename: 'main.js',
-   				path: path.resolve(__dirname, 'dist')
-		 },
-		 watch: true
+		entry: './src/index.js',
+		output: {
+				filename: 'main.js',
+				path: path.resolve(__dirname, 'dist')
+		},
+		watch: true
 };
 ```
 
@@ -155,24 +155,24 @@ module.exports = {
 	* Add below setting in config file
 
 ```javascript
-  module: {
-       rules:[
-         {
-               enforce: 'pre',
-               test: /\.js$/,
-               exclude: /(node_modules/,
-               loader: 'jshint-loader',
-           },
-           {
-               test: /\.m?js$/,
-               exclude: /(node_modules/,
-               loader: 'babel-loader'
-           }
-       ],
-   },
-   resolve: {
-       extensions: ['', '.js', '.es6']
-   }
+module: {
+rules:[
+		{
+			enforce: 'pre',
+			test: /\.js$/,
+			exclude: /(node_modules/,
+			loader: 'jshint-loader',
+		},
+		{
+			test: /\.m?js$/,
+			exclude: /(node_modules/,
+			loader: 'babel-loader'
+		}
+	],
+},
+resolve: {
+	extensions: ['', '.js', '.es6']
+}
 ```
 
 * This will load es6 file through loader
@@ -193,21 +193,21 @@ module.exports = {
 * You can also configure webpack dev server in `webpack.dev.js` as
 
 ```javascript
-  devServer: {
-       compress: false,
-       port: 9000
-  }
+devServer: {
+	compress: false,
+	port: 9000
+}
 ```
 
 ### Organizing files & folders
 
 * Declare virtual folder to access bundle.js , create new folder "Build" and move all html files to folder "public"
 ```javascript			
-	output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build/js'),
-        publicPath: '/public/assets/js'
-    }
+output: {
+	filename: 'bundle.js',
+	path: path.resolve(__dirname, 'build/js'),
+	publicPath: '/public/assets/js'
+}
 ```
 
 ##### More Info (<https://medium.com/@rajaraodv/webpack-the-confusing-parts-58712f8fcad9>)
