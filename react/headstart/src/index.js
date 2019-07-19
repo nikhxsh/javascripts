@@ -9,6 +9,7 @@ import SpaceQuizApp from './spaceQuiz/SpaceQuiz'
 import * as serviceWorker from './serviceWorker';
 import DemoLifeCycle from './LifeCycle';
 import HookExamples from './reactHooks';
+import OtherConcepts from './otherConcepts';
 
 
 export const AppContext = React.createContext();
@@ -43,6 +44,9 @@ ReactDOM.render(
 							<li className="nav-item">
 								<NavLink to="/hooks" className="nav-link" activeClassName="active">Hooks</NavLink>
 							</li>
+							<li className="nav-item">
+								<NavLink to="/otherConcepts" className="nav-link" activeClassName="active">Other</NavLink>
+							</li>
 						</ul>
 						<form className="form-inline mt-2 mt-md-0">
 							<input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" onChange={(e) => AppConfiguration.searchToken = e.target.value} />
@@ -63,6 +67,7 @@ ReactDOM.render(
 				<AppContext.Provider value={AppConfiguration}>
 					<Route path="/hooks" component={HookExamples} />
 				</AppContext.Provider>
+				<Route path="/otherConcepts" component={OtherConcepts} />
 			</main>
 		</BrowserRouter>
 	</section>,

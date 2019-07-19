@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useReducer, useContext, useMemo, memo } from 'react'
-import { NavLink, Route } from 'react-router-dom'
+import React, { useState, useRef, useEffect, useCallback, useReducer, useContext, useMemo, memo, Fragment } from 'react'
 import { AppContext } from './index'
 
 /**
@@ -38,12 +37,6 @@ const UseStateExample = () => {
 			</div>
 		</div>
 		<p className="card-text">{email}</p>
-		<hr />
-		<ul>
-			{
-				history.map((x, index) => <div key={index}>{x}</div>)
-			}
-		</ul>
 	</div>;
 }
 
@@ -150,7 +143,7 @@ const UseReducerExample = () => {
 
 
 function CountButton({ onClick, count }) {
-	return <button className="btn btn-sm btn-outline-info" onClick={onClick}>Notmal : {count}</button>
+	return <button className="btn btn-sm btn-outline-info" onClick={onClick}>Normal : {count}</button>
 }
 
 /**
@@ -215,42 +208,56 @@ class HookExamples extends React.Component {
 	}
 
 	render() {
-		return <div className="card">
-			<div className="card-header">
-				<ul className="nav nav-pills card-header-pills">
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/usestate`} className="nav-link" activeClassName="active">useState</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/useref`} className="nav-link" activeClassName="active">useRef</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/useeffect`} className="nav-link" activeClassName="active">useEffect</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/usereducer`} className="nav-link" activeClassName="active">useReducer</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/usememo`} className="nav-link" activeClassName="active">useMemo</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/usecallback`} className="nav-link" activeClassName="active">useCallback</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to={`${this.props.match.url}/usecontext`} className="nav-link" activeClassName="active">useContext</NavLink>
-					</li>
-				</ul>
+		return <Fragment>
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseState Example</h5>
+					<UseStateExample />
+				</div>
 			</div>
-			<div className="card-body">
-				<Route exact path={`${this.props.match.url}/usestate`} component={UseStateExample} />
-				<Route path={`${this.props.match.url}/useref`} component={UseRefExample} />
-				<Route path={`${this.props.match.url}/useeffect`} component={UseEffectExample} />
-				<Route path={`${this.props.match.url}/usereducer`} component={UseReducerExample} />
-				<Route path={`${this.props.match.url}/usememo`} component={UseMemoExample} />
-				<Route path={`${this.props.match.url}/usecallback`} component={UseCallbackExample} />
-				<Route path={`${this.props.match.url}/usecontext`} component={UseContextExample} />
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseRef Example</h5>
+					<UseRefExample />
+				</div>
 			</div>
-		</div>;
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseEffect Example</h5>
+					<UseEffectExample />
+				</div>
+			</div>
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseReducer Example</h5>
+					<UseReducerExample />
+				</div>
+			</div>
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseMemo Example</h5>
+					<UseMemoExample />
+				</div>
+			</div>
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseCallback Example</h5>
+					<UseCallbackExample />
+				</div>
+			</div>
+			<br />
+			<div className="card">
+				<div className="card-body">
+					<h5 className="card-title">UseContext Example</h5>
+					<UseContextExample />
+				</div>
+			</div>
+		</Fragment>;
 	};
 }
 
