@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class SelectExample extends React.Component {
 	constructor(props) {
@@ -61,6 +62,11 @@ const FancyButton = React.forwardRef((props, ref) => (
 ));
 
 
+/**
+ * 1. The term “render prop” refers to a technique for sharing code between React components using a prop whose value is a function.
+ * 2. A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic.
+ * 3. Libraries that use render props include React Router and Downshift.
+ */
 class BattleGround extends React.Component {
 
 	constructor(props) {
@@ -115,6 +121,23 @@ const ForwardRefExample = () => {
 	return <FancyButton ref={ref} children="Click Me!" />;
 }
 
+
+class PropsValidationExample extends React.Component{
+	render(){
+		return <div>
+			<h5>{this.props.message} {this.props.inputValue}</h5>
+		</div>
+	}
+}
+
+PropsValidationExample.defaultProps = {
+	message: "This is "
+}
+
+PropsValidationExample.propTypes = {
+	inputValue: PropTypes.string
+}
+
 const OtherConcepts = () => {
 	return <Fragment>
 		<div className="card">
@@ -129,6 +152,10 @@ const OtherConcepts = () => {
 			<div className="card-body">
 				<h5>RenderProps Example</h5>
 				<RenderPropsExample />
+			</div>			
+			<div className="card-body">
+				<h5>Props Validation</h5>
+				<PropsValidationExample inputValue={123}/>
 			</div>
 		</div>
 	</Fragment>;
