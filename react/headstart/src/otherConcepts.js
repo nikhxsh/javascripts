@@ -121,21 +121,29 @@ const ForwardRefExample = () => {
 	return <FancyButton ref={ref} children="Click Me!" />;
 }
 
-
-class PropsValidationExample extends React.Component{
-	render(){
+/**
+ * https://blog.logrocket.com/validating-react-component-props-with-prop-types-ef14b29963fc/
+ */
+class PropsValidationExample extends React.Component {
+	render() {
 		return <div>
-			<h5>{this.props.message} {this.props.inputValue}</h5>
+			<h6>{this.props.x} / {this.props.y} = {this.props.x / this.props.y}  ({this.props.email})</h6>
 		</div>
 	}
 }
 
-PropsValidationExample.defaultProps = {
-	message: "This is "
+
+const isEmail = function (props, propName, componentName) {
+	const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if (!regex.test(props[propName])) {
+		return new Error(`Invalid prop ${propName} with value ${props[propName]} passed to ${componentName}. Expected a valid email address.`);
+	}
 }
 
 PropsValidationExample.propTypes = {
-	inputValue: PropTypes.string
+	x: PropTypes.number.isRequired,
+	y: PropTypes.number.isRequired,
+	email: isEmail
 }
 
 const OtherConcepts = () => {
@@ -152,10 +160,13 @@ const OtherConcepts = () => {
 			<div className="card-body">
 				<h5>RenderProps Example</h5>
 				<RenderPropsExample />
-			</div>			
+			</div>
 			<div className="card-body">
 				<h5>Props Validation</h5>
-				<PropsValidationExample inputValue={123}/>
+				(Check console for Props Validation Errors)
+				<PropsValidationExample x={12} y={12} email="abcd@gmail.com" />
+				{/* <PropsValidationExample x={12} y="Twelve" />
+				<PropsValidationExample x={12} /> */}
 			</div>
 		</div>
 	</Fragment>;
