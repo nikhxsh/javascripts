@@ -251,6 +251,7 @@ console.code(`
     };
 
     let weirdRabbit = new Rabbit("weird");
+    weirdRabbit.speak('SKREEEE!!');
 `);
 weirdRabbit.speak('SKREEEE!!');
 
