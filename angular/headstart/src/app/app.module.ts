@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,12 +21,7 @@ import { ChildComponent } from './providers/child.component';
 import { ParentComponent } from './providers/parent.component';
 import { SimpleService } from './services/simple.service';
 import { HolderComponent } from './providers/holder.component';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { SearchService } from './services/search.service';
-import { ArtistComponent } from './itunes/artist.component';
-import { ItuneSearchComponent } from './itunes/itune-search.component';
-import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
-import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
 import { LoginComponent } from './_ui/login.component';
 import { AuthService } from './services/auth.service';
 import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
@@ -35,6 +31,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { AccountEffects } from './ngrxstore/effects/account.effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { AccountService } from './services/account.service';
+import { APIInterceptor } from './services/APIInterceptor';
+import { AuthGuard } from './services/AuthGuardService';
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -60,10 +58,6 @@ import { AccountService } from './services/account.service';
     ChildComponent,
     ParentComponent,
     HolderComponent,
-    ArtistComponent,
-    ItuneSearchComponent,
-    ArtistTrackListComponent,
-    ArtistAlbumListComponent,
     LoginComponent,
     NgrxstoreComponent
   ],
@@ -72,42 +66,57 @@ import { AccountService } from './services/account.service';
    * application’s root module should import the BrowserModule.
    */
   imports: [
+    //When you want to run your app in a browser
     BrowserModule,
-    FormsModule, 
+    //When you want to build template driven forms
+    FormsModule,
+    //When you want to talk to a server
     HttpClientModule,
     HttpClientJsonpModule,
-	ReactiveFormsModule,
-	StoreModule.forRoot(appReducers),
-	EffectsModule.forRoot([AccountEffects]),
-	StoreRouterConnectingModule.forRoot({stateKey:'router'}),
+    //When you want to build reactive forms
+    ReactiveFormsModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([AccountEffects]),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
     AppRoutingModule,
     TabsModule.forRoot()
   ],
   /**
-   * > providers which accepts a list of providers exactly the same as we would pass to the ReflectiveInjector via the 
-   * resolveAndCreate function
-   * > We can also configure our Components and Directives the same way using a property called providers on the Component 
-   * and Directive decorators, like so:
-   *  @Component({
+   * > A provider is an instruction to the Dependency Injection system on how to obtain a value for a dependency. 
+   *   Most of the time, these dependencies are services that you create and provide.
+   * > When you register a provider with a specific NgModule, the same instance of a service is available to all 
+   *   components in that NgModule.
+   * > When you register a provider at the component level, you get a new instance of the service with each new 
+   *   instance of that component. At the component level, register a service provider in the providers property 
+   *   of the @Component() metadata.
+    *  @Component({
    *    selector: 'my-comp',
    *    template: `...`,
-   *    providers: [EmailService]
+   *    viewProviders: [AuthService]
    *  })
    * > This creates a child injector who’s parent injector is the injector on the parent component. If there is
-   * no parent component then the parent injector is the top level NgModule injector.
+   *   no parent component then the parent injector is the top level NgModule injector.
    * > With components we have another property called viewProviders which creates a special injector that resolves 
-   * dependencies only for this components view children and doesn’t act as a parent injector for any content children
-   *  @Component({
-   *    selector: 'my-comp',
-   *    template: `...`,
-   *    viewProviders: [EmailService]
-   *  })
+   *   dependencies only for this components view children and doesn’t act as a parent injector for any content 
+   *   children
+   *   @Component({
+   *     selector: 'my-comp',
+   *     template: `...`,
+   *     viewProviders: [AuthService]
+   *   })
    */
   providers: [
     SimpleService,
     SearchService,
-	AuthService,
-	AccountService
+    AuthService,
+    AccountService,
+    AuthGuard,
+    //Intercepts and handles an HttpRequest or HttpResponse.
+    {
+      provide: HTTP_INTERCEPTORS, 
+      useClass: APIInterceptor, 
+      multi: true 
+    }
   ],
   /**
    * Identifies the root component that Angular should bootstrap when it starts the application.

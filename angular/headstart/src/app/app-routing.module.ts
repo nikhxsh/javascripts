@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router'; //When you want to use RouterLink, .forRoot(), and .forChild()
 import { JokelistComponent } from './joke/jokelist.component';
 import { BasicComponent } from './basic/basic.component';
 import { FormsComponent } from './forms/forms.component';
 import { HolderComponent } from './providers/holder.component';
-import { ArtistComponent } from './itunes/artist.component';
-import { ArtistTrackListComponent } from './itunes/artist-track-list.component';
-import { ArtistAlbumListComponent } from './itunes/artist-album-list.component';
-import { ItuneSearchComponent } from './itunes/itune-search.component';
 import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
 
 const routes: Routes = [
@@ -19,18 +15,13 @@ const routes: Routes = [
   { path: 'ngfor/:id', component: BasicComponent },
   { path: 'forms', component: FormsComponent },
   { path: 'providers', component: HolderComponent },
-  { path: 'itunes', 
-    component: ItuneSearchComponent,
-    children: [  
-        {
-          path: 'artist/:artistId', component: ArtistComponent,
-          children: [
-            { path: '', redirectTo: 'tracks', pathMatch: 'full' },
-            { path: 'tracks', component: ArtistTrackListComponent },
-            { path: 'albums', component: ArtistAlbumListComponent },
-          ]
-        }
-    ]   
+  //Lazy Loading using feature module
+  { 
+    path: 'itunes',   
+    //Angular 7
+    //loadChildren: './itunes/itunes.module#ItuneModule' 
+    //Angular 8
+    loadChildren: () => import('./itunes/itunes.module').then(module => module.ItuneModule)
   },
   { path: 'ngrx', component: NgrxstoreComponent },
   { path: '**', component: JokelistComponent } //catch all route by using the path **
@@ -43,7 +34,14 @@ const routes: Routes = [
  * AppComponent,
  */
 @NgModule({
+  /**
+   * The method is called forRoot() because you configure the router at the application's root level. 
+   * The forRoot() method supplies the service providers and directives needed for routing, and performs 
+   *  the initial navigation based on the current browser URL.
+   */
   imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+  //For submodules and lazy loaded submodules the module should be used as follows: forChild creates a module that 
+  //contains all the directives and the given routes, but does not include the router service.
+  exports: [RouterModule] //exports RouterModule so it will be available throughout the app.
 })
 export class AppRoutingModule { }
