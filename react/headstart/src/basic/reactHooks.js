@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useReducer, useContext, useMemo, memo, Fragment } from 'react'
-import { AppContext } from './index'
+import { AppContext } from '../index'
 
 /**
  * 1. usestate is hook which is calls inside function & add some state to it

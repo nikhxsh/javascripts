@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Link, NavLink } from 'react-router-dom';
-import './bootstrap.min.css'
+import './styles/bootstrap.min.css'
 import './index.css';
 
 import logo from './logo.svg';
-import SpaceQuizApp from './spaceQuiz/SpaceQuiz'
+import SpaceQuizApp from './quiz/spaceQuiz'
 import * as serviceWorker from './serviceWorker';
-import DemoLifeCycle from './LifeCycle';
-import HookExamples from './reactHooks';
-import OtherConcepts from './otherConcepts';
+import DemoLifeCycle from './basic/lifeCycle';
+import HookExamples from './basic/reactHooks';
+import OtherConcepts from './basic/otherConcepts';
 
 
 export const AppContext = React.createContext();

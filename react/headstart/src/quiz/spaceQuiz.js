@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Route, Link, withRouter } from 'react-router-dom';
-import './SpaceQuiz.css';
+import './spaceQuiz.css';
 
-import AddQuestionForm from './AddQuestionForm';
-import questions from './Data.json'
+import AddQuestionForm from './addQuestionForm';
+import questions from './data.json'
 
 class Header extends Component {
 
