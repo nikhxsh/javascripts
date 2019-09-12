@@ -55,6 +55,7 @@ console.log(`map.has("A") >> ${map.has("A")}`);
 console.log(`map.delete("A") >> ${map.delete("A")}`);
 console.log(`map.has("A") >> ${map.has("A")}`);
 console.log(`map.size >> ${map.size}`);
+
 console.code(`
     for (let key of map.keys()) {
         console.log(key);
@@ -63,6 +64,7 @@ console.code(`
 for (let key of map.keys()) {
     console.log('>> ' + key);
 }
+
 console.code(`
     for (let value of map.values()) {
         console.log(value);
@@ -71,14 +73,16 @@ console.code(`
 for (let value of map.values()) {
     console.log('>> ' + value);
 }
+
 console.code(`
-    for (let value of map.values()) {
-        console.log(value);
+    for (let entry of map.entries()) {
+        console.log(\`>> \${entry[0]}:\${entry[1]}\`);
     }
 `);
 for (let entry of map.entries()) {
     console.log(`>> ${entry[0]}:${entry[1]}`);
 }
+
 console.code(`
     for (let [key, value] of map.entries()) {
         console.log(\`>> \${key}:\${value}\`);
@@ -87,6 +91,7 @@ console.code(`
 for (let [key, value] of map.entries()) {
     console.log(`>> ${key}:${value}`);
 }
+
 console.comment(`
     - Sets are a bit like maps but they only store keys not key-value pairs.
     - Sets can only store unique values, so adding a value a second time has no effect

@@ -22,7 +22,9 @@ console.log(`  'monkey' * 'monkey' = ${'monkey' * 'monkey'}`);
 
 console.h2(`Operators`);
 console.log(`  null == undefined = ${null == undefined}`, `null & undefined evaluated as false`);
-console.log(`  NaN == false = ${NaN == false}`, `NaN evaluated as false`);
+console.log(`  NaN == false = ${NaN == false}`);
+console.log(`  NaN !== NaN = ${NaN !== NaN}`, `NaN compares unequal (via ==, !=, ===, and !==) to any other value`);
+console.log(`  NaN === NaN = ${NaN === NaN}`);
 console.log(`  null == false = ${null == false}`, `Null evaluated as false`);
 console.log(`  0 == false = ${0 == false}`, `0 evaluated as false`);
 console.log(`  '' == false = ${'' == false}`, `empty strings '' and "" evaluated as false`);
@@ -161,6 +163,53 @@ console.code(`
     hello();
 `);
 hello3();
+
+
+console.comment(`
+    - In below example, for loop executes first, setTimeout after 1s delay looks for the i value, which is 5, 
+      and then outputs four times, one for each loop iteration.
+`);
+function timeoutFunction() {
+    for (i = 0; i < 5; i++) {
+        setTimeout(function () {
+            console.log('>> ' + i);
+        }, 1000);
+    }
+}
+console.code(`
+    function timeoutFunction() {
+        for (i = 0; i < 5; i++) {
+            setTimeout(function () {
+                console.log('>> ' + i);
+            }, 1000);
+        }
+    }
+    timeoutFunction(); //It will print 4, 4, 4, 4, 4
+`);
+//timeoutFunction();
+
+console.comment(`
+    - Above problem can be solved with IIFE
+`);
+function timeoutFunctionIIFE() {
+    for (var i = 0; i < 5; i++) {
+        (function(index) {
+            setTimeout(function() { console.log('>> ' + index) }, 1000);
+        })(i);
+    }
+}
+console.code(`
+    function timeoutFunctionIIFE() {
+        for (var i = 0; i < 5; i++) {
+            (function(index) {
+                setTimeout(function() { console.log('>> ' + index) }, 1000);
+            })(i);
+        }
+    }
+    timeoutFunctionIIFE(); //It will print 0, 1, 2, 3, 4
+`);
+//timeoutFunctionIIFE();
+
 console.comment(`
     - Since functions have their own scope, using an IIFE has the same effect as if we had block level
     scope, the variable a inside the IIFE isn’t visible outside the IIFE.
@@ -240,6 +289,7 @@ console.code(`
 funcs.forEach(function (func) {
     func()
 });
+
 console.comment(`
     - Both let and const create variables that are block-scoped – they only exist within the innermost
       block that surrounds them.
@@ -393,5 +443,5 @@ console.code(`
     }
 `);
 for (var value of numbers) {
-    console.log(value);
+    console.log(`>> ${value}`);
 }

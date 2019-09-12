@@ -70,7 +70,7 @@ console.log(`Object.getPrototypeOf([1,2]) == Array.prototype > ${Object.getProto
 let protoRabbit = {
     age: undefined,
     speak(line) {
-        console.log(`The ${this.type} rabbit says '${line}'`, 'You can use Object.create to create an object with a specific prototype');
+        return `The ${this.type} rabbit says '${line}'`;
     }
 };
 let killerRabbit = Object.create(protoRabbit);
@@ -78,15 +78,15 @@ killerRabbit.type = "killer";
 
 console.code(`
     let protoRabbit = {
-      speak(line){
-        console.log(\`The \${this.type} rabbit says '\${line}'\`);
-      }
+        age: undefined,
+        speak(line) {
+            return \`The \${this.type} rabbit says '\${line}'\`;
+        }
     };
-
     let killerRabbit = Object.create(protoRabbit);
-    killerRabbit.type = "killer";
 `);
-console.log(`killerRabbit.speak("SKREEEE!") >> ${killerRabbit.speak("SKREEEE!")}`);
+console.log(`killerRabbit.speak("SKREEEE!"); >> ${killerRabbit.speak("SKREEEE!")}`);
+
 console.comment(`
     - __proto__ is a historical getter/setter for [[Prototype]]
     - It exists for historical reasons, in modern language it is replaced with functions Object.getPrototypeOf/Object.setPrototypeOf 
@@ -113,7 +113,7 @@ class Rabbit {
         this.type = type;
     }
     speak(line) {
-        console.log(`The ${this.type} rabbit says '${line}'`);
+        return `The ${this.type} rabbit says '${line}'`;
     }
 }
 let obj1 = new Rabbit("killer");
@@ -125,26 +125,23 @@ console.code(`
             this.type = type;
         }
         speak(line) {
-            console.log(\`The \${this.type} rabbit says '\${line}'\`);
+            return \`The \${this.type} rabbit says '\${line}'\`;
         }
     }
     let obj1 = new Rabbit("killer");
     let obj2 = new Rabbit("black");
 `);
-obj1.speak('SKREEEE!!');
-obj2.speak('HELLO!!');
+console.log(`obj1.speak('SKREEEE!!'); >> ${obj1.speak('SKREEEE!!')}`);
+console.log(`obj2.speak('HELLO!!'); >> ${obj2.speak('HELLO!!')}`);
 
 
 console.h2('Polymorphism');
 let blackRabbit = new Rabbit('Black');
 console.code(`
-    let blackRabbit = new Rabbit('Black');
-    console.log(String(blackRabbit));
-    console.log(blackRabbit.toString());
-    
+    let blackRabbit = new Rabbit('Black');    
 `);
-console.log(String(blackRabbit));
-console.log(blackRabbit.toString());
+console.log(`String(blackRabbit); >> ${String(blackRabbit)}`);
+console.log(`blackRabbit.toString(); >> ${blackRabbit.toString()}`);
 
 Rabbit.prototype.toString = function () {
     return ` A ${this.type} rabbit`;
@@ -153,11 +150,9 @@ console.code(`
     Rabbit.prototype.toString = function() {
          return \`A \${this.type} rabbit\`;
     };
-    console.log(String(blackRabbit));
-    console.log(blackRabbit.toString());
 `);
-console.log(String(blackRabbit));
-console.log(blackRabbit.toString());
+console.log(`String(blackRabbit); >> ${String(blackRabbit)}`);
+console.log(`blackRabbit.toString(); >> ${blackRabbit.toString()}`);
 
 console.h2('Symbols');
 console.comment(`
@@ -171,11 +166,10 @@ let id2 = Symbol("id");
 console.code(`
     let id1 = Symbol("id");
     let id2 = Symbol("id");
-    console.log(id1 == id2);
-    console.log(id1.toString());
 `);
-console.log(id1 == id2);
-console.log(id1.toString());
+console.log(`id1 == id2 >> ${id1 == id2}`);
+console.log(`id1.toString() >> ${id1.toString()}`);
+
 console.comment(`
     - Symbols allow us to create “hidden” properties of an object, that no other part of code can occasionally access or overwrite.
 `);
@@ -192,18 +186,18 @@ console.code(`
     };
     let id = Symbol("id");
     user[id] = "Secret";
-    console.log(user[id]);
 `);
-console.log(user[id]);
+console.log(`user[id] >> ${user[id]}`);
+
 console.comment(`
     - Now note that if we used a string "id" instead of a symbol for the same purpose, then there would be a conflict
 `);
 user[id] = "Secret 123";
 console.code(`
     user[id] = "Secret 123";
-    console.log(user[id]);
 `);
-console.log(user[id], 'overwritten! it did not mean to harm the colleague, but did it!');
+console.log(`user[id] >> ${user[id]}`, 'overwritten! it did not mean to harm the colleague, but did it!');
+
 console.comment(`
     - If we want to use a symbol in an object literal, we need square brackets
 `);
@@ -214,6 +208,7 @@ console.code(`
         [test]: 123 // not just "test: 123"
     };
 `);
+
 console.comment(`
     - Symbolic properties do not participate in for..in loop
     - In contrast, Object.assign copies both string and symbol properties
@@ -221,7 +216,8 @@ console.comment(`
 console.code(`
     for (let key in user) console.log(key);
 `);
-for (let key in user) console.log(key);
+for (let key in user) console.log(">> " + key);
+
 console.comment(`
     - If different parts of our application want to access symbol "id" meaning exactly the same property
     - To achieve that, there exists a global symbol registry. We can create symbols in it and access them later, 
@@ -244,6 +240,7 @@ console.code(`
     id === idAgain >> true
     Symbol.keyFor(idAgain) >> id
 `);
+
 console.comment(`
     - Being both unique and usable as property names makes symbols suitable for defining interfaces that can peacefully live alongside other properties, 
       no matter what their names are.
@@ -400,7 +397,7 @@ console.code(`
 `);
 
 for (let { x, value } of shelf) {
-    console.log(`${x}: ${value}`);
+    console.log(`>> ${x}: ${value}`);
 }
 
 shelf.set(1, 'The Alchemist');
@@ -408,7 +405,7 @@ console.code(`
     shelf.set(1, 'The Alchemist');
     console.log('shelf.get(1)');
 `);
-console.log(shelf.get(1));
+console.log(`shelf.get(1) >> ${shelf.get(1)}`);
 
 console.h2('Inheritance');
 console.comment(`
@@ -456,9 +453,8 @@ for (let { x, value } of musicShelf) {
 musicShelf.set(1, 'Alan Walker');
 console.code(`
     musicShelf.set(1, 'Alan Walker');
-    console.log('musicShelf.get(1)');
 `);
-console.log(musicShelf.get(1));
+console.log(`musicShelf.get(1) >> ${musicShelf.get(1)}`);
 
 console.log(`musicShelf instanceof(Shelf) >> ${musicShelf instanceof (Shelf)}`, 'The instanceof operator');
 
@@ -475,9 +471,8 @@ object.value = 10;
 console.code(`
     let object = Object.freeze({value: 5});
     object.value = 10;
-    console.log(object.value);
 `);
-console.log(object.value);
+console.log(`object.value >> ${object.value}`);
 
 console.h2('Decorators and forwarding, call/apply');
 user.say = function (line) {
@@ -489,21 +484,21 @@ let xcachingDecorator = function (func) {
         if (cache.has(x))
             return cache.get(x);
         let result = func(x);
-        cache.set(x.result);
+        cache.set(result);
         return result;
     }
 }
 console.code(`
     user.say = function (line) {
-        console.log(\`\${this.name} says \${line}\`)
+        return \`\${this.name} says \${line}\`;
     }
     let xcachingDecorator = function (func) {
         let cache = new Map();
         return function (x) {
             if (cache.has(x))
                 return cache.get(x); 
-            let result = func.call(this, x);
-            cache.set(x.result);
+            let result = func(x); **
+            cache.set(result);
             return result;
         }
     }
@@ -532,13 +527,13 @@ let ycachingDecorator = function (func) {
         if (cache.has(x))
             return cache.get(x);
         let result = func.call(this, x);
-        cache.set(x.result);
+        cache.set(result);
         return result;
     }
 }
 console.code(`
     user.say = function (line) {
-        console.log(\`\${this.name} says \${line}\`)
+        return \`\${this.name} says \${line}\`;
     }
     let ycachingDecorator = function (func) {
         let cache = new Map();
@@ -546,7 +541,7 @@ console.code(`
             if (cache.has(x))
                 return cache.get(x); 
             let result = func.call(this, x);
-            cache.set(x.result);
+            cache.set(result);
             return result;
         }
     }
@@ -625,13 +620,15 @@ console.code(`
         name: "calling context",
         sayLater: function () {
             setTimeout(function () {
-                console.log(this.name);
+                console.log('Normal Function >> ' + this.name);
             }, 1000);
         }
     };
+
     cc.sayLater();
 `);
 cc.sayLater();
+
 console.comment(`
     - In fact we get undefined printed out to the console.The reason for this is that the value of this in a function 
       depends on how the function is called.

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, Injector } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -8,15 +8,17 @@ import { AuthService } from '../services/auth.service';
 export class LoginComponent implements OnInit {
   loggedOut: boolean = true;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService
+    //@Inject() is a manual mechanism for letting Angular know that a parameter must be injected.
+    //@inject(AuthService) private authService: AuthService
+  ) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().then((authenticated) => {
-      this.loggedOut = !authenticated;
-    })
+    this.loggedOut = this.authService.isAuthenticated();
   }
 
   needsLogin() {
-    return !this.authService.xisAuthenticated();
+    return !this.authService.isAuthenticated();
   }
 }
