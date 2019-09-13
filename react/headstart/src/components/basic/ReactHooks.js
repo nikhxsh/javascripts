@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useReducer, useContext, useMemo, memo, Fragment } from 'react'
-import { AppContext } from '../index'
+import { AppContext } from '../AppContext'
 
 /**
  * 1. usestate is hook which is calls inside function & add some state to it
@@ -99,9 +99,7 @@ const UseEffectExample = () => {
  * 	  to that MyContext provider.
  */
 const UseContextExample = () => {
-
 	const Context = useContext(AppContext);
-
 	return <div>
 		{Context.searchToken}!!
 	</div>;
