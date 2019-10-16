@@ -7,7 +7,7 @@ import SpaceQuizApp from './quiz/SpaceQuiz'
 import DemoLifeCycle from './basic/LifeCycle';
 import HookExamples from './basic/ReactHooks';
 import OtherConcepts from './basic/OtherConcepts';
-import WineriesPage from './wineshop/WineryDetails';
+import WineriesPage from './wineshop/Wineries';
 
 
 /**

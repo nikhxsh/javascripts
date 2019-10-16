@@ -1,0 +1,32 @@
+export function getAllCountries() {
+	return [
+		{ "name": "Australia", "code": "AU" },
+		{ "name": "Austria", "code": "AT" },
+		{ "name": "Argentina", "code": "AG" },
+		{ "name": "Chile", "code": "CL" },
+		{ "name": "China", "code": "CN" },
+		{ "name": "Denmark", "code": "DK" },
+		{ "name": "Finland", "code": "FI" },
+		{ "name": "France", "code": "FR" },
+		{ "name": "Germany", "code": "DE" },
+		{ "name": "Greece", "code": "GR" },
+		{ "name": "Iceland", "code": "IS" },
+		{ "name": "India", "code": "IN" },
+		{ "name": "Ireland", "code": "IE" },
+		{ "name": "Israel", "code": "IL" },
+		{ "name": "Italy", "code": "IT" },
+		{ "name": "Japan", "code": "JP" },
+		{ "name": "Mexico", "code": "MX" },
+		{ "name": "Netherlands", "code": "NL" },
+		{ "name": "New Zealand", "code": "NZ" },
+		{ "name": "Russia", "code": "RU" },
+		{ "name": "Rwanda", "code": "RW" },
+		{ "name": "South Africa", "code": "ZA" },
+		{ "name": "Spain", "code": "ES" },
+		{ "name": "Switzerland", "code": "CH" },
+		{ "name": "United Kingdom", "code": "GB" },
+		{ "name": "United States", "code": "US" },
+		{ "name": "Uruguay", "code": "UY" },
+		{ "name": "Venezuela", "code": "VE" }
+	];
+}

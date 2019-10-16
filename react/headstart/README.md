@@ -139,3 +139,47 @@ function display(value) {
 	* `componentWillUnmount`
 		- componentWillUnmount() is invoked immediately before a component is unmounted and destroyed. 
 		- Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in componentDidMount().
+
+
+## React-Redux
+
+* Why?
+
+	- For complex Significant setup e.g. When two completely different component access same data (both can call API for same data
+	  which is completely redundant)
+	- Avoid Prop drilling, sending shared data across component from Top level component through props, and this gets even worse 
+	  if you have more layers of components between the data source and end component
+	- Redux solve this problem my maintaining store (We can Also use react context to avoid props drilling)
+
+* When?
+
+	- Has Complex data flows
+	- Has Frequent Inter-component communicatios
+	- Has Non-heirarchical data
+	- Has many actions (CRUD)
+	- Same data used in many places
+
+* Principles
+
+	- One Immutable store
+	- Action reperesents user intent
+	- Action triggers changes (User actions)
+	- Actions must have return type
+	- Reducers updates state, all reducer called upon each action where switch will handle changed action
+	  all other return default untouched state
+	- Each action can be handled by multiple reducers
+
+* Flux vs Redux
+
+	- Flux is precursor of redux
+	- Both have unidirection data flow, actions and store concepts (Flux has multiple stores)
+
+| Flux |Redux |
+|:-------------:|:-------------:|
+| Stores contain state & change logic  | Store & change logic are separate |
+| Multiple Store  | One Store  |
+| Flat & Disconnected Store  | Single Store with hierarchical reducers  |
+| Singletone dispatcher  | No dispatcher  |
+| React component subscribe to stores  | Container component utilize connect  |
+| State is mutated  | State is immutable  |
+ 
