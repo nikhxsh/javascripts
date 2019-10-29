@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import * as wineryApi from '../../api/wineShopApi';
+import { beginApiCall, apiCallFailed } from './apiStatusActions';
 
 export function getWineriesSuccess(wineries) {
 	return { type: types.GET_WINERIES_SUCCESS, wineries }
@@ -7,9 +8,10 @@ export function getWineriesSuccess(wineries) {
 
 export function getWineries(queryString) {
 	return function (dispatch) {
+		dispatch(beginApiCall());
 		return wineryApi.getWineries(queryString)
-			.then(wineries => {
-				dispatch(getWineriesSuccess(wineries))
+			.then(response => {
+				dispatch(getWineriesSuccess(response.result))
 			})
 			.catch(error => {
 				throw error;
@@ -27,13 +29,33 @@ export function updateWinerySuccess(winery) {
 
 export function saveWinery(winery) {
 	return function (dispatch) {
+		dispatch(beginApiCall());
 		return wineryApi.saveWinery(winery)
 			.then(savedWinery => {
 				winery.id
-					? dispatch(updateWinerySuccess(winery))
-					: dispatch(createWinerySuccess(winery))
+					? dispatch(updateWinerySuccess(savedWinery))
+					: dispatch(createWinerySuccess(savedWinery))
 			})
 			.catch(error => {
+				dispatch(apiCallFailed(error))
+				throw error;
+			});
+	}
+}
+
+export function deleteWinerySuccess(deletedId) {
+	return { type: types.DELETE_WINERY_SUCCESS, deletedId }
+}
+
+export function deleteWinery(wineryId) {
+	return function (dispatch) {
+		dispatch(beginApiCall());
+		return wineryApi.deleteWinery(wineryId)
+			.then(deletedId => {
+				dispatch(deleteWinerySuccess(deletedId));
+			})
+			.catch(error => {
+				dispatch(apiCallFailed(error))
 				throw error;
 			});
 	}

@@ -6,13 +6,16 @@ const SelectInput = ({
 	label,
 	options,
 	value,
-	onChange,
-	error
+	onChange
 }) => {
 	return <div className="form-row">
-		<label htmlFor="options" className="sr-only">{label}</label>
 		<div className="form-group col-md-6">
-			<select class="form-control" name={name} value={value} onChange={onChange}>
+			<label htmlFor="options">{label}</label>
+			<select
+				className="form-control"
+				name={name}
+				value={value}
+				onChange={onChange}>
 				{options.map(option =>
 					<option key={option.code} value={option.name}>
 						{option.name}
@@ -28,8 +31,7 @@ SelectInput.propType = {
 	label: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	options: PropTypes.arrayOf(PropTypes.object),
-	error: PropTypes.object.isRequired,
+	options: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default SelectInput;

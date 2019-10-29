@@ -1,5 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Link, NavLink, Switch } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'glyphicons-only-bootstrap/css/bootstrap.min.css'
 
 import logo from './logo.svg';
 import PageNotFound from './PageNotFound';
@@ -65,6 +68,7 @@ const App = () => {
 					<Route path="/hooks" component={HookExamples} />
 					<Route component={PageNotFound} />
 				</Switch>
+				<ToastContainer autoClose={3000} hideProgressBar />
 			</main>
 		</BrowserRouter>
 	</section>

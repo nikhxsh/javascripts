@@ -7,7 +7,9 @@ export default function wineryReducer(state = [], action) {
 		case types.EDIT_WINERY_SUCCESS:
 			return state.map(winery => winery.id === action.winery.id ? action.winery : winery);
 		case types.GET_WINERIES_SUCCESS:
-			return action.wineries.result;
+			return action.wineries;
+		case types.DELETE_WINERY_SUCCESS:
+			return state.filter(x => x.id !== action.deletedId);
 		default:
 			return state;
 	}

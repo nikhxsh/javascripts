@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Set submit button label 'Save' when saving is false 1`] = `
+<form
+  onSubmit={[MockFunction]}
+>
+  <h4>
+    Edit
+     Winery
+  </h4>
+  <br />
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label>
+        Name
+      </label>
+      <input
+        className="form-control"
+        id="name"
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Winery Name"
+        type="text"
+        value="Bodegas Godeval"
+      />
+      <div
+        className=""
+      >
+        
+      </div>
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label>
+        Region
+      </label>
+      <input
+        className="form-control"
+        id="region"
+        name="region"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Winery Region"
+        type="text"
+        value="Valdeorras"
+      />
+      <div
+        className=""
+      >
+        
+      </div>
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label
+        htmlFor="options"
+      >
+        Country
+      </label>
+      <select
+        className="form-control"
+        name="country"
+        onChange={[MockFunction]}
+        value="Spain"
+      />
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <button
+      className="btn btn-info"
+      type="submit"
+    >
+      Save
+    </button>
+  </div>
+</form>
+`;
+
+exports[`Set submit button label 'Saving..' when saving is true 1`] = `
+<form
+  onSubmit={[MockFunction]}
+>
+  <h4>
+    Add
+     Winery
+  </h4>
+  <br />
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label>
+        Name
+      </label>
+      <input
+        className="form-control"
+        id="name"
+        name="name"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Winery Name"
+        type="text"
+        value="Château Coutet"
+      />
+      <div
+        className=""
+      >
+        
+      </div>
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label>
+        Region
+      </label>
+      <input
+        className="form-control"
+        id="region"
+        name="region"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Winery Region"
+        type="text"
+        value="Bordeaux"
+      />
+      <div
+        className=""
+      >
+        
+      </div>
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <div
+      className="form-group col-md-6"
+    >
+      <label
+        htmlFor="options"
+      >
+        Country
+      </label>
+      <select
+        className="form-control"
+        name="country"
+        onChange={[MockFunction]}
+        value="France"
+      />
+    </div>
+  </div>
+  <div
+    className="form-row"
+  >
+    <button
+      className="btn btn-info"
+      type="submit"
+    >
+      Saving...
+    </button>
+  </div>
+</form>
+`;
