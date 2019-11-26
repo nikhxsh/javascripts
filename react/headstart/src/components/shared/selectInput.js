@@ -17,7 +17,7 @@ const SelectInput = ({
 				value={value}
 				onChange={onChange}>
 				{options.map(option =>
-					<option key={option.code} value={option.name}>
+					<option key={option.code} value={option.code}>
 						{option.name}
 					</option>
 				)}

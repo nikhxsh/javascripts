@@ -3,14 +3,14 @@ import { handleResponse, handleError, baseUrl } from "./apiUtils";
 
 export function getWineries(queryString) {
 
-	return fetch(`${baseUrl}/winery?${queryString}`)
+	return fetch(`${baseUrl}/wineries?${queryString}`)
 		.then(handleResponse)
 		.catch(handleError);
 }
 
 export function getWinery(wineryId) {
 
-	return fetch(`${baseUrl}/winery/${wineryId}`)
+	return fetch(`${baseUrl}/wineries/${wineryId}`)
 		.then(handleResponse)
 		.catch(handleError);
 }
@@ -27,7 +27,7 @@ export function saveWinery(winery) {
 		body: JSON.stringify(winery)
 	};
 
-	return fetch(`${baseUrl}/winery`, payload)
+	return fetch(`${baseUrl}/wineries`, payload)
 		.then(handleResponse)
 		.catch(handleError);
 }
@@ -39,7 +39,14 @@ export function deleteWinery(wineryId) {
 		method: 'DELETE'
 	};
 
-	return fetch(`${baseUrl}/winery/${wineryId}`, payload)
+	return fetch(`${baseUrl}/wineries/${wineryId}`, payload)
+		.then(handleResponse)
+		.catch(handleError);
+}
+
+export function getWinesFromWinery(wineryId, queryString) {
+
+	return fetch(`${baseUrl}/wineries/${wineryId}/wines?${queryString}`)
 		.then(handleResponse)
 		.catch(handleError);
 }

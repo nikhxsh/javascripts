@@ -9,7 +9,7 @@ import { isEqualObject, hasAllValues } from '../helper/utils';
 import WineryForm from './WineryForm';
 
 //Function component
-export const ManageWineryPage = ({
+export const EditWineryPage = ({
 	history,
 	saveWinery,
 	winery
@@ -72,8 +72,6 @@ export const ManageWineryPage = ({
 	const redirectToWineriesPage = () => history.push('/wineries');
 
 	return <>
-		<button className="btn btn-link" onClick={redirectToWineriesPage}>Back</button>
-		<hr />
 		{errors.onSave}
 		<WineryForm
 			countries={countries}
@@ -82,11 +80,12 @@ export const ManageWineryPage = ({
 			handleSave={handleSave}
 			saving={saving}
 			formInvalid={isFormInvalid}
+			redirect={redirectToWineriesPage}
 		/>
 	</>
 };
 
-ManageWineryPage.propType = {
+EditWineryPage.propType = {
 	match: PropsTypes.object.isRequired,
 	winery: PropsTypes.object.isRequired,
 	history: PropsTypes.object.isRequired,
@@ -98,7 +97,7 @@ export function getWineryById(wineries, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-	const wineryId = ownProps.match.params.id;
+	const wineryId = ownProps.match.params.wineryId;
 	const winery = wineryId ? getWineryById(state.wineries, wineryId) : emptyWinery;
 	return {
 		winery
@@ -111,4 +110,4 @@ const mapDispatchToProps = {
 
 const emptyWinery = { name: "", region: "", country: "India" };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageWineryPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditWineryPage);

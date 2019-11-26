@@ -60,3 +60,21 @@ export function deleteWinery(wineryId) {
 			});
 	}
 }
+
+export function getWinesFromWinerySuccess(content) {
+	return { type: types.GET_WINES_FROM_WINERY_SUCCESS, content }
+}
+
+export function getWinesFromWinery(wineryId, queryString) {
+	return function (dispatch) {
+		dispatch(beginApiCall());
+		return wineryApi.getWinesFromWinery(wineryId, queryString)
+			.then(response => {
+				var content = { wines: response.result, wineryId: wineryId };
+				dispatch(getWinesFromWinerySuccess(content))
+			})
+			.catch(error => {
+				throw error;
+			});
+	}
+}
