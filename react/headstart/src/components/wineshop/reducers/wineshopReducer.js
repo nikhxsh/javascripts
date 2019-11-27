@@ -1,5 +1,5 @@
 import * as types from '../actions/actionTypes';
-import Wineries from '../Wineries';
+import Wineries from '../wineryManagement/Wineries';
 
 export default function wineryReducer(state = [], action) {
 	switch (action.type) {

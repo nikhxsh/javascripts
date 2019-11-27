@@ -2,41 +2,39 @@ import React, { useEffect, useState } from 'react';
 import PropsTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getAllCountries } from '../api/commonApi'
-import { saveWinery } from './actions/wineshopActions';
+import { saveWinery } from '../actions/wineshopActions';
+import { emptyWine, wineColors } from '../shared/wineshopModel';
 import { toast } from 'react-toastify';
-import { isEqualObject, hasAllValues } from '../helper/utils';
-import WineryForm from './WineryForm';
+import { isEqualObject, hasAllValues } from '../../helper/utils';
+import WineForm from './WineForm';
 
 //Function component
-export const EditWineryPage = ({
+export const EditWinePage = ({
 	history,
-	saveWinery,
-	winery
+	saveWine,
+	wine
 }) => {
-	const [selectedWinery, setSelectedWinery] = useState({});
+	const [selectedWine, setSelectedWine] = useState({});
 	const [saving, toggleSaving] = useState(false);
 	const [errors, setErrors] = useState({});
-	const [countries, setCountries] = useState([]);
 	const [isFormInvalid, setIsFormInvalid] = useState(true);
 
 	useEffect(() => {
-		setCountries(getAllCountries());
 	}, []);
 
 	useEffect(() => {
-		setSelectedWinery(winery);
-	}, [winery]);
+		setSelectedWine(wine);
+	}, [wine]);
 
 	useEffect(() => {
 		validateForm();
-	}, [selectedWinery]);
+	}, [selectedWine]);
 
 	function handleChange(event) {
 		event.preventDefault();
 		const { name, value } = event.target;
-		setSelectedWinery({
-			...selectedWinery,
+		setSelectedWine({
+			...selectedWine,
 			[name]: value
 		});
 	}
@@ -45,10 +43,10 @@ export const EditWineryPage = ({
 		event.preventDefault();
 		toggleSaving(true);
 		setIsFormInvalid(true);
-		saveWinery(selectedWinery)
+		saveWinery(selectedWine)
 			.then(() => {
 				toast.success('Winery Saved!!');
-				redirectToWineriesPage();
+				redirectToWineryInfoPage();
 			})
 			.catch(error => {
 				toggleSaving(false);
@@ -58,10 +56,10 @@ export const EditWineryPage = ({
 	}
 
 	function validateForm() {
-		let oldWinery = winery;
-		if (hasAllValues(selectedWinery)) {
+		let oldWine = wine;
+		if (hasAllValues(selectedWine)) {
 			setIsFormInvalid(false);
-			if (selectedWinery.id && isEqualObject(selectedWinery, oldWinery)) {
+			if (selectedWine.id && isEqualObject(selectedWine, oldWine)) {
 				setIsFormInvalid(true);
 			}
 		}
@@ -69,38 +67,40 @@ export const EditWineryPage = ({
 			setIsFormInvalid(true);
 	}
 
-	const redirectToWineriesPage = () => history.push('/wineries');
+	const redirectToWineryInfoPage = () => history.go(-1);
 
 	return <>
 		{errors.onSave}
-		<WineryForm
-			countries={countries}
-			winery={selectedWinery}
+		<WineForm
+			colors={wineColors}
+			wine={selectedWine}
 			handleChange={handleChange}
 			handleSave={handleSave}
 			saving={saving}
 			formInvalid={isFormInvalid}
-			redirect={redirectToWineriesPage}
+			redirect={redirectToWineryInfoPage}
 		/>
 	</>
 };
 
-EditWineryPage.propType = {
+EditWinePage.propType = {
 	match: PropsTypes.object.isRequired,
-	winery: PropsTypes.object.isRequired,
+	wine: PropsTypes.object.isRequired,
 	history: PropsTypes.object.isRequired,
-	saveWinery: PropsTypes.func.isRequired
+	saveWine: PropsTypes.func.isRequired
 }
 
-export function getWineryById(wineries, id) {
-	return wineries.find(winery => winery.id === id) || emptyWinery;
+export function getWineById(wineries, wineryId, wineId) {
+	let winery = wineries.find(winery => winery.id === wineryId);
+	return winery.products.find(wine => wine.id === wineId) || emptyWine;
 }
 
 function mapStateToProps(state, ownProps) {
 	const wineryId = ownProps.match.params.wineryId;
-	const winery = wineryId ? getWineryById(state.wineries, wineryId) : emptyWinery;
+	const wineId = ownProps.match.params.wineId;
+	const wine = wineId ? getWineById(state.wineries, wineryId, wineId) : emptyWine;
 	return {
-		winery
+		wine
 	};
 }
 
@@ -108,6 +108,4 @@ const mapDispatchToProps = {
 	saveWinery
 }
 
-const emptyWinery = { name: "", region: "", country: "India" };
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditWineryPage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditWinePage);

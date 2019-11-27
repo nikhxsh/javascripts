@@ -1,7 +1,7 @@
 import React from 'react';
 
-import TextInput from '../shared/TextInput';
-import SelectInput from '../shared/selectInput';
+import TextInput from '../../shared/TextInput';
+import SelectInput from '../../shared/selectInput';
 
 const WineryForm = ({
 	countries,

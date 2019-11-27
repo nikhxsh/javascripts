@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropsTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { getWinesFromWinery } from './actions/wineshopActions';
+import { getWinesFromWinery } from '../actions/wineshopActions';
+import { emptyWinery, wineColors } from '../shared/wineshopModel';
+import DataTable from '../../shared/dataTable';
 import EditWinePage from './EditWine';
-import Spinner from '../shared/spinner';
+import Spinner from '../../shared/spinner';
 
 //Function component
 export const ViewWineryPage = ({
@@ -25,6 +27,20 @@ export const ViewWineryPage = ({
 		}
 	}, [winery]);
 
+
+	function getWineColor(code) {
+		let wineColor = wineColors.find(x => x.code === code);
+		return wineColor.name || '';
+	};
+
+	const fieldMappings = [
+		{ header: 'Name', key: 'name' },
+		{ header: 'Color', key: 'color', parse: getWineColor },
+		{ header: 'Vintage', key: 'vintage' },
+		{ header: 'Score', key: 'score' },
+		{ header: 'Rank', key: 'rank' }
+	];
+
 	const redirectToWineriesPage = () => history.go(-1);
 
 	const formatWineryTable = () => {
@@ -42,52 +58,13 @@ export const ViewWineryPage = ({
 						<div className="card-body">
 							<b>Wines</b>
 							<hr />
-							<table className="table table-bordered table-sm table-hover">
-								<thead>
-									<tr>
-										<th scope="col">#</th>
-										<th scope="col">Name</th>
-										<th scope="col">Color</th>
-										<th scope="col">Price</th>
-										<th scope="col">Vintage</th>
-										<th scope="col">Score</th>
-										<th scope="col">Rank</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody>
-									{
-										selectedWinery.products ? selectedWinery.products.map((x, index) =>
-											<tr key={index}>
-												<th scope="row">{index + 1}</th>
-												<td>{x.name}</td>
-												<td>{x.color}</td>
-												<td>{x.price}</td>
-												<td>{x.vintage}</td>
-												<td>{x.score}</td>
-												<td>{x.rank}</td>
-												<td align="center">
-													<div class="btn-group">
-														<button type="button"
-															class="btn btn-sm btn-info dropdown-toggle"
-															data-toggle="dropdown"
-															aria-haspopup="true"
-															aria-expanded="false">
-															Action
-													<span class="caret"></span>
-														</button>
-														<ul class="dropdown-menu">
-															<li>
-																<Link class="dropdown-item" to={`${match.url}/${x.id}/edit`}>Edit</Link>
-															</li>
-														</ul>
-													</div>
-												</td>
-											</tr>
-										) : <></>
-									}
-								</tbody>
-							</table>
+							<DataTable
+								fieldMappings={fieldMappings}
+								rows={selectedWinery.products}
+								style={'table table-bordered table-sm table-hover'}
+								onEditUrl={`${match.url}/:id/edit`}
+								onRemoveUrl={`${match.url}/:id/remove`}
+							/>
 						</div>
 					</div>
 					<br />
@@ -113,8 +90,6 @@ ViewWineryPage.propType = {
 export function getWineryById(wineries, id) {
 	return wineries.find(winery => winery.id === id);
 }
-
-const emptyWinery = { name: "", region: "", country: "", products: [] };
 
 function mapStateToProps(state, ownProps) {
 	const wineryId = ownProps.match.params.wineryId;

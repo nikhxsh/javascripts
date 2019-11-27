@@ -2,7 +2,7 @@ import React from 'react';
 import WineryForm from './WineryForm';
 import renderer from 'react-test-renderer';
 
-import { mockWineries } from '../../Test/WineryMockData';
+import { mockWineries } from '../../../../Test/WineryMockData';
 
 it("Set submit button label 'Saving..' when saving is true", () => {
 	const tree = renderer.create(
