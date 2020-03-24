@@ -1,6 +1,18 @@
 const console = require('./utils');
 
-console.h1('Javascrpt Info');
+console.h1('JavaScript Info');
+
+console.h2('ECMAScript');
+console.comment(`
+   - ECMAScript (European Computer Manufacturer's Association) is based on several originating technologies, the most well-known being JavaScript (Netscape) and JScript (Microsoft). 
+   - The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser. 
+   - It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0.
+   - ECMAScript is an object-oriented programming language for performing computations and manipulating computational objects within a host environment.
+   - Before ES2015, ECMAScript specifications were commonly called by their edition. So ES5 is the official name for the ECMAScript specification update published in 2009.
+   - The sixth version of ECMA Script6 is known as ES6 (it is also called as ECMA Script 2015).
+   - https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e/
+   - https://www.ecma-international.org/ecma-262/#sec-intro
+`);
 
 console.h2('Modules');
 console.comment(`

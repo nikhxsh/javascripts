@@ -2,157 +2,234 @@ const console = require('./utils');
 
 console.h1('Objects');
 console.comment(`
-    - As we know from the Data types, there are seven data types in JavaScript. Six of them are called “primitive”, because their 
-      values contain only a single thing (be it a string or a number or whatever).
-    - In contrast, objects are used to store keyed collections of various data and more complex entities. We can imagine an object as a cabinet 
-      with signed files. Every piece of data is stored in its file by the key. It’s easy to find a file by its name or add/remove a file.
+   - As we know from the Data types, there are seven data types in JavaScript. Six of them are called “primitive”, because their 
+     values contain only a single thing (be it a string or a number or whatever).
+   - In contrast, objects are used to store keyed collections of various data and more complex entities. We can imagine an object as a cabinet
+     with signed files. Every piece of data is stored in its file by the key. It’s easy to find a file by its name or add/remove a file.
+   - Creating an object often begins with defining and initializing a variable
 `);
-console.code(`
-    let user = new Object(); // "object constructor" syntax
-    let user = {};  // "object literal" syntax
-`);
-let descriptions = {
-    work: 'Went to work',
-    'touched tree': 'Touched a tree',
-    events: ['work', 'sleep', 'pizza', 'running'],
-    statement: `I love fucking with people's mind! lol!`
+
+console.h2('Using object initializers');
+let account = {
+	number: 'X000009098',
+	name: ['Crime', 'Master'],
+	age: 39,
+	gender: 'Male',
+	types: ['Saving', 'Loan'],
+	'Account Flag': 'Green',
+	getTypes: function () {
+		return this.number + ' has ' + this.types[0] + ' & ' + this.types[1] + ' accounts.';
+	},
+	getDetails: function () {
+		return this.number + ' belongs to ' + this.name[0] + ' ' + this.name[1] + ' gogo. He\'s' + this.age + ' old.';
+	}
 };
 
 let listall = function listAllProperties(o) {
-    var objectToInspect;
-    var result = [];
-    for (objectToInspect = o; objectToInspect !== null;
-        objectToInspect = Object.getPrototypeOf(objectToInspect)) {
-        result = result.concat(
-            Object.getOwnPropertyNames(objectToInspect)
-        );
-    }
-    return result;
+	var objectToInspect;
+	var result = [];
+	for (objectToInspect = o; objectToInspect !== null;
+		objectToInspect = Object.getPrototypeOf(objectToInspect)) {
+		result = result.concat(
+			Object.getOwnPropertyNames(objectToInspect)
+		);
+	}
+	return result;
 }
 
 console.code(`
-    let descriptions = {
-        work: 'Went to work',
-        'touched tree': 'Touched a tree',
-        events: ['work', 'sleep', 'pizza', 'running'],
-        statement: \`I love fucking with people's mind! lol!\`
-    }
+    let user = new Object(); //"Object constructor" syntax
+    let user = {};  // "object literal" syntax
+
+    let account = {
+    	number: 'X000009098',
+    	name: ['Crime', 'Master'],
+    	age: 39,
+    	gender: 'Male',
+    	types: ['Saving', 'Loan'],
+    	'Account Flag': 'Green',
+    	getTypes: function () {
+            return this.number + ' has ' + this.types[0] + ' & ' + this.types[1] + ' accounts.';
+    	},
+    	getDetails: function () {
+            return this.number + ' belongs to ' + this.name[0] + ' ' + this.name[1] + ' gogo. He\'s' + this.age + ' old.';
+    	}
+    };
 `);
-console.log(`JSON.stringify(descriptions) = ${JSON.stringify(descriptions)}`);
-console.log(`descriptions.work = ${descriptions.work}`);
-console.log(`descriptions['work'] = ${descriptions['work']}`);
-console.log(`descriptions['touched tree'] = ${descriptions['touched tree']}`);
-console.log(`descriptions.events = ${descriptions.events}`);
-Object.assign(descriptions, { Gym: true });
-console.log(`Object.assign(descriptions, { Gym : true}) Then descriptions.Gym = ${descriptions.Gym}`);
-console.log(`Object.keys(descriptions) = ${Object.keys(descriptions)}`);
-console.log(`Object.values(descriptions) = ${Object.values(descriptions)}`);
-console.log(`listall(descriptions) = ${listall(descriptions)}`, `This can be useful to reveal "hidden" properties`);
+console.log(`JSON.stringify(account) = ${JSON.stringify(account)}`);
+console.log(`account.age = ${account.age}`);
+console.log(`account['age'] = ${account['age']}`);
+console.log(`account['Account Flag'] = ${account['Account Flag']}`);
+console.log(`account.types = ${account.types}`);
+console.log(`account.getDetails() >> ${account.getDetails()}`);
+Object.assign(account, { amount: 1000 });
+console.log(`Object.assign(account, { amount: 1000 }) >> account.amount = ${account.amount}`);
+
+console.comment(`
+   - You may have noticed "this" keyword, The this keyword refers to the current object the code is being written inside 
+   - So in this case "this" is equivalent to object "account"
+`);
+
+console.h2('Object (built-in)');
+console.comment(`
+   - The "Object" constructor creates an object wrapper for the given value.
+      > If the value is null or undefined, it will create and return an empty object.
+      > Otherwise, it will return an object of a Type that corresponds to the given value.
+      > If the value is an object already, it will return the value.
+   - When called in a non-constructor context, Object behaves identically to new Object().
+`);
+
+const xaccount = Object.create(account);
+console.code(`
+    //Object.create(proto, [propertiesObject])
+    const xaccount = Object.create(account); //Creates a new object, using an existing object as the prototype of the newly created object
+	
+    xaccount.number // ${xaccount.number}
+    xaccount.name[1] // ${xaccount.name[1]}
+`);
+
+console.log(`Object.keys({ a: 1, b: 2, sum: () => a + b }) = ${Object.keys({ a: 1, b: 2, sum: () => a + b })}`);
+console.log(`Object.values({ a: 1, b: 2, sum: () => a + b }) = ${Object.values({ a: 1, b: 2, sum: () => a + b })}`, `Display all values`);
 console.log(`Object.keys('Okay!') = ${Object.keys('Okay!')}`);
 console.log(`Object.values('Okay!') = ${Object.values('Okay!')}`);
-console.log(`Object.keys(1000) = ${Object.keys(1000)}`, `Prints nothing`);
-console.log(`Object.values(1000) = ${Object.values(1000)}`);
+console.log(`Object.keys(1000) = ${Object.keys(1000)}`, `Returns [] as 1000 is value`);
+console.log(`Object.values(1000) = ${Object.values(1000)}`, `Returns [] as 1000 is value`);
 
-console.h2('Prototypes');
+console.h2('Using a constructor function');
 console.comment(`
-    - In addition to their set of properties, most objects also have a prototype.A prototype is another object that is used as a fallback source of 
-      properties. When an object gets a request for a property that it does not have, its prototype will be searched for the property, then the prototype’s 
-      prototype, and so on.
-    - The prototype relations of JavaScript objects form a tree-shaped structure, and at the root of this structure sits Object.prototype. 
-      It provides a few methods that show up in all objects, such as toString, which converts an object to a string representation.
-    - Many objects don’t directly have Object.prototype as their prototype but instead have another object that provides a different set of default 
-      properties. Functions derive from Function.prototype, and arrays derive from Array.prototype.
-`);
-console.log(`Object.getPrototypeOf({}) == Object.prototype > ${Object.getPrototypeOf({}) == Object.prototype}`);
-console.log(`Object.getPrototypeOf(Math.max) == Function.prototype > ${Object.getPrototypeOf(Math.max) == Function.prototype}`);
-console.log(`Object.getPrototypeOf([1,2]) == Array.prototype > ${Object.getPrototypeOf([1, 2]) == Array.prototype}`);
-
-let protoRabbit = {
-    age: undefined,
-    speak(line) {
-        return `The ${this.type} rabbit says '${line}'`;
-    }
-};
-let killerRabbit = Object.create(protoRabbit);
-killerRabbit.type = "killer";
-
-console.code(`
-    let protoRabbit = {
-        age: undefined,
-        speak(line) {
-            return \`The \${this.type} rabbit says '\${line}'\`;
-        }
-    };
-    let killerRabbit = Object.create(protoRabbit);
-`);
-console.log(`killerRabbit.speak("SKREEEE!"); >> ${killerRabbit.speak("SKREEEE!")}`);
-
-console.comment(`
-    - __proto__ is a historical getter/setter for [[Prototype]]
-    - It exists for historical reasons, in modern language it is replaced with functions Object.getPrototypeOf/Object.setPrototypeOf 
-      that also get/set the prototype. 
-`);
-protoRabbit.__proto__ = {
-    fly: true
-};
-console.code(`
-    protoRabbit.__proto__ = {
-        fly : true
-    };
-`);
-console.log(`killerRabbit.fly >> ${killerRabbit.fly}`);
-
-console.h2('Classes');
-console.comment(`
-    - So JavaScript classes are constructor functions with a prototype property. That is how they work, 
-      and until 2015, that was how you had to write them. These days, we have a less awkward notation.
+   - Alternatively, you can create an object with these two steps:
+     > Define the object type by writing a constructor function.
+     > Create an instance of the object with new.
 `);
 
-class Rabbit {
-    constructor(type) {
-        this.type = type;
-    }
-    speak(line) {
-        return `The ${this.type} rabbit says '${line}'`;
-    }
+function BankAccount(amount) {
+	this.amount = amount;
 }
-let obj1 = new Rabbit("killer");
-let obj2 = new Rabbit("black");
 
 console.code(`
-    class Rabbit {
-        constructor(type) {
-            this.type = type;
-        }
-        speak(line) {
-            return \`The \${this.type} rabbit says '\${line}'\`;
-        }
+    function BankAccount(amount) {
+       this.amount = amount;
     }
-    let obj1 = new Rabbit("killer");
-    let obj2 = new Rabbit("black");
+    var bankAccount = new BankAccount(2000);
 `);
-console.log(`obj1.speak('SKREEEE!!'); >> ${obj1.speak('SKREEEE!!')}`);
-console.log(`obj2.speak('HELLO!!'); >> ${obj2.speak('HELLO!!')}`);
 
+console.comment(`
+   - "new" operator create instance of a user defined object type having contructor function. When the code new BankAccount(2000) is executed, 
+     the following things happen:
+       1. A new object is created, inheriting from BankAccount.prototype.
+       2. The constructor function BankAccount is called with the specified arguments, and with this bound to the newly created object.
+          new BankAccount is equivalent to new BankAccount(), i.e. if no argument list is specified, BankAccount is called without arguments.
+       3. The object (not null, false, 3.1415 or other primitive types) returned by the constructor function becomes the result of the whole 
+          new expression. If the constructor function doesn't explicitly return an object, the object created in step 1 is used instead.
+   ** Function constructor creates functions which execute in the global scope only.
+   ** Every JavaScript function is actually a Function object. This can be seen with the code (function(){}).constructor === Function which returns true.
+`);
+
+console.h2('Object prototypes');
+console.comment(`
+   - Prototypes are the mechanism by which JavaScript objects inherit features from one another
+   - Objects can have a prototype object, which acts as a template object that it inherits methods and properties from.
+   - An object's prototype object may also have a prototype object, which it inherits methods and properties from, and 
+     so on. This is often referred to as a prototype chain
+   - A link is made between the object instance and its prototype (its __proto__ ([[Prototype]]) property, which is derived from 
+     the prototype property on the constructor), and the properties and methods are found by walking up the chain of prototypes
+   - The prototype relations of JavaScript objects form a tree-shaped structure, and at the root of this structure sits Object.prototype. 
+     It provides a few methods that show up in all objects, such as toString, which converts an object to a string representation.
+`);
+
+BankAccount.prototype.toString = function () {
+	return BankAccount.name;
+};
+let bankAccountObj = new BankAccount(2000);
+
+console.code(`
+    BankAccount.prototype.toString = function () {
+       return BankAccount.name;
+    };
+    let bankAccountObj = new BankAccount(2000);
+`);
+console.log(`bankAccountObj.toString() >> ${bankAccountObj.toString()}`, 'bankAccountObj --Inherits from prototype of--> BankAccount --Inherits from--> Object');
+
+console.code(`
+   BankAccount.prototype >>   
+   {
+     toString: ƒ ()
+     constructor: ƒ BankAccount(BankAccount),
+     __proto__: {
+         constructor: ƒ Object(),
+         hasOwnProperty: ƒ hasOwnProperty(),
+         isPrototypeOf: ƒ isPrototypeOf(),
+         propertyIsEnumerable: ƒ propertyIsEnumerable(),
+         toLocaleString: ƒ toLocaleString(),
+         toString: ƒ toString(),
+         valueOf: ƒ valueOf()
+     }
+   }
+`);
+
+console.h2('Inheritance using prototype Chain');
+console.comment(`
+   - When it comes to inheritance, JavaScript only has one construct: objects. 
+   - Each object has a private property which holds a link to another object called its prototype(__proto__). 
+   - That prototype object has a prototype of its own, and so on until an object is reached with null 
+	 as its prototype. By definition, null has no prototype, and acts as the final link in this prototype chain.
+   - Nearly all objects in JavaScript are instances of Object which sits on the top of a prototype chain.
+`);
+
+function SpecialAccount(topup) {
+	this.topup = topup;
+	BankAccount.call(this, topup);
+}
+
+//Assign prototype linkage
+SpecialAccount.prototype = Object.create(BankAccount.prototype);
+SpecialAccount.prototype.constructor = BankAccount;
+SpecialAccount.prototype.display = function () {
+	return "SpecialAccount has total Amount ₹" + this.amount;
+};
+var specialAccountObj = new SpecialAccount(1000);
+
+console.code(`
+    function SpecialAccount(topup) {
+       this.topup = topup;
+       BankAccount.call(this, topup);
+    }
+    
+    //Assign prototype linkage
+    SpecialAccount.prototype = Object.create(BankAccount.prototype);
+    SpecialAccount.prototype.constructor = BankAccount;
+    SpecialAccount.prototype.display = function () {
+       return "SpecialAccount has total Amount ₹" + this.amount;
+    };
+    var specialAccountObj = new SpecialAccount(1000);
+`);
+
+console.log(`specialAccountObj.display() >> ${specialAccountObj.display()}`);
+
+console.comment(`
+   - Every constructor function has a prototype property whose value is an object containing a constructor 
+     property. This constructor property points to the original constructor function.
+`);
+
+var testAccountObj = Object.create(bankAccountObj);
+console.code(`
+    var testAccountObj = Object.create(bankAccountObj);
+`);
+
+console.log(`bankAccountObj.constructor >> ${bankAccountObj.constructor.name}`);
+console.log(`testAccountObj.constructor >> ${testAccountObj.constructor.name}`, 'both return the BankAccount() constructor, as it contains the original definition of these instances.');
 
 console.h2('Polymorphism');
-let blackRabbit = new Rabbit('Black');
-console.code(`
-    let blackRabbit = new Rabbit('Black');    
+console.comment(`
+   - Polymorphism is the presentation of one interface for multiple data types. 
+   - A polymorphic function or data type is more general than a monomorphic one, because it can be used in a wider range of 
+	 scenarios. In this sense polymorphism represents the idea of generalization in strictly typed languages.
+   - Perhaps in JavaScript, it is a bit more difficult to see the effects of polymorphism because the more classical types of 
+	 polymorphism are more evident in static type systems, whereas JavaScript has a dynamic type system
+   - So, for instance, there is no method or function overloading or automatic type coercions at compile time in JavaScript. In a dynamic language, 
+	 we take most of these things for granted. Neither we need something like parametric polymorphism in JavaScript due to the dynamic nature of the language.
+   - JS is not a typed language so it really not meant to use OOP concepts like polymorphism
 `);
-console.log(`String(blackRabbit); >> ${String(blackRabbit)}`);
-console.log(`blackRabbit.toString(); >> ${blackRabbit.toString()}`);
-
-Rabbit.prototype.toString = function () {
-    return ` A ${this.type} rabbit`;
-};
-console.code(`
-    Rabbit.prototype.toString = function() {
-         return \`A \${this.type} rabbit\`;
-    };
-`);
-console.log(`String(blackRabbit); >> ${String(blackRabbit)}`);
-console.log(`blackRabbit.toString(); >> ${blackRabbit.toString()}`);
 
 console.h2('Symbols');
 console.comment(`
@@ -174,8 +251,8 @@ console.comment(`
     - Symbols allow us to create “hidden” properties of an object, that no other part of code can occasionally access or overwrite.
 `);
 let user = {
-    name: "John",
-    age: 30
+	name: "John",
+	age: 30
 };
 let id = Symbol("id");
 user[id] = "Secret";
@@ -247,7 +324,7 @@ console.comment(`
 `);
 const toStringSymbol = Symbol("toString");
 Array.prototype[toStringSymbol] = function () {
-    return `${this.length} cm of blue yarn`;
+	return `${this.length} cm of blue yarn`;
 };
 console.code(`
     const toStringSymbol = Symbol("toString");
@@ -259,7 +336,7 @@ console.log(`[1, 2].toString() >> ${[1, 2].toString()}`);
 console.log(`[1, 2][toStringSymbol]() >> ${[1, 2][toStringSymbol]()}`);
 
 user[Symbol.toPrimitive] = function (hint) {
-    return hint == 'string' ? `Hint: ${this.name}` : this.age;
+	return hint == 'string' ? `Hint: ${this.name}` : this.age;
 }
 console.code(`
     user[Symbol.toPrimitive] = function(hint){
@@ -271,9 +348,9 @@ console.log(`+user >> ${+user}`);
 console.log(`user + 15 >> ${user + 15}`);
 
 let obj = {
-    toString() { // toString handles all conversions in the absence of other methods
-        return "2";
-    }
+	toString() { // toString handles all conversions in the absence of other methods
+		return "2";
+	}
 };
 console.code(`
     let obj = {
@@ -283,380 +360,3 @@ console.code(`
     };
 `);
 console.log(`obj * 2 >> ${obj * 2}`);
-
-console.h2('Iterator');
-console.comment(`
-    - The object given to a for/of loop is expected to be iterable. This means it has a method named with the Symbol.iterator symbol
-    - When called, that method should return an object that provides a second interface, iterator. This is the actual thing that iterates. 
-      It has a next method that returns the next result.
-`);
-let okIterator = "OKAY"[Symbol.iterator]();
-console.code(`
-    let okIterator = "OKAY"[Symbol.iterator]();
-`);
-console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
-console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
-console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
-console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
-console.log(`okIterator.next() >> ${JSON.stringify(okIterator.next())}`);
-
-class Shelf {
-    constructor(size, element = (z) => undefined) {
-        this.size = size;
-        this.content = [];
-        this.intialise(size, element)
-    }
-
-    intialise(size, element) {
-        for (let y = 0; y < size; y++) {
-            this.content[y] = element(y);
-        }
-    }
-
-    get(x) {
-        return this.content[x];
-    }
-
-    set(x, value) {
-        this.content[x] = value;
-    }
-}
-
-class ShelfIterator {
-    constructor(shelf) {
-        this.x = 0;
-        this.shelf = shelf;
-    }
-
-    next() {
-        if (this.x == this.shelf.size) return { done: true };
-        let value = {
-            x: this.x,
-            value: this.shelf.get(this.x)
-        };
-        this.x++;
-        return { value, done: false };
-    }
-}
-
-Shelf.prototype[Symbol.iterator] = function () {
-    return new ShelfIterator(this);
-}
-
-let shelf = new Shelf(5, (z) => `Section ${z}`);
-
-console.code(`
-    class Shelf {
-        constructor(size, element = (z) => undefined) {
-            this.size = size;
-            this.content = [];
-            this.intialise(size, element)
-        }
-
-        intialise(size, element) {
-            for (let y = 0; y < size; y++) {
-                this.content[y] = element(y);
-            }
-        }
-
-        get(x) {
-            return this.content[x];
-        }
-
-        set(x, value) {
-            this.content[x] = value;
-        }
-    }
-
-    class ShelfIterator {
-        constructor(shelf) {
-            this.x = 0;
-            this.shelf = shelf;
-        }
-
-        next() {
-            if (this.x == this.shelf.size) return { done: true };
-            let value = {
-                x: this.x,
-                value: this.shelf.get(this.x)
-            };
-            this.x++;
-            return { value, done: false };
-        }
-    }
-
-    Shelf.prototype[Symbol.iterator] = function () {
-        return new ShelfIterator(this);
-    }
-
-    let shelf = new Shelf(5, (z) => \`Section \${z}\`);
-
-    for (let {x, value} of shelf) {
-        console.log(x, value);
-    }
-`);
-
-for (let { x, value } of shelf) {
-    console.log(`>> ${x}: ${value}`);
-}
-
-shelf.set(1, 'The Alchemist');
-console.code(`
-    shelf.set(1, 'The Alchemist');
-    console.log('shelf.get(1)');
-`);
-console.log(`shelf.get(1) >> ${shelf.get(1)}`);
-
-console.h2('Inheritance');
-console.comment(`
-    - JavaScript’s prototype system makes it possible to create a new class, much like the old class, but with new definitions 
-      for some of its properties. The
-    - prototype for the new class derives from the old prototype but adds a new definition for, say, the set method.
-    - In object-oriented programming terms, this is called inheritance
-    - The use of the word extends indicates that this class shouldn’t be directly based on the default Object prototype but on some other class. 
-      This is called the superclass. The derived class is the subclass.
-`);
-
-class AlbumShelf extends Shelf {
-    constructor(size, element = (z) => undefined) {
-        super(size, element);
-    }
-
-    set(loc, value) {
-        let name = super.get(loc);
-        super.set(loc, `${name} | Artist:${value}`);
-    }
-}
-let musicShelf = new AlbumShelf(5, (z) => `Album ${z}`);
-console.code(`
-    class AlbumShelf extends Shelf {
-        constructor(size, element = (z) => undefined) {
-            super(size, element);
-        }
-
-        set (loc, value) {
-            let name = super.get(loc);
-            super.set(loc, \`\${name} | Artist:\${value}\`);
-        }
-    }
-
-    let musicShelf = new AlbumShelf(5, (z) => \`Album \${z}\`);
-    for (let { x, value } of shelf) {
-        console.log(\`\${x}: \${value}\`);
-    }
-`);
-
-for (let { x, value } of musicShelf) {
-    console.log(`${x}: ${value}`);
-}
-
-musicShelf.set(1, 'Alan Walker');
-console.code(`
-    musicShelf.set(1, 'Alan Walker');
-`);
-console.log(`musicShelf.get(1) >> ${musicShelf.get(1)}`);
-
-console.log(`musicShelf instanceof(Shelf) >> ${musicShelf instanceof (Shelf)}`, 'The instanceof operator');
-
-console.h2('Persistent data');
-console.comment(`
-    - Data structures that don’t change are called immutable or persistent. They behave a lot like strings and numbers in 
-      that they are who they are and stay that way, rather than containing different things at different times.
-    - In JavaScript, just about everything can be changed, so working with values that are supposed to be persistent requires 
-      some restraint. There is a function called Object.freeze that changes an object so that writing to its properties is ignored.
-`);
-
-let object = Object.freeze({ value: 5 });
-object.value = 10;
-console.code(`
-    let object = Object.freeze({value: 5});
-    object.value = 10;
-`);
-console.log(`object.value >> ${object.value}`);
-
-console.h2('Decorators and forwarding, call/apply');
-user.say = function (line) {
-    return `${this.name} says ${line}`;
-}
-let xcachingDecorator = function (func) {
-    let cache = new Map();
-    return function (x) {
-        if (cache.has(x))
-            return cache.get(x);
-        let result = func(x);
-        cache.set(result);
-        return result;
-    }
-}
-console.code(`
-    user.say = function (line) {
-        return \`\${this.name} says \${line}\`;
-    }
-    let xcachingDecorator = function (func) {
-        let cache = new Map();
-        return function (x) {
-            if (cache.has(x))
-                return cache.get(x); 
-            let result = func(x); **
-            cache.set(result);
-            return result;
-        }
-    }
-`);
-
-console.log(`user.say('Bye') >> ${user.say('Bye')}`);
-console.log(`user.say = xcachingDecorator(user.say);`);
-user.say = xcachingDecorator(user.say);
-console.log(`user.say('Hey') >> ${user.say('Hey')}`);
-console.log(`user.say('Hey') >> ${user.say('Hey')}`);
-
-console.comment(`
-    - you can see the second call after calling xcachingDecorator return undefined
-    - The reason is that the wrapper calls the original function as func(x) in the line (**). And, when called like that, 
-      the function gets this = undefined
-    - So, the wrapper passes the call to the original name property, but without the context this.Hence the error.
-    - There’s a special built-in function method func.call(context, …args) that allows to call a function explicitly setting this.
-`);
-
-user.say = function (line) {
-    return `${this.name} says ${line}`;
-}
-let ycachingDecorator = function (func) {
-    let cache = new Map();
-    return function (x) {
-        if (cache.has(x))
-            return cache.get(x);
-        let result = func.call(this, x);
-        cache.set(result);
-        return result;
-    }
-}
-console.code(`
-    user.say = function (line) {
-        return \`\${this.name} says \${line}\`;
-    }
-    let ycachingDecorator = function (func) {
-        let cache = new Map();
-        return function (x) {
-            if (cache.has(x))
-                return cache.get(x); 
-            let result = func.call(this, x);
-            cache.set(result);
-            return result;
-        }
-    }
-`);
-
-console.log(`user.say('Bye') >> ${user.say('Bye')}`);
-console.log(`user.say = ycachingDecorator(user.say);`);
-user.say = ycachingDecorator(user.say);
-console.log(`user.say('Hey') >> ${user.say('Hey')}`);
-console.log(`user.say('Hey') >> ${user.say('Hey')}`, 'Cached Call');
-
-console.comment(`
-    - To make it all clear, let’s see more deeply how this is passed along:
-      > After the decoration user.say is now the wrapper function (x) { ... }.
-      > So when user.say('Hello') is executed, the wrapper gets 'Hello' as an argument and this=user (it’s the object before dot).
-      > Inside the wrapper, assuming the result is not yet cached, func.call(this, x) passes the current this (=user) and the 
-        current argument (='Hello') to the original method.
-`);
-
-user.translate = function (source, result) {
-    return `If ${this.name} says ${source} then its ${result}`;
-}
-let zcachingDecoratorApply = function (func) {
-    let cache = new Map();
-    return function () {
-        let key = hash(arguments);
-        if (cache.has(key))
-            return cache.get(key);
-        let result = func.apply(this, arguments);
-        cache.set(key, result);
-        return result;
-    }
-}
-function hash(args) {
-    return args[0] + ',' + args[1];
-}
-console.code(`
-    user.translate = function (source, result) {
-        return \`>> If \${this.name} says \${source} then its \${result}\`;
-    }
-
-    let zcachingDecoratorApply = function (func) {
-        let cache = new Map();
-        return function () {
-            let key = hash(arguments);
-            if (cache.has(key))
-                return cache.get(key);
-            let result = func.apply(this, arguments);
-            cache.set(key, result);
-            return result;
-        }
-    }
-
-    function hash(args) {
-        return args[0] + ',' + args[1];
-    }
-`);
-
-console.log(`user.translate('Hi','Oh God!') >> ${user.translate('Hi', 'Oh God!')}`);
-console.log(`user.translate = ycachingDecorator(user.translate);`);
-user.translate = zcachingDecoratorApply(user.translate);
-console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`);
-console.log(`user.translate('Bye','Fuck Off') >> ${user.translate('Bye', 'Fuck Off')}`, 'Cached Call');
-
-console.h2('Calling context');
-let cc = {
-    name: "calling context",
-    sayLater: function () {
-        setTimeout(function () {
-            console.log('Normal Function >> ' + this.name);
-        }, 1000);
-    }
-};
-console.code(`
-    let cc = {
-        name: "calling context",
-        sayLater: function () {
-            setTimeout(function () {
-                console.log('Normal Function >> ' + this.name);
-            }, 1000);
-        }
-    };
-
-    cc.sayLater();
-`);
-cc.sayLater();
-
-console.comment(`
-    - In fact we get undefined printed out to the console.The reason for this is that the value of this in a function 
-      depends on how the function is called.
-    - In the browser it’s either undefined or the global object depending on if you are running in strict
-      mode or not. In node it’s an internal timeout object.
-    - In all cases however it isn’t going to be obj, so this.name is not going to return "calling context", it’s going 
-      to return undefined or raise an error.
-    - In ES5 there are a number of methods we can use to stabilise the value of this. One common solution is to assign 
-      this to another variable at the top, usually called self or vm, and then always use self in the function body, 
-      like so:
-      let self = this;
-      console.log(self.name});
-    - But in ES6 we can do better, if we use fat arrow functions the value of this inside a fat arrow
-      function will be the same as the value of this outside the fat arrow function.
-`);
-let cc1 = {
-    name: "calling context",
-    sayLater: function () {
-        setTimeout(() => console.log('Fat Arrow Function >> ' + this.name), 1000);
-    }
-};
-console.code(`
-    let cc = {
-        name: "calling context",
-        sayLater: function () {
-            setTimeout(() => console.log(this.name), 1000);
-        }
-    };
-    cc.sayLater();
-`);
-cc1.sayLater();
