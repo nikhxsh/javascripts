@@ -1,21 +1,17 @@
-<div class="card-body">
-  <div class="card-block">
-    <h4>{{artist?.artistName}} <span class="tag tagdefault">{{
-        artist?.primaryGenreName}}</span></h4>
-    <footer>
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['./tracks']">Tracks
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['./albums']">Albums
-          </a>
-        </li>
-      </ul>
-    </footer>
-  </div>
-  <div class="card-body">
-    <router-outlet></router-outlet>
-  </div>
+<div class="card">
+	<div class="card-header">
+		<h4>{{artist?.artistName}} | <span class="tag tagdefault">{{
+			artist?.primaryGenreName}}</span></h4>
+	</div>
+	<div class="card-body">
+		<div class="card-block">
+			<nav class="nav nav-pills nav-justified">
+				<a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['./tracks']">Tracks
+				</a>
+				<a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['./albums']">Albums
+				</a>
+			</nav>
+		</div>
+	</div>
 </div>
+<router-outlet></router-outlet>

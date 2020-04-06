@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  iTuneApiBase: '',
-  mokcUsersApiBase: 'http://www.mocky.io/v2'
+	production: true,
+	iTuneApiBase: '',
+	mockUsersApiBase: 'http://www.mocky.io/v2'
 };

@@ -1,23 +1,21 @@
-<div class="container">
-  <div class="card">
-    <div class="card card-body">
-      <form class="form-inline">
-        <div class="form-group">
-          <!-- <input type="search" class="form-control" placeholder="Enter search string" #search> -->
-          <input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
-        </div>
-        <!-- &nbsp;
+<div class="card">
+	<div class="card card-body">
+		<form class="form-inline">
+			<div class="form-group">
+				<!-- <input type="search" class="form-control" placeholder="Enter search string" #search> -->
+				<input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
+			</div>
+			<!-- &nbsp;
         <button type="button" class="btn btn-primary" (click)="staticSearch(search.value)">Search</button> -->
-      </form>        
-      <hr />
-      <div class="list-group">
-        <a [routerLink]="['artist', track.artistId]" class="list-group-item list-group-item-action"
-          *ngFor="let track of dynamicResult | async" (click)="moveToArtistSection()">
-          <img src="{{track.artworkUrl100}}"> 
-          {{ track.trackName }} <span class="text-muted">by</span> {{ track.artistName }}
-        </a>
-      </div>
-    </div>
-    <router-outlet #artist></router-outlet>  
-  </div>
+		</form>
+		<hr />
+		<div class="list-group">
+			<a [routerLink]="['artist', track.artistId]" class="list-group-item list-group-item-action"
+				*ngFor="let track of dynamicResult | async" (click)="moveToArtistSection()">
+				<img src="{{track.artworkUrl100}}">
+				{{ track.trackName }} <span class="text-muted">by</span> {{ track.artistName }}
+			</a>
+		</div>
+	</div>
+	<router-outlet #artist></router-outlet>
 </div>
