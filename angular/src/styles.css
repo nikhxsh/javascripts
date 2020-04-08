@@ -20,6 +20,11 @@ p {
 	margin: 0;
 }
 
+.card-horizontal {
+    display: flex;
+	flex: 1 1 auto;
+}
+
 .spacer {
 	flex: 1;
 }

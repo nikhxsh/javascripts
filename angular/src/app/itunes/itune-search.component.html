@@ -1,19 +1,28 @@
-<div class="card">
-	<div class="card card-body">
-		<form class="form-inline">
+<div class="card w-75">
+	<div class="card-body">
+		<form>
 			<div class="form-group">
+				<label><strong>&nbsp;iTune Search Box</strong></label>
 				<!-- <input type="search" class="form-control" placeholder="Enter search string" #search> -->
-				<input type="search" class="form-control" placeholder="Enter search string" [formControl]="searchField">
+				<input type="search" class="form-control" placeholder="Artist, Track or Album"
+					[formControl]="searchField">
 			</div>
 			<!-- &nbsp;
         <button type="button" class="btn btn-primary" (click)="staticSearch(search.value)">Search</button> -->
 		</form>
-		<hr />
 		<div class="list-group">
 			<a [routerLink]="['artist', track.artistId]" class="list-group-item list-group-item-action"
 				*ngFor="let track of dynamicResult | async" (click)="moveToArtistSection()">
-				<img src="{{track.artworkUrl100}}">
-				{{ track.trackName }} <span class="text-muted">by</span> {{ track.artistName }}
+				<div class="card-horizontal">
+					<div class="img-square-wrapper" style="margin-top: 12px;">
+						<img src="{{track.artworkUrl100}}" alt="Card image cap">
+					</div>
+					<div class="card-body">
+						<h5>{{track.artistName}}</h5>
+						<h6>{{track.trackName}}</h6>
+						<span>{{track.collectionName}}</span>
+					</div>
+				</div>
 			</a>
 		</div>
 	</div>

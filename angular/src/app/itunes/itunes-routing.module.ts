@@ -14,7 +14,8 @@ const routes: Routes = [
 			[
 				{ path: '', redirectTo: 'tracks', pathMatch: 'full' },
 				{ path: 'tracks', component: ArtistTrackListComponent },
-				{ path: 'albums', component: ArtistAlbumListComponent }
+				{ path: 'albums', component: ArtistAlbumListComponent },
+				{ path: 'back', redirectTo: '/itunes', pathMatch: 'full' },
 			]
 	}
 ];
