@@ -17,7 +17,7 @@ export class ItuneSearchComponent implements OnInit, OnDestroy {
 	loading: boolean = false;
 	searchTerm: string;
 
-	@ViewChild('artist') public artistSection: ElementRef;
+	@ViewChild('artist', { static: false }) public artistSection: ElementRef;
 
 	constructor(private itunes: SearchService,
 		private route: ActivatedRoute) {

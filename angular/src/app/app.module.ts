@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,8 +32,13 @@ import { AuthService } from './services/auth.service';
 import { appReducers } from './ngrxstore/reducers/app.reducers';
 import { AccountEffects } from './ngrxstore/effects/account.effects';
 import { AccountService } from './services/account.service';
-import { APIInterceptor } from './services/APIInterceptor';
-import { AuthGuard } from './services/AuthGuardService';
+import { APIInterceptor } from './services/api.interceptor';
+import { AuthGuard } from './services/authguard';
+import { WineryService } from './services/winery.service';
+import { WineryComponent } from './winery/winery.component';
+import { NgDataGridModule } from 'ngdatagrid';
+import { DatePipe, CurrencyPipe } from '@angular/common';
+
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
  *   Every app requires at least one module, the root module, that we call AppModule by convention
@@ -59,7 +65,8 @@ import { AuthGuard } from './services/AuthGuardService';
 		ParentComponent,
 		HolderComponent,
 		LoginComponent,
-		NgrxstoreComponent
+		NgrxstoreComponent,
+		WineryComponent
 	],
 	/**
 	 * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -79,6 +86,8 @@ import { AuthGuard } from './services/AuthGuardService';
 		EffectsModule.forRoot([AccountEffects]),
 		StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
 		AppRoutingModule,
+		NgDataGridModule,
+		ModalModule.forRoot(),
 		TabsModule.forRoot()
 	],
 	/**
@@ -106,11 +115,14 @@ import { AuthGuard } from './services/AuthGuardService';
 	 *   })
 	 */
 	providers: [
+		DatePipe,
+		CurrencyPipe,
 		SimpleService,
 		SearchService,
 		AuthService,
 		AccountService,
 		AuthGuard,
+		WineryService,
 		//Intercepts and handles an HttpRequest or HttpResponse.
 		{
 			provide: HTTP_INTERCEPTORS,

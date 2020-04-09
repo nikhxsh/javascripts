@@ -5,16 +5,17 @@ import { BasicComponent } from './basic/basic.component';
 import { FormsComponent } from './forms/forms.component';
 import { HolderComponent } from './providers/holder.component';
 import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
+import { WineryComponent } from './winery/winery.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'home', pathMatch: 'full' },
-	{ path: 'jokes', component: JokelistComponent },
-	{ path: 'jokes', component: JokelistComponent },
-	{ path: 'ngfor', component: BasicComponent },
+	{ path: 'basics', component: BasicComponent },
 	//parameterised route (Non-parameterised routes take precedence over parameterised routes.)
-	{ path: 'ngfor/:id', component: BasicComponent },
+	{ path: 'basics/:id', component: BasicComponent },
 	{ path: 'forms', component: FormsComponent },
 	{ path: 'providers', component: HolderComponent },
+	{ path: 'ngrx', component: NgrxstoreComponent },
+	{ path: 'jokes', component: JokelistComponent },
 	//Lazy Loading using feature module
 	{
 		path: 'itunes',
@@ -23,8 +24,8 @@ const routes: Routes = [
 		//Angular 8
 		loadChildren: () => import('./itunes/itunes.module').then(module => module.ItuneModule)
 	},
-	{ path: 'ngrx', component: NgrxstoreComponent },
-	{ path: '**', component: JokelistComponent } //catch all route by using the path **
+	{ path: 'winery', component: WineryComponent },
+	{ path: '**', component: BasicComponent } //catch all route by using the path **
 ];
 /**
  * We then install these routes into our application by importing RouterModule.forRoot(routes) into

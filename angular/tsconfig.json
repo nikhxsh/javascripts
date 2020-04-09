@@ -11,14 +11,25 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "es2018",
       "dom"
     ],
     "paths": {
-      "datatable": [
-        "dist/datatable/datatable",
-        "dist/datatable"
+      "customdatatable": [
+        "dist/customdatatable"
+      ],
+      "customdatatable/*": [
+        "dist/customdatatable/*"
+      ],
+      "ngdatagrid": [
+        "dist/ngdatagrid"
+      ],
+      "ngdatagrid/*": [
+        "dist/ngdatagrid/*"
       ]
     }
   },
