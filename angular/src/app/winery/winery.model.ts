@@ -3,7 +3,7 @@ interface Wine {
 	id: number,
 	name: string,
 	wineryId: string,
-	color: string,
+	color: Type,
 	vintage: string,
 	score: number,
 	price: number,
@@ -19,4 +19,14 @@ interface WineInfo {
 	total: number
 }
 
-export { WineInfo, Wine };
+enum Type {
+	Red,
+	White,
+	Rose,
+	Champagne,
+	Dessert,
+	Sparkling,
+	Blush
+}
+
+export { WineInfo, Wine, Type };

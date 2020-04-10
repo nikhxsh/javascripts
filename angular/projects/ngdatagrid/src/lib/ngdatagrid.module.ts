@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { NgDataGridComponent } from './ngdatagrid.component';
 import { GetkeysPipe } from './getkeys.pipe';
@@ -13,8 +12,7 @@ import { GetkeysPipe } from './getkeys.pipe';
 	],
 	imports: [
 		CommonModule,
-		FormsModule,
-		PaginationModule.forRoot()
+		FormsModule
 	],
 	exports: [
 		NgDataGridComponent

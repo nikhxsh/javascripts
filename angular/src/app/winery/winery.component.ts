@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { WineryService } from '../services/winery.service';
 import { HandleError } from '../helpers/error.utility';
 import { Sort, Filter, PagingRequest } from '../helpers/common.model';
-import { Wine } from './winery.model';
+import { Wine, Type } from './winery.model';
 import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest } from 'ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 
@@ -40,10 +40,10 @@ export class WineryComponent implements OnInit {
 	ngOnInit() {
 		this.headers = [
 			new TableHeader({ key: 'Name', enableView: true, sortable: true, filterable: true, sort: SortOrder.Asc, width: 40 }),
-			new TableHeader({ key: 'Vintage', sortable: true, sort: SortOrder.None, width: 10 }),
+			new TableHeader({ key: 'Type', sortable: true, sort: SortOrder.None, filterable: true, width: 10 }),
+			new TableHeader({ key: 'Vintage' }),
 			new TableHeader({ key: 'Score' }),
 			new TableHeader({ key: 'Price' }),
-			new TableHeader({ key: 'Color' }),
 			new TableHeader({ key: 'Year/Rank' }),
 			new TableHeader({ key: 'Issue Date' })
 		];
@@ -61,8 +61,8 @@ export class WineryComponent implements OnInit {
 						this.mappedWines = wineinfo.result.map(x => ({
 							id: x.id,
 							name: x.name,
+							color: Type[x.color],
 							vintage: x.vintage,
-							color: x.color,
 							score: x.score,
 							price: this.currencyPipe.transform(x.price, 'CAD', 'symbol-narrow'),
 							yearAndRank: `${x.rankYear}/${x.rank}`,

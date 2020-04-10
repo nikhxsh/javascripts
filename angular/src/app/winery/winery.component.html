@@ -1,8 +1,8 @@
 <ngdatagrid [totalItems]="totalItems" [records]="mappedWines" [headers]="headers" [enableEdit]="true"
-	[enableDelete]="true" (onPageChange)="pageChanged($event)" (onPageSizeChange)="updatePageSize($event)"
-	(onSearch)="search($event)" (onSort)="sort($event)" (onFilter)="filterRecord($event)" (onReset)="resetAll()"
-	(onView)="openModal(ViewTemplate, 1, $event)" (onEdit)="openModal(EditTemplate, 2, $event)"
-	(onDelete)="openModal(DeleteTemplate, 3, $event)">
+	[enableDelete]="true" [loading]="refreshing" (onPageChange)="pageChanged($event)"
+	(onPageSizeChange)="updatePageSize($event)" (onSearch)="search($event)" (onSort)="sort($event)"
+	(onFilter)="filterRecord($event)" (onReset)="resetAll()" (onView)="openModal(ViewTemplate, 1, $event)"
+	(onEdit)="openModal(EditTemplate, 2, $event)" (onDelete)="openModal(DeleteTemplate, 3, $event)">
 </ngdatagrid>
 
 <ng-template #ViewTemplate>
