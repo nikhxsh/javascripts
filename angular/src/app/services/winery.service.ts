@@ -13,15 +13,17 @@ export class WineryService {
 	}
 
 	public fecthAll(request: any): Observable<WineInfo> {
+
 		let params = new HttpParams({
 			fromObject: {
 				skip: request.skip,
 				take: request.take,
-				token: request.token
+				token: request.token,
+				filters: request.filters
 			}
 		});
 
-		return this.http.get(`${environment.wineryApiBase}/wines`, { params })
+		return this.http.post(`${environment.wineryApiBase}/wines`, request)
 			.pipe(
 				map((response: any) => response as WineInfo)
 			);

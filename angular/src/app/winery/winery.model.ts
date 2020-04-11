@@ -16,7 +16,8 @@ interface Wine {
 
 interface WineInfo {
 	result: Wine[]
-	total: number
+	total: number,
+	filteredTotal: number
 }
 
 enum Type {

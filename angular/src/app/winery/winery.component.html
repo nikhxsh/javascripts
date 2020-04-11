@@ -1,14 +1,16 @@
-<ngdatagrid [totalItems]="totalItems" [records]="mappedWines" [headers]="headers" [enableEdit]="true"
-	[enableDelete]="true" [loading]="refreshing" (onPageChange)="pageChanged($event)"
-	(onPageSizeChange)="updatePageSize($event)" (onSearch)="search($event)" (onSort)="sort($event)"
-	(onFilter)="filterRecord($event)" (onReset)="resetAll()" (onView)="openModal(ViewTemplate, 1, $event)"
-	(onEdit)="openModal(EditTemplate, 2, $event)" (onDelete)="openModal(DeleteTemplate, 3, $event)">
+<ngdatagrid [totalItems]="totalItems" [maxSize]="10" [itemsPerPage]="request.take" [records]="mappedWines"
+	[headers]="headers" [enableEdit]="true" [enableDelete]="true" [loading]="refreshing" [blinkRowOnSelect]="blinkrow"
+	(onPageChange)="pageChanged($event)" (onPageSizeChange)="updatePageSize($event)" (onSearch)="search($event)"
+	(onSort)="sort($event)" (onFilter)="filterRecord($event)" (onReset)="resetAll()"
+	(onView)="openModal(ViewTemplate, 1, $event)" (onEdit)="openModal(EditTemplate, 2, $event)"
+	(onDelete)="openModal(DeleteTemplate, 3, $event)">
 </ngdatagrid>
 
+<!-- previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" -->
 <ng-template #ViewTemplate>
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">Description</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -20,7 +22,7 @@
 <ng-template #EditTemplate>
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">Description</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -32,7 +34,7 @@
 <ng-template #DeleteTemplate>
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">Description</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>

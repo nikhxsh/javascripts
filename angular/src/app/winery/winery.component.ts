@@ -5,7 +5,7 @@ import { WineryService } from '../services/winery.service';
 import { HandleError } from '../helpers/error.utility';
 import { Sort, Filter, PagingRequest } from '../helpers/common.model';
 import { Wine, Type } from './winery.model';
-import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest } from 'ngdatagrid';
+import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from 'ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -19,14 +19,15 @@ export class WineryComponent implements OnInit {
 	selectedDescription = '';
 	refreshing = false;
 	headers: TableHeader[] = [];
+	blinkrow: boolean = true;
 
 	wines: Wine[] = [];
 	mappedWines: any[];
 	modalRef: BsModalRef;
 
 	request = new PagingRequest({
-		take: 10,
 		skip: 0,
+		take: 10,
 		token: '',
 		sort: new Sort("name"),
 		filters: []
@@ -40,10 +41,10 @@ export class WineryComponent implements OnInit {
 	ngOnInit() {
 		this.headers = [
 			new TableHeader({ key: 'Name', enableView: true, sortable: true, filterable: true, sort: SortOrder.Asc, width: 40 }),
-			new TableHeader({ key: 'Type', sortable: true, sort: SortOrder.None, filterable: true, width: 10 }),
-			new TableHeader({ key: 'Vintage' }),
+			new TableHeader({ key: 'Price', sortable: true, sort: SortOrder.None }),
+			new TableHeader({ key: 'Vintage', sortable: true, sort: SortOrder.None }),
+			new TableHeader({ key: 'Color', width: 10 }),
 			new TableHeader({ key: 'Score' }),
-			new TableHeader({ key: 'Price' }),
 			new TableHeader({ key: 'Year/Rank' }),
 			new TableHeader({ key: 'Issue Date' })
 		];
@@ -61,14 +62,17 @@ export class WineryComponent implements OnInit {
 						this.mappedWines = wineinfo.result.map(x => ({
 							id: x.id,
 							name: x.name,
-							color: Type[x.color],
-							vintage: x.vintage,
-							score: x.score,
 							price: this.currencyPipe.transform(x.price, 'CAD', 'symbol-narrow'),
+							vintage: x.vintage,
+							color: Type[x.color],
+							score: x.score,
 							yearAndRank: `${x.rankYear}/${x.rank}`,
 							issueDate: this.datePipe.transform(x.issueDate, 'yyyy-MM-dd')
 						}));
 						this.totalItems = wineinfo.total;
+
+						if (wineinfo.total > wineinfo.filteredTotal)
+							this.totalItems = wineinfo.filteredTotal;
 					}
 					else {
 						this.mappedWines = [];
@@ -86,13 +90,7 @@ export class WineryComponent implements OnInit {
 	}
 
 	public pageChanged(event: PageRequest) {
-		this.request.skip = (event.page - 1) * event.size;
-		this.request.take = event.size;
-		this.getWineryInfo();
-	}
-
-	public search(token: string) {
-		this.request.token = token.trim();
+		this.setSkipTake(event);
 		this.getWineryInfo();
 	}
 
@@ -102,8 +100,14 @@ export class WineryComponent implements OnInit {
 		this.getWineryInfo();
 	}
 
-	public filterRecord(event: FilterRequest) {
+	public search(event: SearchRequest) {
+		this.setSkipTake(event);
+		this.request.token = event.token.trim();
+		this.getWineryInfo();
+	}
 
+	public filterRecord(event: FilterRequest) {
+		this.setSkipTake(event);
 		var filter = this.request.filters.find(x => x.column === event.column);
 		if (filter)
 			filter.token = event.token;
@@ -114,9 +118,13 @@ export class WineryComponent implements OnInit {
 	}
 
 	public updatePageSize(event: PageRequest) {
+		this.setSkipTake(event);
+		this.getWineryInfo();
+	}
+
+	public setSkipTake(event: any) {
 		this.request.skip = (event.page - 1) * event.size;
 		this.request.take = event.size;
-		this.getWineryInfo();
 	}
 
 	public resetAll() {
@@ -137,13 +145,20 @@ export class WineryComponent implements OnInit {
 				break;
 
 			case 2:
+				this.blinkrow = true;
 				this.selectedDescription = this.wines.find(x => x.id === $event.id).name;
 				break;
 
 			case 3:
+				this.blinkrow = true;
 				this.selectedDescription = this.wines.find(x => x.id === $event.id).name;
 				break;
 
 		}
+	}
+
+	public closeModal() {
+		this.modalRef.hide();
+		this.blinkrow = false;
 	}
 }

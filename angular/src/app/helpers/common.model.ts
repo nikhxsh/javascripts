@@ -4,7 +4,6 @@ export class PagingRequest {
 	token: string = ''
 	sort: Sort = undefined
 	filters: Filter[] = []
-	isEnable: boolean = false
 
 	//1. Using Partial<PagingRequest> makes every parameter optional
 	//2. you'd probably be better off defining anything that has a default as optional in the class itself, but assign a default. 

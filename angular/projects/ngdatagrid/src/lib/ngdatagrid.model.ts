@@ -12,7 +12,18 @@ export class TableHeader {
 	}
 }
 
-export enum SortOrder { None = 1, Asc, Desc }
+export enum SortOrder { None, Asc, Desc }
+
+export class PageRequest {
+	page: number
+	size: number
+	constructor(
+		page: number = 1,
+		size: number = 10) {
+		this.page = page;
+		this.size = size;
+	}
+}
 
 export class SortRequest {
 	column: string
@@ -25,24 +36,27 @@ export class SortRequest {
 	}
 }
 
-export class FilterRequest {
-	column: string
+export class SearchRequest extends PageRequest {
 	token: string
 	constructor(
-		column: string,
+		page: number,
+		size: number,
 		token: string) {
-		this.column = column;
+		super(page, size);
 		this.token = token;
 	}
 }
 
-export class PageRequest {
-	page: number
-	size: number
+export class FilterRequest extends PageRequest {
+	column: string
+	token: string
 	constructor(
-		page: number = 1,
-		size: number = 10) {
-		this.page = page;
-		this.size = size;
+		page: number,
+		size: number,
+		column: string,
+		token: string) {
+		super(page, size);
+		this.column = column;
+		this.token = token;
 	}
 }

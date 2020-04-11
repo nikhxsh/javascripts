@@ -10,3 +10,26 @@ thead > th {
     vertical-align: middle !important;
     font-size: x-small !important;
 }
+
+@-webkit-keyframes highlightrow {
+	from { background-color: rgb(89, 157, 184); }
+	to { background-color: inherit; }
+  }
+  @-moz-keyframes highlightrow {
+	from { background-color: rgb(89, 157, 184); }
+	to { background-color: inherit; }
+  }
+  @-o-keyframes highlightrow {
+	from { background-color: rgb(89, 157, 184); }
+	to { background-color: inherit; }
+  }
+  @keyframes highlightrow {
+	from { background-color: rgb(89, 157, 184); }
+	to { background-color: inherit; }
+  }
+  .highlightrow {
+	-webkit-animation: highlightrow 1s infinite; /* Safari 4+ */
+	-moz-animation:    highlightrow 1s infinite; /* Fx 5+ */
+	-o-animation:      highlightrow 1s infinite; /* Opera 12+ */
+	animation:         highlightrow 1s infinite; /* IE 10+ */
+  }

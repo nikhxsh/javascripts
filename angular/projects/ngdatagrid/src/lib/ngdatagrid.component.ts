@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder } from './ngdatagrid.model';
+import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ngdatagrid.model';
 
 @Component({
 	selector: 'ngdatagrid',
@@ -11,9 +11,10 @@ export class NgDataGridComponent {
 	filterSelected = false;
 	currentPage: number = 1;
 	firstPage: number = 1;
-	lastPage: number;
+	lastPage: number = 1;
 	searchToken: string;
 	totalPages: number = 1;
+	blinkRowId: string = '';
 	pages: number[] = [];
 
 	_totalItems: number;
@@ -34,6 +35,11 @@ export class NgDataGridComponent {
 	@Input() enableEdit: boolean = false;
 	@Input() enableDelete: boolean = false;
 	@Input() loading: boolean = false;
+	@Input() blinkRowOnSelect: boolean = false;
+	@Input() firstPageText: string = "First";
+	@Input() prevPageText: string = "Prev";
+	@Input() nextPageText: string = "Next";
+	@Input() lastPageText: string = "Last";
 
 	@Output() onSort: EventEmitter<SortRequest> = new EventEmitter<SortRequest>();
 	@Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
@@ -50,7 +56,7 @@ export class NgDataGridComponent {
 
 	sortClick(columName: string, i: number): void {
 		let selectedHeader = this.headers.find(x => x.key === columName);
-		selectedHeader.sort = (selectedHeader.sort % 3) + 1;
+		selectedHeader.sort = (selectedHeader.sort + 1) % 3;
 
 		this.headers.forEach(x => {
 			if (x.key !== columName)
@@ -62,12 +68,23 @@ export class NgDataGridComponent {
 	}
 
 	searchClick(token: string): void {
-		if (token.length > 0)
-			this.onSearch.emit(token);
+		this.resetPagination();
+		let searchRequest = new SearchRequest(
+			this.currentPage,
+			this.itemsPerPage,
+			token
+		);
+		this.onSearch.emit(searchRequest);
 	}
 
 	filterClick(i: number): void {
-		let filterRequest = new FilterRequest(this.headers[i].key, this.headers[i].filterToken)
+		this.resetPagination();
+		let filterRequest = new FilterRequest(
+			this.currentPage,
+			this.itemsPerPage,
+			this.headers[i].key,
+			this.headers[i].filterToken
+		);
 		this.onFilter.emit(filterRequest);
 	}
 
@@ -88,16 +105,17 @@ export class NgDataGridComponent {
 	}
 
 	onEditClick(item: any): void {
+		this.blinkRowId = item.id;
 		this.onEdit.emit(item);
 	}
 
 	onDeleteClick(item: any): void {
+		this.blinkRowId = item.id;
 		this.onDelete.emit(item);
 	}
 
 	onResetClick(): void {
 		this.currentPage = 1;
-		this.itemsPerPage = 10;
 		this.searchToken = '';
 		this.filterSelected = false;
 		this.headers.map(x => x.filterToken = '');
@@ -121,6 +139,22 @@ export class NgDataGridComponent {
 		if (this.showLinkColumn())
 			colspan++;
 		return colspan;
+	}
+
+	disablePagination(flag: number = 0) {
+		switch (flag) {
+			case 1: return this.records.length === 0 || this.currentPage === 1 || this.loading;
+			case 2: return this.records.length === 0 || this.currentPage === this.totalPages || this.loading;
+			default: return this.loading;
+		}
+	}
+
+	resetPagination(): void {
+		this.pages = [];
+		this.currentPage = 1;
+		this.firstPage = 1;
+		this.lastPage = 1;
+		this.setPages(this.firstPage, this.lastPage);
 	}
 
 	initPagination(): void {
@@ -195,7 +229,7 @@ export class NgDataGridComponent {
 		let min = this.firstPage;
 		let max = (this.firstPage + this.validateMaxSize()) - 1;
 
-		if (this.currentPage <= 10) {
+		if (this.currentPage <= this.maxSize) {
 			min = 1;
 			max = this.validateMaxSize();
 		}
