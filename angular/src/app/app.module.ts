@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +38,7 @@ import { AuthGuard } from './services/authguard';
 import { WineryService } from './services/winery.service';
 import { WineryComponent } from './winery/winery.component';
 import { NgDataGridModule } from 'ngdatagrid';
-import { DatePipe, CurrencyPipe } from '@angular/common';
+import { NgModelformModule } from 'ngmodelform';
 
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
@@ -87,6 +88,7 @@ import { DatePipe, CurrencyPipe } from '@angular/common';
 		StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
 		AppRoutingModule,
 		NgDataGridModule,
+		NgModelformModule,
 		ModalModule.forRoot(),
 		TabsModule.forRoot()
 	],

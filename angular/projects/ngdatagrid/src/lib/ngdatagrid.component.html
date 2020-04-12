@@ -2,15 +2,18 @@
 	<div class="card card-body">
 		<div class="row">
 			<div class="col-md-6">
-				<input class="form-control" type="text" placeholder="Enter search text here" [(ngModel)]="searchToken"
-					(keyup.enter)="searchClick(searchToken)" />
+				<div style="margin-top: 5px;">
+					<input class="form-control form-control-sm" type="text" placeholder="Enter search text here"
+						[(ngModel)]="searchToken" (keyup.enter)="searchClick(searchToken)" />
+				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="btn-group float-right" role="group">
-					<button class="btn btn-sm btn-light" type="button" data-placement="bottom" title="Filter"
-						(click)="filterSelected = !filterSelected">
-						<svg class="svg-icon" viewBox="0 0 20 20">
-							<path fill="none" d="M15.808,14.066H6.516v-1.162H5.354v1.162H4.193c-0.321,0-0.581,0.26-0.581,0.58s0.26,0.58,0.581,0.58h1.162
+				<div class="btn-toolbar float-right" role="toolbar">
+					<div class="btn-group mr-2" role="group">
+						<button class="btn btn-sm btn-light" type="button" data-placement="bottom" title="Filter"
+							(click)="filterSelected = !filterSelected">
+							<svg class="svg-icon" viewBox="0 0 20 20">
+								<path fill="none" d="M15.808,14.066H6.516v-1.162H5.354v1.162H4.193c-0.321,0-0.581,0.26-0.581,0.58s0.26,0.58,0.581,0.58h1.162
 						v1.162h1.162v-1.162h9.292c0.32,0,0.58-0.26,0.58-0.58S16.128,14.066,15.808,14.066z M15.808,9.419h-1.742V8.258h-1.162v1.161
 						h-8.71c-0.321,0-0.581,0.26-0.581,0.581c0,0.321,0.26,0.581,0.581,0.581h8.71v1.161h1.162v-1.161h1.742
 						c0.32,0,0.58-0.26,0.58-0.581C16.388,9.679,16.128,9.419,15.808,9.419z M17.55,0.708H2.451c-0.962,0-1.742,0.78-1.742,1.742v15.1
@@ -18,28 +21,43 @@
 						c0,0.32-0.26,0.58-0.58,0.58H2.451c-0.321,0-0.581-0.26-0.581-0.58v-15.1c0-0.321,0.26-0.581,0.581-0.581H17.55
 						c0.32,0,0.58,0.26,0.58,0.581V17.551z M15.808,4.774H9.419V3.612H8.258v1.162H4.193c-0.321,0-0.581,0.26-0.581,0.581
 						s0.26,0.581,0.581,0.581h4.065v1.162h1.161V5.935h6.388c0.32,0,0.58-0.26,0.58-0.581S16.128,4.774,15.808,4.774z">
-							</path>
-						</svg>
-					</button>
-					<button class="btn btn-sm btn-light" type="button" data-placement="bottom" title="Reset"
-						(click)="onResetClick()">
-						<svg class="svg-icon" viewBox="0 0 20 20">
-							<path fill="none"
-								d="M3.254,6.572c0.008,0.072,0.048,0.123,0.082,0.187c0.036,0.07,0.06,0.137,0.12,0.187C3.47,6.957,3.47,6.978,3.484,6.988c0.048,0.034,0.108,0.018,0.162,0.035c0.057,0.019,0.1,0.066,0.164,0.066c0.004,0,0.01,0,0.015,0l2.934-0.074c0.317-0.007,0.568-0.271,0.56-0.589C7.311,6.113,7.055,5.865,6.744,5.865c-0.005,0-0.01,0-0.015,0L5.074,5.907c2.146-2.118,5.604-2.634,7.971-1.007c2.775,1.912,3.48,5.726,1.57,8.501c-1.912,2.781-5.729,3.486-8.507,1.572c-0.259-0.18-0.618-0.119-0.799,0.146c-0.18,0.262-0.114,0.621,0.148,0.801c1.254,0.863,2.687,1.279,4.106,1.279c2.313,0,4.591-1.1,6.001-3.146c2.268-3.297,1.432-7.829-1.867-10.101c-2.781-1.913-6.816-1.36-9.351,1.058L4.309,3.567C4.303,3.252,4.036,3.069,3.72,3.007C3.402,3.015,3.151,3.279,3.16,3.597l0.075,2.932C3.234,6.547,3.251,6.556,3.254,6.572z">
-							</path>
-						</svg>
-					</button>
-					<div class="btn-group" role="group">
-						<button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Show {{ itemsPerPage }}
+								</path>
+							</svg>
 						</button>
-						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-							<a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(10)">10</a>
-							<a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(25)">25</a>
-							<a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(50)">50</a>
-							<a class="dropdown-item" href="javascript:void(0)" (click)="onPageSizeChanged(100)">100</a>
+						<button class="btn btn-sm btn-light" type="button" data-placement="bottom" title="Reset"
+							(click)="onResetClick()">
+							<svg class="svg-icon" viewBox="0 0 20 20">
+								<path fill="none"
+									d="M3.254,6.572c0.008,0.072,0.048,0.123,0.082,0.187c0.036,0.07,0.06,0.137,0.12,0.187C3.47,6.957,3.47,6.978,3.484,6.988c0.048,0.034,0.108,0.018,0.162,0.035c0.057,0.019,0.1,0.066,0.164,0.066c0.004,0,0.01,0,0.015,0l2.934-0.074c0.317-0.007,0.568-0.271,0.56-0.589C7.311,6.113,7.055,5.865,6.744,5.865c-0.005,0-0.01,0-0.015,0L5.074,5.907c2.146-2.118,5.604-2.634,7.971-1.007c2.775,1.912,3.48,5.726,1.57,8.501c-1.912,2.781-5.729,3.486-8.507,1.572c-0.259-0.18-0.618-0.119-0.799,0.146c-0.18,0.262-0.114,0.621,0.148,0.801c1.254,0.863,2.687,1.279,4.106,1.279c2.313,0,4.591-1.1,6.001-3.146c2.268-3.297,1.432-7.829-1.867-10.101c-2.781-1.913-6.816-1.36-9.351,1.058L4.309,3.567C4.303,3.252,4.036,3.069,3.72,3.007C3.402,3.015,3.151,3.279,3.16,3.597l0.075,2.932C3.234,6.547,3.251,6.556,3.254,6.572z">
+								</path>
+							</svg>
+						</button>
+						<div class="btn-group" role="group">
+							<button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Show {{ itemsPerPage }}
+							</button>
+							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+								<a class="dropdown-item" href="javascript:void(0)"
+									(click)="onPageSizeChanged(10)">10</a>
+								<a class="dropdown-item" href="javascript:void(0)"
+									(click)="onPageSizeChanged(25)">25</a>
+								<a class="dropdown-item" href="javascript:void(0)"
+									(click)="onPageSizeChanged(50)">50</a>
+								<a class="dropdown-item" href="javascript:void(0)"
+									(click)="onPageSizeChanged(100)">100</a>
+							</div>
 						</div>
+					</div>
+					<div *ngIf="enableAdd" class="btn-group mr-2" role="group">
+						<button class="btn btn-sm btn-light" type="button" data-placement="bottom" title="Add record"
+							(click)="onAddClick()">
+							<svg class="svg-icon" viewBox="0 0 20 20">
+								<path fill="none"
+									d="M13.388,9.624h-3.011v-3.01c0-0.208-0.168-0.377-0.376-0.377S9.624,6.405,9.624,6.613v3.01H6.613c-0.208,0-0.376,0.168-0.376,0.376s0.168,0.376,0.376,0.376h3.011v3.01c0,0.208,0.168,0.378,0.376,0.378s0.376-0.17,0.376-0.378v-3.01h3.011c0.207,0,0.377-0.168,0.377-0.376S13.595,9.624,13.388,9.624z M10,1.344c-4.781,0-8.656,3.875-8.656,8.656c0,4.781,3.875,8.656,8.656,8.656c4.781,0,8.656-3.875,8.656-8.656C18.656,5.219,14.781,1.344,10,1.344z M10,17.903c-4.365,0-7.904-3.538-7.904-7.903S5.635,2.096,10,2.096S17.903,5.635,17.903,10S14.365,17.903,10,17.903z">
+								</path>
+							</svg>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -122,7 +140,7 @@
 							</td>
 						</tr>
 						<ng-template #showdata>
-							<tr *ngIf="records.length === 0">
+							<tr *ngIf="records && records.length === 0">
 								<td [attr.colspan]="getColSpan()" class="text-center">
 									<br />
 									<h6><span class="badge badge-secondary">No record(s) found!</span></h6>

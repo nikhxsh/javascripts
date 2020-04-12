@@ -30,6 +30,18 @@
       ],
       "ngdatagrid/*": [
         "dist/ngdatagrid/*"
+      ],
+      "ng-model-form": [
+        "dist/ng-model-form"
+      ],
+      "ng-model-form/*": [
+        "dist/ng-model-form/*"
+      ],
+      "ngmodelform": [
+        "dist/ngmodelform"
+      ],
+      "ngmodelform/*": [
+        "dist/ngmodelform/*"
       ]
     }
   },

@@ -163,6 +163,40 @@
 					}
 				}
 			}
+		},
+		"ngmodelform": {
+			"projectType": "library",
+			"root": "projects/ngmodelform",
+			"sourceRoot": "projects/ngmodelform/src",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/ngmodelform/tsconfig.lib.json",
+						"project": "projects/ngmodelform/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/ngmodelform/src/test.ts",
+						"tsConfig": "projects/ngmodelform/tsconfig.spec.json",
+						"karmaConfig": "projects/ngmodelform/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/ngmodelform/tsconfig.lib.json",
+							"projects/ngmodelform/tsconfig.spec.json"
+						],
+						"exclude": [
+							"**/node_modules/**"
+						]
+					}
+				}
+			}
 		}
 	},
 	"defaultProject": "headstart"

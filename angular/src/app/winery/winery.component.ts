@@ -7,6 +7,8 @@ import { Sort, Filter, PagingRequest } from '../helpers/common.model';
 import { Wine, Type } from './winery.model';
 import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from 'ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
+import { FormField, FieldType, DropDown } from 'ngmodelform';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-winery',
@@ -20,10 +22,12 @@ export class WineryComponent implements OnInit {
 	refreshing = false;
 	headers: TableHeader[] = [];
 	blinkrow: boolean = true;
-
+	resetForm: boolean = false;
 	wines: Wine[] = [];
 	mappedWines: any[];
+
 	modalRef: BsModalRef;
+	modelFormFields: FormField[] = []
 
 	request = new PagingRequest({
 		skip: 0,
@@ -48,6 +52,7 @@ export class WineryComponent implements OnInit {
 			new TableHeader({ key: 'Year/Rank' }),
 			new TableHeader({ key: 'Issue Date' })
 		];
+
 		this.getWineryInfo();
 	}
 
@@ -136,22 +141,33 @@ export class WineryComponent implements OnInit {
 		this.getWineryInfo();
 	}
 
+	public onFormSubmit(event: any) {
+		console.log(event);
+	}
+
 	public openModal(template: TemplateRef<any>, flag, $event) {
+		this.resetForm = false;
 		this.modalRef = this.modalService.show(template);
+		let wine = this.wines.find(x => x.id === $event.id);
 
 		switch (flag) {
 			case 1:
-				this.selectedDescription = this.wines.find(x => x.id === $event.id).note;
+				this.selectedDescription = wine.note;
 				break;
 
 			case 2:
 				this.blinkrow = true;
-				this.selectedDescription = this.wines.find(x => x.id === $event.id).name;
+				let wineTypes = this.getWineTypes();
+				this.modelFormFields = [
+					new FormField("Name", "name", new FormControl(wine.name, Validators.required), FieldType.Text),
+					new FormField("Vintage", "vintage", new FormControl(wine.vintage, Validators.required), FieldType.Text),
+					new DropDown("Color", "color", new FormControl(wineTypes[wine.color], Validators.required), wineTypes)
+				];
 				break;
 
 			case 3:
 				this.blinkrow = true;
-				this.selectedDescription = this.wines.find(x => x.id === $event.id).name;
+				this.selectedDescription = wine.name;
 				break;
 
 		}
@@ -160,5 +176,14 @@ export class WineryComponent implements OnInit {
 	public closeModal() {
 		this.modalRef.hide();
 		this.blinkrow = false;
+		this.resetForm = true;
+	}
+
+	private getWineTypes() {
+		let types: string[] = [];
+		for (var n in Type) {
+			if (typeof Type[n] === 'number') types.push(n);
+		}
+		return types;
 	}
 }

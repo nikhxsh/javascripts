@@ -1,0 +1,63 @@
+<div class="card card-body">
+	<form [formGroup]="formGroup" novalidate>
+		<fieldset>
+			<div class="form-group" *ngFor="let field of formFields; let i = index" [attr.data-index]="i">
+				<label>{{field.label}}</label>
+				<ng-template [ngIf]="field.type === 1">
+					<input type="text" class="form-control form-control-sm" formControlName="{{field.controlName}}"
+						[ngClass]="{
+						'is-invalid': formGroup.controls[field.controlName].invalid && 
+									  formGroup.controls[field.controlName].touched,
+						'is-valid': formGroup.controls[field.controlName].valid && 
+									formGroup.controls[field.controlName].touched
+						}">
+					<div class="valid-feedback">
+						{{field.validText}}
+					</div>
+					<div class="invalid-feedback" *ngIf="formGroup.controls[field.controlName].invalid && 
+								(
+									formGroup.controls[field.controlName].dirty || 
+								    formGroup.controls[field.controlName].touched
+								)">
+						<p *ngIf="formGroup.controls[field.controlName].errors.required">
+							{{field.label}} is required.
+						</p>
+						<p *ngIf="formGroup.controls[field.controlName].errors.pattern">
+							{{field.label}} is Non-compliant with pattern.
+						</p>
+					</div>
+				</ng-template>
+				<ng-template [ngIf]="field.type === 2">
+				</ng-template>
+				<ng-template [ngIf]="field.type === 3">
+				</ng-template>
+				<ng-template [ngIf]="field.type === 4">
+					<select class="form-control form-control-sm" formControlName="{{field.controlName}}" [ngClass]="{
+						'is-invalid': formGroup.controls[field.controlName].invalid && 
+									  formGroup.controls[field.controlName].touched,
+						'is-valid': formGroup.controls[field.controlName].valid && 
+									formGroup.controls[field.controlName].touched
+						}">
+						<option *ngFor="let item of field.values" [value]="item">{{item}}
+						</option>
+					</select>
+					<div class="valid-feedback">
+						{{field.validText}}
+					</div>
+					<div class="invalid-feedback" *ngIf="formGroup.controls[field.controlName].invalid && 
+								(
+									formGroup.controls[field.controlName].dirty || 
+								    formGroup.controls[field.controlName].touched
+								)">
+						<p *ngIf="formGroup.controls[field.controlName].errors.required">
+							{{field.label}} is required.
+						</p>
+					</div>
+				</ng-template>
+				<ng-template [ngIf]="field.type === 5">
+				</ng-template>
+			</div>
+		</fieldset>
+	</form>
+	<button class="btn btn-info" (click)="onSubmitClick()">{{submitText}}</button>
+</div>

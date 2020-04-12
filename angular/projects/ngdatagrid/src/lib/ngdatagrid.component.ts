@@ -32,6 +32,7 @@ export class NgDataGridComponent {
 	@Input() maxSize: number = 10;
 	@Input() headers: TableHeader[];
 	@Input() records: any[] = [];
+	@Input() enableAdd: boolean = false;
 	@Input() enableEdit: boolean = false;
 	@Input() enableDelete: boolean = false;
 	@Input() loading: boolean = false;
@@ -47,6 +48,7 @@ export class NgDataGridComponent {
 	@Output() onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
 	@Output() onPageSizeChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
 	@Output() onView: EventEmitter<any> = new EventEmitter<any>();
+	@Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
 	@Output() onEdit: EventEmitter<any> = new EventEmitter<any>();
 	@Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
 	@Output() onReset: EventEmitter<any> = new EventEmitter<any>();
@@ -104,6 +106,10 @@ export class NgDataGridComponent {
 		this.onView.emit(item);
 	}
 
+	onAddClick(): void {
+		this.onAdd.emit();
+	}
+
 	onEditClick(item: any): void {
 		this.blinkRowId = item.id;
 		this.onEdit.emit(item);
@@ -143,8 +149,8 @@ export class NgDataGridComponent {
 
 	disablePagination(flag: number = 0) {
 		switch (flag) {
-			case 1: return this.records.length === 0 || this.currentPage === 1 || this.loading;
-			case 2: return this.records.length === 0 || this.currentPage === this.totalPages || this.loading;
+			case 1: return this.records && (this.records.length === 0 || this.currentPage === 1 || this.loading);
+			case 2: return this.records && (this.records.length === 0 || this.currentPage === this.totalPages || this.loading);
 			default: return this.loading;
 		}
 	}

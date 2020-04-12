@@ -21,13 +21,13 @@ interface WineInfo {
 }
 
 enum Type {
-	Red,
-	White,
-	Rose,
+	Blush,
 	Champagne,
 	Dessert,
+	Red,
+	Rose,
 	Sparkling,
-	Blush
+	White
 }
 
 export { WineInfo, Wine, Type };
