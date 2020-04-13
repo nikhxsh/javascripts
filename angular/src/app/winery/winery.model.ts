@@ -1,15 +1,12 @@
 
 interface Wine {
-	id: number,
+	id: string,
 	name: string,
 	wineryId: string,
 	color: Type,
 	vintage: string,
-	score: number,
 	price: number,
 	issueDate: string,
-	rank: number,
-	rankYear: number,
 	note: string
 }
 

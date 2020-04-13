@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ngdatagrid.model';
+import { Page } from 'ngpagination';
 
 @Component({
 	selector: 'ngdatagrid',
@@ -9,27 +10,14 @@ import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, Search
 export class NgDataGridComponent {
 
 	filterSelected = false;
-	currentPage: number = 1;
-	firstPage: number = 1;
-	lastPage: number = 1;
 	searchToken: string;
-	totalPages: number = 1;
 	blinkRowId: string = '';
-	pages: number[] = [];
+	initPagination: boolean;
+	resetPagination: boolean;
 
-	_totalItems: number;
-	@Input()
-	set totalItems(val: number) {
-		this._totalItems = val;
-		this.initPagination();
-	}
-
-	get totalItems(): number {
-		return this._totalItems;
-	}
-
-	@Input() itemsPerPage: number = 10;
+	@Input() totalItems: number = 0;
 	@Input() maxSize: number = 10;
+	@Input() itemsPerPage: number = 10;
 	@Input() headers: TableHeader[];
 	@Input() records: any[] = [];
 	@Input() enableAdd: boolean = false;
@@ -37,10 +25,10 @@ export class NgDataGridComponent {
 	@Input() enableDelete: boolean = false;
 	@Input() loading: boolean = false;
 	@Input() blinkRowOnSelect: boolean = false;
-	@Input() firstPageText: string = "First";
-	@Input() prevPageText: string = "Prev";
-	@Input() nextPageText: string = "Next";
-	@Input() lastPageText: string = "Last";
+	@Input() firstPageText: string;
+	@Input() prevPageText: string;
+	@Input() nextPageText: string;
+	@Input() lastPageText: string;
 
 	@Output() onSort: EventEmitter<SortRequest> = new EventEmitter<SortRequest>();
 	@Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
@@ -56,7 +44,18 @@ export class NgDataGridComponent {
 	constructor() {
 	}
 
-	sortClick(columName: string, i: number): void {
+	onPageSizeChanged(Size: number): void {
+		this.itemsPerPage = Size;
+		var pageRequest = new PageRequest(1, this.itemsPerPage);
+		this.onPageSizeChange.emit(pageRequest);
+	}
+
+	onPageChanged(event: Page): void {
+		var pageRequest = new PageRequest(event.currentPage, this.itemsPerPage);
+		this.onPageChange.emit(pageRequest);
+	}
+
+	sortClick(columName: string): void {
 		let selectedHeader = this.headers.find(x => x.key === columName);
 		selectedHeader.sort = (selectedHeader.sort + 1) % 3;
 
@@ -70,9 +69,9 @@ export class NgDataGridComponent {
 	}
 
 	searchClick(token: string): void {
-		this.resetPagination();
+		this.resetPagination = true;
 		let searchRequest = new SearchRequest(
-			this.currentPage,
+			1,
 			this.itemsPerPage,
 			token
 		);
@@ -80,26 +79,14 @@ export class NgDataGridComponent {
 	}
 
 	filterClick(i: number): void {
-		this.resetPagination();
+		this.resetPagination = true;
 		let filterRequest = new FilterRequest(
-			this.currentPage,
+			1,
 			this.itemsPerPage,
 			this.headers[i].key,
 			this.headers[i].filterToken
 		);
 		this.onFilter.emit(filterRequest);
-	}
-
-	onPageChanged(): void {
-		var pageRequest = new PageRequest(this.currentPage, this.itemsPerPage);
-		this.onPageChange.emit(pageRequest);
-	}
-
-	onPageSizeChanged(Size: number): void {
-		this.itemsPerPage = Size;
-		this.initPagination();
-		var pageRequest = new PageRequest(this.currentPage, this.itemsPerPage);
-		this.onPageSizeChange.emit(pageRequest);
 	}
 
 	onViewClick(item: any): void {
@@ -121,7 +108,7 @@ export class NgDataGridComponent {
 	}
 
 	onResetClick(): void {
-		this.currentPage = 1;
+		this.resetPagination = true;
 		this.searchToken = '';
 		this.filterSelected = false;
 		this.headers.map(x => x.filterToken = '');
@@ -145,133 +132,5 @@ export class NgDataGridComponent {
 		if (this.showLinkColumn())
 			colspan++;
 		return colspan;
-	}
-
-	disablePagination(flag: number = 0) {
-		switch (flag) {
-			case 1: return this.records && (this.records.length === 0 || this.currentPage === 1 || this.loading);
-			case 2: return this.records && (this.records.length === 0 || this.currentPage === this.totalPages || this.loading);
-			default: return this.loading;
-		}
-	}
-
-	resetPagination(): void {
-		this.pages = [];
-		this.currentPage = 1;
-		this.firstPage = 1;
-		this.lastPage = 1;
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	initPagination(): void {
-		this.pages = [];
-		this.currentPage = 1;
-		this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
-		this.firstPage = this.currentPage;
-		this.lastPage = this.validateMaxSize();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	setPages(min: number, max: number): void {
-		this.pages = [];
-		for (let i = min; i <= max && i <= this.totalPages; i++)
-			this.pages.push(i);
-	}
-
-	onPageClick(page: number): void {
-		this.currentPage = page;
-
-		let median = Math.ceil(this.validateMaxSize() / 2) - 1;
-		let min = this.currentPage - median;
-		let max = this.currentPage + median + 1;
-
-		if (min < 1) {
-			min = 1;
-			max = this.validateMaxSize();
-		}
-		else if (max > this.totalPages) {
-			max = this.totalPages;
-			min = (this.totalPages - this.validateMaxSize()) + 1;
-		}
-
-		this.firstPage = min;
-		this.lastPage = max;
-
-		this.onPageChanged();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	onPreviousPageClick(prevPage: number): void {
-
-		if (prevPage < 1)
-			return;
-
-		this.currentPage = prevPage;
-
-		let max = this.lastPage;
-		let min = (this.currentPage - this.validateMaxSize()) + (max - this.currentPage) + 1;
-
-		if (this.firstPage > this.currentPage) {
-			min = this.currentPage;
-			max = (this.currentPage + this.validateMaxSize()) - 1;
-			this.firstPage = min;
-			this.lastPage = max;
-		}
-
-		this.firstPage = min;
-		this.lastPage = max;
-
-		this.onPageChanged();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	onNextPageClick(nextPage: number): void {
-
-		if (nextPage > this.totalPages)
-			return;
-
-		this.currentPage = nextPage;
-
-		let min = this.firstPage;
-		let max = (this.firstPage + this.validateMaxSize()) - 1;
-
-		if (this.currentPage <= this.maxSize) {
-			min = 1;
-			max = this.validateMaxSize();
-		}
-		else if (max >= this.totalPages) {
-			min = (this.totalPages - this.validateMaxSize()) + 1;
-			max = this.totalPages;
-		}
-		else {
-			min = (this.currentPage - this.validateMaxSize()) + 1;
-			max = this.currentPage;
-		}
-
-		this.firstPage = min;
-		this.lastPage = max;
-
-		this.onPageChanged();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	onFirstPageClick(): void {
-		this.currentPage = 1;
-		this.firstPage = this.currentPage;
-		this.lastPage = (this.firstPage + this.validateMaxSize()) - 1;
-		this.onPageChanged();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	onLastPageClick(): void {
-		this.currentPage = this.totalPages;
-		this.firstPage = (this.currentPage - this.validateMaxSize()) + 1;
-		this.lastPage = this.currentPage;
-		this.onPageChanged();
-		this.setPages(this.firstPage, this.lastPage);
-	}
-
-	validateMaxSize(): number {
-		return this.maxSize > this.totalPages ? this.totalPages : this.maxSize;
 	}
 }

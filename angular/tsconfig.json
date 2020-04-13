@@ -42,6 +42,18 @@
       ],
       "ngmodelform/*": [
         "dist/ngmodelform/*"
+      ],
+      "ng-pagination": [
+        "dist/ng-pagination"
+      ],
+      "ng-pagination/*": [
+        "dist/ng-pagination/*"
+      ],
+      "ngpagination": [
+        "dist/ngpagination"
+      ],
+      "ngpagination/*": [
+        "dist/ngpagination/*"
       ]
     }
   },

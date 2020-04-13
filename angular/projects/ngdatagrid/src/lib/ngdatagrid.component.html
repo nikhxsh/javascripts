@@ -71,7 +71,7 @@
 							<th scope="col" *ngFor="let item of headers; let i = index" [attr.data-index]="i"
 								width="{{item.width}}%">
 								<span *ngIf="item.sortable">
-									<a href="javascript:void(0);" (click)="sortClick(item.key, i)">
+									<a href="javascript:void(0);" (click)="sortClick(item.key)">
 										<span class="float-left"> {{ item.key }}</span>
 										<span *ngIf="item.sort===0" class="float-right">
 											<svg class="svg-icon" viewBox="0 0 20 20">
@@ -191,27 +191,11 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<ul class="pagination justify-content-center">
-					<li class="page-item" [class.disabled]="disablePagination(1)">
-						<a class="page-link" href="javascript:void(0)"
-							(click)="onFirstPageClick()">{{firstPageText}}</a>
-					</li>
-					<li class="page-item" [class.disabled]="disablePagination(1)">
-						<a class="page-link" href="javascript:void(0)"
-							(click)="onPreviousPageClick(currentPage - 1)">{{prevPageText}}</a>
-					</li>
-					<li class="page-item" *ngFor="let page of pages" [class.disabled]="disablePagination()"
-						[class.active]="currentPage === page">
-						<a class="page-link" href="javascript:void(0)" (click)="onPageClick(page)">{{page}}</a>
-					</li>
-					<li class="page-item" [class.disabled]="disablePagination(2)">
-						<a class="page-link" href="javascript:void(0)"
-							(click)="onNextPageClick(currentPage + 1)">{{nextPageText}}</a>
-					</li>
-					<li class="page-item" [class.disabled]="disablePagination(2)">
-						<a class="page-link" href="javascript:void(0)" (click)="onLastPageClick()">{{lastPageText}}</a>
-					</li>
-				</ul>
+				<ngpagination [totalItems]="totalItems" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize"
+					[disable]="loading" [reset]="resetPagination" [firstPageText]="firstPageText"
+					[prevPageText]="prevPageText" [nextPageText]="nextPageText" [lastPageText]="lastPageText"
+					(onPageChanged)="onPageChanged($event)">
+				</ngpagination>
 			</div>
 		</div>
 	</div>​ ​

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgDataGridComponent } from './ngdatagrid.component';
 import { GetkeysPipe } from './getkeys.pipe';
+import { NgPaginationModule } from 'ngpagination';
 
 @NgModule({
 	declarations: [
@@ -12,7 +13,8 @@ import { GetkeysPipe } from './getkeys.pipe';
 	],
 	imports: [
 		CommonModule,
-		FormsModule
+		FormsModule,
+		NgPaginationModule
 	],
 	exports: [
 		NgDataGridComponent

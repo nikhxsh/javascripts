@@ -197,6 +197,41 @@
 					}
 				}
 			}
+		},
+		"ngpagination": {
+			"projectType": "library",
+			"root": "projects/ngpagination",
+			"sourceRoot": "projects/ngpagination/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/ngpagination/tsconfig.lib.json",
+						"project": "projects/ngpagination/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/ngpagination/src/test.ts",
+						"tsConfig": "projects/ngpagination/tsconfig.spec.json",
+						"karmaConfig": "projects/ngpagination/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/ngpagination/tsconfig.lib.json",
+							"projects/ngpagination/tsconfig.spec.json"
+						],
+						"exclude": [
+							"**/node_modules/**"
+						]
+					}
+				}
+			}
 		}
 	},
 	"defaultProject": "headstart"

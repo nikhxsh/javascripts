@@ -45,11 +45,9 @@ export class WineryComponent implements OnInit {
 	ngOnInit() {
 		this.headers = [
 			new TableHeader({ key: 'Name', enableView: true, sortable: true, filterable: true, sort: SortOrder.Asc, width: 40 }),
-			new TableHeader({ key: 'Price', sortable: true, sort: SortOrder.None }),
-			new TableHeader({ key: 'Vintage', sortable: true, sort: SortOrder.None }),
-			new TableHeader({ key: 'Color', width: 10 }),
-			new TableHeader({ key: 'Score' }),
-			new TableHeader({ key: 'Year/Rank' }),
+			new TableHeader({ key: 'Color', sortable: true, sort: SortOrder.None, filterable: true }),
+			new TableHeader({ key: 'Price', sortable: true, sort: SortOrder.None, filterable: true }),
+			new TableHeader({ key: 'Vintage' }),
 			new TableHeader({ key: 'Issue Date' })
 		];
 
@@ -67,11 +65,9 @@ export class WineryComponent implements OnInit {
 						this.mappedWines = wineinfo.result.map(x => ({
 							id: x.id,
 							name: x.name,
+							color: Type[x.color],
 							price: this.currencyPipe.transform(x.price, 'CAD', 'symbol-narrow'),
 							vintage: x.vintage,
-							color: Type[x.color],
-							score: x.score,
-							yearAndRank: `${x.rankYear}/${x.rank}`,
 							issueDate: this.datePipe.transform(x.issueDate, 'yyyy-MM-dd')
 						}));
 						this.totalItems = wineinfo.total;
@@ -148,29 +144,33 @@ export class WineryComponent implements OnInit {
 	public openModal(template: TemplateRef<any>, flag, $event) {
 		this.resetForm = false;
 		this.modalRef = this.modalService.show(template);
-		let wine = this.wines.find(x => x.id === $event.id);
-
 		switch (flag) {
 			case 1:
-				this.selectedDescription = wine.note;
+				this.selectedDescription = $event.note;
 				break;
 
 			case 2:
 				this.blinkrow = true;
-				let wineTypes = this.getWineTypes();
-				this.modelFormFields = [
-					new FormField("Name", "name", new FormControl(wine.name, Validators.required), FieldType.Text),
-					new FormField("Vintage", "vintage", new FormControl(wine.vintage, Validators.required), FieldType.Text),
-					new DropDown("Color", "color", new FormControl(wineTypes[wine.color], Validators.required), wineTypes)
-				];
+				this.sendForm($event.id);
 				break;
 
 			case 3:
 				this.blinkrow = true;
-				this.selectedDescription = wine.name;
+				this.selectedDescription = $event.name;
 				break;
 
 		}
+	}
+
+	sendForm(id: string): void {
+		let wine = this.wines.find(x => x.id === id);
+		let wineTypes = this.getWineTypes();
+		this.modelFormFields = [
+			new FormField("Name", "name", new FormControl(wine.name, Validators.required), FieldType.Text),
+			new DropDown("Color", "color", new FormControl(wineTypes[wine.color], Validators.required), wineTypes),
+			new FormField("Price", "price", new FormControl(wine.price, Validators.required), FieldType.Text),
+			new FormField("Vintage", "vintage", new FormControl(wine.vintage, Validators.required), FieldType.Text)
+		];
 	}
 
 	public closeModal() {
