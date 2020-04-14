@@ -5,7 +5,7 @@ import { WineryService } from '../services/winery.service';
 import { HandleError } from '../helpers/error.utility';
 import { Sort, Filter, PagingRequest } from '../helpers/common.model';
 import { Wine, Type } from './winery.model';
-import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from 'ngdatagrid';
+import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from '@nikxsh/ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { FormField, FieldType, DropDown } from 'ngmodelform';
 import { FormControl, Validators } from '@angular/forms';

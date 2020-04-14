@@ -37,8 +37,8 @@ import { APIInterceptor } from './services/api.interceptor';
 import { AuthGuard } from './services/authguard';
 import { WineryService } from './services/winery.service';
 import { WineryComponent } from './winery/winery.component';
-import { NgDataGridModule } from 'ngdatagrid';
 import { NgModelformModule } from 'ngmodelform';
+import { NgDataGridModule } from '@nikxsh/ngdatagrid';
 
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.

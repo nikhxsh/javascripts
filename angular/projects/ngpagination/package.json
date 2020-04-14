@@ -1,8 +1,13 @@
 {
-  "name": "ngpagination",
-  "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
-  }
+	"name": "@nikxsh/ngpagination",
+	"version": "1.0.0",
+	"peerDependencies": {
+		"@angular/common": "^8.2.14",
+		"@angular/core": "^8.2.14"
+	},
+	"license": "ISC",
+	"keywords": [
+		"angular",
+		"pagination"
+	]
 }

@@ -1,7 +1,6 @@
 /*
  * Public API Surface of ngdatagrid
  */
-
-export * from './lib/ngdatagrid.model';
-export * from './lib/ngdatagrid.component';
-export * from './lib/ngdatagrid.module';
+export { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from './lib/ngdatagrid.model';
+export { NgDataGridComponent } from './lib/ngdatagrid.component';
+export { NgDataGridModule } from './lib/ngdatagrid.module';
