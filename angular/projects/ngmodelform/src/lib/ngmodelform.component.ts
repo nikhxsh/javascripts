@@ -1,23 +1,22 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ModelFormControl, FormField } from './ngmodelform.model';
 import { FormGroup } from '@angular/forms';
+import { FormField, FormFieldControl } from './ngmodelform.model';
 
 @Component({
 	selector: 'ngmodelform',
 	templateUrl: './ngmodelform.component.html',
 	styles: []
 })
-export class NgModelformComponent {
+export class NgModelFormComponent {
 
 	formGroup: FormGroup;
-	formControls: ModelFormControl[] = [];
+	formControls: FormFieldControl[] = [];
 
-	_formFields: FormField[] = [];;
+	_formFields: FormField[] = [];
 	@Input()
 	set formFields(val: FormField[]) {
 		this._formFields = val;
-		this.createControls();
-		this.createForm();
+		this.prepareForm();
 	}
 
 	get formFields(): FormField[] {
@@ -40,15 +39,9 @@ export class NgModelformComponent {
 		this.formGroup = new FormGroup({});
 	}
 
-	createControls() {
-		this.formFields.forEach(field => {
-			this.formControls.push(new ModelFormControl(field.controlName, field.control));
-		});
-	}
-
-	createForm(): void {
-		this.formControls.forEach(field => {
-			this.formGroup.addControl(field.name, field.control);
+	prepareForm() {
+		this.formFields.forEach(item => {
+			this.formGroup.addControl(item.field.name, item.field.control);
 		});
 	}
 

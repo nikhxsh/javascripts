@@ -1,0 +1,39 @@
+<div class="form-group" [formGroup]="group">
+	<label>{{label}}</label>
+	<select
+		*ngIf="!multiple"
+		class="form-control form-control-sm"
+		formControlName="{{name}}"
+		[ngClass]="{
+			'is-invalid' : control.invalid && control.touched,
+			'is-valid'   : control.valid && control.touched
+		}">
+		<option *ngFor="let option of options" [value]="option">
+			{{option}}
+		</option>
+	</select>
+	<select
+		*ngIf="multiple"
+		multiple
+		class="form-control form-control-sm"
+		formControlName="{{name}}"
+		[ngClass]="{
+		'is-invalid' : control.invalid && control.touched,
+		'is-valid'   : control.valid && control.touched
+		}">
+		<option *ngFor="let option of options" [value]="option">
+			{{option}}
+		</option>
+	</select>
+	<div class="valid-feedback">
+		{{validText}}
+	</div>
+	<div class="invalid-feedback" *ngIf="control.invalid &&	(control.dirty || control.touched)">
+		<p *ngIf="control.errors.required">
+			{{label}} is required.
+		</p>
+		<p *ngIf="control.errors.pattern">
+			{{label}} is Non-compliant with pattern.
+		</p>
+	</div>
+</div>

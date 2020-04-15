@@ -1,0 +1,15 @@
+<div class="form-group" [formGroup]="group">
+	<div class="row">
+		<legend class="col-form-label col-sm-2 pt-0">{{label}}</legend>
+		<div class="form-check form-check-inline" *ngFor="let item of values; index as i;">
+			<input class="form-check-input"
+				type="radio"
+				id="{{ label | format: 'Id':i }}"
+				formControlName="{{name}}"
+				value="{{item}}" />
+			<label class="form-check-label">
+				{{item}}
+			</label>
+		</div>
+	</div>
+</div>

@@ -35,7 +35,7 @@ It also support Sorting, Search, Filter, Pagination & custom pagesize change, al
 #### Angular Component (e.g. app.component.ts)
 ```javascript
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from 'ngdatagrid';
+import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from '@nikxsh/ngdatagrid';
 
 @Component({
 	selector: 'app',
@@ -157,4 +157,4 @@ export class AppComponent implements OnInit {
 ```
 
 #### UI
-![](https://github.com/nikxsh/javascripts/files/ngdatagrid.jpg)
+![](https://github.com/nikxsh/javascripts/blob/master/files/ngdatagrid.JPG?raw=true)

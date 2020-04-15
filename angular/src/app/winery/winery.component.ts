@@ -7,7 +7,7 @@ import { Sort, Filter, PagingRequest } from '../helpers/common.model';
 import { Wine, Type } from './winery.model';
 import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from '@nikxsh/ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
-import { FormField, FieldType, DropDown } from 'ngmodelform';
+import { TextField, SelectField, FormField } from 'ngmodelform';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -166,10 +166,10 @@ export class WineryComponent implements OnInit {
 		let wine = this.wines.find(x => x.id === id);
 		let wineTypes = this.getWineTypes();
 		this.modelFormFields = [
-			new FormField("Name", "name", new FormControl(wine.name, Validators.required), FieldType.Text),
-			new DropDown("Color", "color", new FormControl(wineTypes[wine.color], Validators.required), wineTypes),
-			new FormField("Price", "price", new FormControl(wine.price, Validators.required), FieldType.Text),
-			new FormField("Vintage", "vintage", new FormControl(wine.vintage, Validators.required), FieldType.Text)
+			new TextField("Name", { name: "name", control: new FormControl(wine.name, Validators.required) }),
+			new SelectField("Color", { name: "color", control: new FormControl(wineTypes[wine.color], Validators.required) }, wineTypes),
+			new TextField("Price", { name: "price", control: new FormControl(wine.price, Validators.required) }),
+			new TextField("Vintage", { name: "vintage", control: new FormControl(wine.vintage, Validators.required) })
 		];
 	}
 

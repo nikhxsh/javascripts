@@ -1,0 +1,22 @@
+<div class="form-group" [formGroup]="group">
+	<label>{{label}}</label>
+	<input type="text"
+		class="form-control form-control-sm"
+		type="type"
+		formControlName="{{name}}"
+		[ngClass]="{
+			'is-invalid' : control.invalid && control.touched,
+			'is-valid'   : control.valid && control.touched
+		}">
+	<div class="valid-feedback">
+		{{validText}}
+	</div>
+	<div class="invalid-feedback" *ngIf="control.invalid &&	(control.dirty || control.touched)">
+		<p *ngIf="control.errors.required">
+			{{label}} is required.
+		</p>
+		<p *ngIf="control.errors.pattern">
+			{{label}} is Non-compliant with pattern.
+		</p>
+	</div>
+</div>

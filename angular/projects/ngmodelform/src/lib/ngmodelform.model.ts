@@ -1,43 +1,120 @@
 import { FormControl } from '@angular/forms';
 
-export class ModelFormControl {
+export interface FormFieldControl {
 	name: string;
 	control: FormControl;
-
-	constructor(name: string, control: FormControl) {
-		this.name = name;
-		this.control = control;
-	}
 }
 
-export class FormField {
+export abstract class FormField {
 	label: string;
-	controlName: any;
-	control: FormControl;
-	successText: string;
+	field: FormFieldControl;
 	type: FieldType;
+	helpText: string;
+	validText: string;
+}
+
+export class InputField extends FormField {
 	placeHolder: string;
-
-	constructor(label: string,
-		controlName: any,
-		control: FormControl,
-		type: FieldType = FieldType.Text) {
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		validText: string = "",
+		placeHolder: string = "",
+		helpText: string = "") {
+		super();
 		this.label = label;
-		this.controlName = controlName;
-		this.control = control;
-		this.type = type;
+		this.field = field;
+		this.validText = validText;
+		this.placeHolder = placeHolder;
+		this.helpText = helpText;
 	}
 }
 
-export class DropDown extends FormField {
-	values: any[];
-	constructor(label: string,
-		controlName: any,
-		control: FormControl,
-		values: any[]) {
-		super(label, controlName, control, FieldType.DropDown);
+export class TextField extends InputField {
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		validText: string = "",
+		placeHolder: string = "",
+		helpText: string = "") {
+		super(label, field, validText, placeHolder, helpText);
+		this.type = FieldType.Text;
+	}
+}
+
+export class PasswordField extends InputField {
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		validText: string = "",
+		placeHolder: string = "",
+		helpText: string = "") {
+		super(label, field, validText, placeHolder, helpText);
+		this.type = FieldType.Password;
+	}
+}
+
+export class TextAreaField extends InputField {
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		validText: string = "",
+		helpText: string = "") {
+		super(label, field, validText, helpText);
+		this.type = FieldType.TextArea;
+	}
+}
+
+export class SelectField extends FormField {
+	options: any[];
+	multiple: boolean;
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		options: any[],
+		multiple: boolean = false,
+		validText: string = "",
+		helpText: string = "") {
+		super();
+		this.label = label;
+		this.field = field;
+		this.validText = validText;
+		this.helpText = helpText;
+		this.type = FieldType.Select;
+		this.options = options;
+		this.multiple = multiple;
+	}
+}
+
+export class CheckBoxField extends FormField {
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		validText: string = "",
+		helpText: string = "") {
+		super();
+		this.label = label;
+		this.field = field;
+		this.validText = validText;
+		this.helpText = helpText;
+		this.type = FieldType.CheckBox;
+	}
+}
+
+export class RadioField extends FormField {
+	values: string[];
+	constructor(
+		label: string,
+		field: FormFieldControl,
+		values: string[],
+		helpText: string = "") {
+		super();
+		this.label = label;
+		this.field = field;
 		this.values = values;
+		this.helpText = helpText;
+		this.type = FieldType.Radio;
 	}
 }
 
-export enum FieldType { Text = 1, Email, Password, DropDown, CheckBox };
+export enum FieldType { Text, Password, TextArea, Select, CheckBox, Radio };

@@ -1,9 +1,24 @@
-<ngdatagrid [totalItems]="totalItems" [maxSize]="10" [itemsPerPage]="request.take" [records]="mappedWines"
-	[headers]="headers" [enableAdd]="true" [enableEdit]="true" [enableDelete]="true" [loading]="refreshing"
-	[blinkRowOnSelect]="blinkrow" (onPageChange)="pageChanged($event)" (onPageSizeChange)="updatePageSize($event)"
-	(onSearch)="search($event)" (onSort)="sort($event)" (onFilter)="filterRecord($event)" (onReset)="resetAll()"
-	(onAdd)="openModal(ViewTemplate, 0)" (onView)="openModal(ViewTemplate, 1, $event)"
-	(onEdit)="openModal(EditTemplate, 2, $event)" (onDelete)="openModal(DeleteTemplate, 3, $event)">
+<ngdatagrid
+	[totalItems]="totalItems"
+	[maxSize]="10"
+	[itemsPerPage]="request.take"
+	[records]="mappedWines"
+	[headers]="headers"
+	[enableAdd]="true"
+	[enableEdit]="true"
+	[enableDelete]="true"
+	[loading]="refreshing"
+	[blinkRowOnSelect]="blinkrow"
+	(onPageChange)="pageChanged($event)"
+	(onPageSizeChange)="updatePageSize($event)"
+	(onSearch)="search($event)"
+	(onSort)="sort($event)"
+	(onFilter)="filterRecord($event)"
+	(onReset)="resetAll()"
+	(onAdd)="openModal(ViewTemplate, 0)"
+	(onView)="openModal(ViewTemplate, 1, $event)"
+	(onEdit)="openModal(EditTemplate, 2, $event)"
+	(onDelete)="openModal(DeleteTemplate, 3, $event)">
 </ngdatagrid>
 
 <!-- previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" -->
@@ -27,7 +42,8 @@
 		</button>
 	</div>
 	<div class="modal-body">
-		<ngmodelform [formFields]="modelFormFields" (onSubmit)="onFormSubmit($event)" [reset]="resetForm"></ngmodelform>
+		<ngmodelform [formFields]="modelFormFields" (onSubmit)="onFormSubmit($event)"
+			[reset]="resetForm"></ngmodelform>
 	</div>
 </ng-template>
 

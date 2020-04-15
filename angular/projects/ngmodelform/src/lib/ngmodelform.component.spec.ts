@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgmodelformComponent } from './ngmodelform.component';
+import { NgModelFormComponent } from './ngmodelform.component';
 
-describe('NgmodelformComponent', () => {
-  let component: NgmodelformComponent;
-  let fixture: ComponentFixture<NgmodelformComponent>;
+describe('NgModelFormComponent', () => {
+	let component: NgModelFormComponent;
+	let fixture: ComponentFixture<NgModelFormComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NgmodelformComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [NgModelFormComponent]
+		})
+			.compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NgmodelformComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(NgModelFormComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

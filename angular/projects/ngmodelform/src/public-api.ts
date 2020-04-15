@@ -1,6 +1,6 @@
 /*
  * Public API Surface of ngmodelform
  */
-export * from './lib/ngmodelform.component';
-export * from './lib/ngmodelform.module';
-export { FormField, DropDown, FieldType } from './lib/ngmodelform.model';
+export { NgModelFormComponent } from './lib/ngmodelform.component';
+export { NgModelformModule } from './lib/ngmodelform.module';
+export { FormField, TextField, TextAreaField, SelectField, CheckBoxField, RadioField } from './lib/ngmodelform.model';

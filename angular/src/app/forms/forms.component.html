@@ -1,19 +1,30 @@
 <div>
-    <tabset>
-        <tab heading="Model Form" id="tab1">
-            <div class="card card-body">
-                <modelform></modelform>
-            </div>
-        </tab>
-        <tab heading="Reactive Model Form">
-            <div class="card card-body">
-                <reactivemodelform></reactivemodelform>
-            </div>
-        </tab>
-        <tab heading="Template Driven Forms">
-            <div class="card card-body">
-                <templateform></templateform>
-            </div>
-        </tab>
-    </tabset>
+	<tabset>
+		<tab heading="Model Form Package">
+			<div class="card card-body">
+				<ngmodelform
+					[formFields]="modelFormFields"
+					[reset]="resetForm"
+					(onSubmit)="onFormSubmit($event)">
+				</ngmodelform>
+				<br />
+				<pre>{{formValues | json}}</pre>
+			</div>
+		</tab>
+		<tab heading="Model Form">
+			<div class="card card-body">
+				<modelform></modelform>
+			</div>
+		</tab>
+		<tab heading="Reactive Model Form">
+			<div class="card card-body">
+				<reactivemodelform></reactivemodelform>
+			</div>
+		</tab>
+		<tab heading="Template Driven Forms">
+			<div class="card card-body">
+				<templateform></templateform>
+			</div>
+		</tab>
+	</tabset>
 </div>

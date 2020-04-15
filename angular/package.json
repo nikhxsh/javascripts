@@ -22,7 +22,7 @@
 		"@ngrx/effects": "^9.1.0",
 		"@ngrx/router-store": "^9.1.0",
 		"@ngrx/store": "^9.1.0",
-		"@nikxsh/ngdatagrid": "^1.0.0",
+		"@nikxsh/ngdatagrid": "^1.0.1",
 		"@nikxsh/ngpagination": "^1.0.0",
 		"bootstrap": "^4.4.1",
 		"jquery": "^3.4.1",

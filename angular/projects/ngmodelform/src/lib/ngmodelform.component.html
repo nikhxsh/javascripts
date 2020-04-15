@@ -1,63 +1,77 @@
 <div class="card card-body">
 	<form [formGroup]="formGroup" novalidate>
 		<fieldset>
-			<div class="form-group" *ngFor="let field of formFields; let i = index" [attr.data-index]="i">
-				<label>{{field.label}}</label>
-				<ng-template [ngIf]="field.type === 1">
-					<input type="text" class="form-control form-control-sm" formControlName="{{field.controlName}}"
-						[ngClass]="{
-						'is-invalid': formGroup.controls[field.controlName].invalid && 
-									  formGroup.controls[field.controlName].touched,
-						'is-valid': formGroup.controls[field.controlName].valid && 
-									formGroup.controls[field.controlName].touched
-						}">
-					<div class="valid-feedback">
-						{{field.validText}}
-					</div>
-					<div class="invalid-feedback" *ngIf="formGroup.controls[field.controlName].invalid && 
-								(
-									formGroup.controls[field.controlName].dirty || 
-								    formGroup.controls[field.controlName].touched
-								)">
-						<p *ngIf="formGroup.controls[field.controlName].errors.required">
-							{{field.label}} is required.
-						</p>
-						<p *ngIf="formGroup.controls[field.controlName].errors.pattern">
-							{{field.label}} is Non-compliant with pattern.
-						</p>
-					</div>
-				</ng-template>
-				<ng-template [ngIf]="field.type === 2">
-				</ng-template>
-				<ng-template [ngIf]="field.type === 3">
-				</ng-template>
-				<ng-template [ngIf]="field.type === 4">
-					<select class="form-control form-control-sm" formControlName="{{field.controlName}}" [ngClass]="{
-						'is-invalid': formGroup.controls[field.controlName].invalid && 
-									  formGroup.controls[field.controlName].touched,
-						'is-valid': formGroup.controls[field.controlName].valid && 
-									formGroup.controls[field.controlName].touched
-						}">
-						<option *ngFor="let item of field.values" [value]="item">{{item}}
-						</option>
-					</select>
-					<div class="valid-feedback">
-						{{field.validText}}
-					</div>
-					<div class="invalid-feedback" *ngIf="formGroup.controls[field.controlName].invalid && 
-								(
-									formGroup.controls[field.controlName].dirty || 
-								    formGroup.controls[field.controlName].touched
-								)">
-						<p *ngIf="formGroup.controls[field.controlName].errors.required">
-							{{field.label}} is required.
-						</p>
-					</div>
-				</ng-template>
-				<ng-template [ngIf]="field.type === 5">
-				</ng-template>
-			</div>
+			<ng-container *ngFor="let item of formFields">
+				<ng-container *ngIf="item.type === 0">
+					<nginputfield
+						[group]="formGroup"
+						[label]="item.label"
+						[type]="'text'"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[validText]="item.validText"
+						[placeholder]="item.placeholder">
+					</nginputfield>
+				</ng-container>
+				<ng-container *ngIf="item.type === 1">
+					<nginputfield
+						[group]="formGroup"
+						[label]="item.label"
+						[type]="'password'"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[validText]="item.validText"
+						[placeholder]="item.placeholder">
+					</nginputfield>
+				</ng-container>
+				<ng-container *ngIf="item.type === 2">
+					<ngtextareafield
+						[group]="formGroup"
+						[label]="item.label"
+						[type]="'password'"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[validText]="item.validText">
+					</ngtextareafield>
+				</ng-container>
+				<ng-container *ngIf="item.type === 3">
+					<ngselectfield
+						[group]="formGroup"
+						[label]="item.label"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[options]="item.options"
+						[multiple]="item.multiple"
+						[validText]="item.validText"
+						[placeholder]="item.placeholder">
+					</ngselectfield>
+				</ng-container>
+				<ng-container *ngIf="item.type === 4">
+					<ngcheckboxfield
+						[group]="formGroup"
+						[label]="item.label"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[validText]="item.validText">
+					</ngcheckboxfield>
+				</ng-container>
+				<ng-container *ngIf="item.type === 5">
+					<ngradiofield
+						[group]="formGroup"
+						[label]="item.label"
+						[name]="item.field.name"
+						[control]="item.field.control"
+						[values]="item.values"
+						[checked]="item.checked">
+					</ngradiofield>
+				</ng-container>
+			</ng-container>
 		</fieldset>
 	</form>
-	<button class="btn btn-info" (click)="onSubmitClick()" [class.disabled]="formGroup.invalid">{{submitText}}</button>
+	<button
+		class="btn btn-info"
+		[disabled]="formGroup.invalid"
+		(click)="onSubmitClick()">
+		{{submitText}}
+	</button>
 </div>
