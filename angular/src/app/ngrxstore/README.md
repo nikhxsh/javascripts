@@ -25,8 +25,7 @@
 ## NGRX
 
 * NGRX is a group of libraries “inspired” by the Redux pattern which in turn is “inspired” by the Flux pattern. Being a little more 
-  concise, this means that redux pattern is a simplified version of the Flux pattern and NGRX is an angular/rxjs version of the redux
-  pattern.
+  concise, this means that redux pattern is a simplified version of the Flux pattern and NGRX is an angular/rxjs version of the redux pattern.
 * The main purpose of this pattern is to provide a predictable state container, based on three main principles of redux.
   When you are building an angular app usually you have the state split and handle in multiple services. As your app growth keeping 
   track of your state changes starts to get messy and hard to debug and maintain. Having a single source of truth resolves this problem 

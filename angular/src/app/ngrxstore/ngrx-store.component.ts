@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'ngrxstore',
-	templateUrl: './ngrxstore.component.html'
+	templateUrl: './ngrx-store.component.html'
 })
 export class NgrxstoreComponent implements OnInit {
 	accountForm: FormGroup;

@@ -3,10 +3,10 @@ import { FormField, TextField, SelectField, RadioField, CheckBoxField } from 'ng
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
-	selector: 'forms',
-	templateUrl: './forms.component.html'
+	selector: 'form-package',
+	templateUrl: './form-package.component.html'
 })
-export class FormsComponent implements OnInit {
+export class FormPackageComponent implements OnInit {
 	modelFormFields: FormField[] = [];
 	formValues: string;
 

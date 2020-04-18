@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Page } from './ngpagination.model';
+import { Page } from './ng-pagination.model';
 
 @Component({
-	selector: 'ngpagination',
-	templateUrl: './ngpagination.component.html'
+	selector: 'pagination',
+	templateUrl: './ng-pagination.component.html'
 })
 export class NgPaginationComponent implements OnInit {
 
@@ -13,6 +13,9 @@ export class NgPaginationComponent implements OnInit {
 
 	@Input() maxSize: number = 10;
 	@Input() disable: boolean = false;
+	@Input() pageListStyle: string = 'pagination justify-content-center';
+	@Input() pageStyle: string = 'page-item';
+	@Input() pageLinkStyle: string = 'page-link';
 	@Input() firstPageText: string = "First";
 	@Input() prevPageText: string = "Prev";
 	@Input() nextPageText: string = "Next";
@@ -44,7 +47,8 @@ export class NgPaginationComponent implements OnInit {
 	@Input()
 	set reset(val: boolean) {
 		this._reset = val;
-		this.resetPagination();
+		if (this._reset)
+			this.initPagination();
 	}
 
 	get reset(): boolean {
@@ -57,12 +61,6 @@ export class NgPaginationComponent implements OnInit {
 
 	ngOnInit() {
 		this.initPagination();
-	}
-
-	resetPagination(): void {
-		this.pages = [];
-		this.pageModel = new Page();
-		this.setPages();
 	}
 
 	initPagination(): void {
@@ -177,8 +175,8 @@ export class NgPaginationComponent implements OnInit {
 
 	disablePagination(flag: number = 0): boolean {
 		switch (flag) {
-			case 1: return this.totalItems > 0 && (this.pageModel.currentPage === 1 || this.disable);
-			case 2: return this.totalItems > 0 && (this.pageModel.currentPage === this.totalPages || this.disable);
+			case 1: return this.totalItems <= 0 || this.pageModel.currentPage === 1 || this.disable;
+			case 2: return this.totalItems <= 0 || this.pageModel.currentPage === this.totalPages || this.disable;
 			default: return this.disable;
 		}
 	}

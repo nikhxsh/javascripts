@@ -1,0 +1,22 @@
+<ul class="{{pageListStyle}}">
+	<li class="{{pageStyle}}" [class.disabled]="disablePagination(1)">
+		<a class="{{pageLinkStyle}}" href="javascript:void(0)"
+			(click)="onFirstPageClick()">{{firstPageText ? firstPageText : 'First'}}</a>
+	</li>
+	<li class="{{pageStyle}}" [class.disabled]="disablePagination(1)">
+		<a class="{{pageLinkStyle}}" href="javascript:void(0)"
+			(click)="onPreviousPageClick(pageModel.currentPage - 1)">{{prevPageText ? prevPageText : 'Prev'}}</a>
+	</li>
+	<li class="{{pageStyle}}" *ngFor="let page of pages" [class.disabled]="disablePagination()"
+		[class.active]="pageModel.currentPage === page">
+		<a class="{{pageLinkStyle}}" href="javascript:void(0)" (click)="onPageClick(page)">{{page}}</a>
+	</li>
+	<li class="{{pageStyle}}" [class.disabled]="disablePagination(2)">
+		<a class="{{pageLinkStyle}}" href="javascript:void(0)"
+			(click)="onNextPageClick(pageModel.currentPage + 1)">{{nextPageText ? nextPageText : 'Next' }}</a>
+	</li>
+	<li class="{{pageStyle}}" [class.disabled]="disablePagination(2)">
+		<a class="{{pageLinkStyle}}" href="javascript:void(0)"
+			(click)="onLastPageClick()">{{lastPageText ? lastPageText : 'Last'}}</a>
+	</li>
+</ul>

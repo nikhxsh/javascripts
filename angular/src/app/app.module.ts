@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgrxstoreComponent } from './ngrxstore/ngrxstore.component';
+import { NgrxstoreComponent } from './ngrxstore/ngrx-store.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -11,33 +11,35 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { JokeComponent } from './joke/joke.component';
-import { JokelistComponent } from './joke/jokelist.component';
-import { JokeformComponent } from './joke/jokeform.component';
-import { HeaderComponent } from './_ui/header.component';
+import { JokelistComponent } from './joke/joke-list.component';
+import { JokeformComponent } from './joke/joke-form.component';
 import { BasicComponent } from './basic/basic.component';
 import { CardHoverDirective } from './directives/card-hover.directive';
-import { FormsComponent } from './forms/forms.component';
 import { DefaultPipe } from './pipes/default.pipe';
-import { ModelformComponent } from './forms/modelform.component';
-import { ReactivemodelformComponent } from './forms/reactivemodelform.component';
-import { TemplateformComponent } from './forms/templateform.component';
+import { ModelformComponent } from './forms/model-form.component';
+import { ReactivemodelformComponent } from './forms/reactive-model-form.component';
+import { TemplateformComponent } from './forms/template-form.component';
 import { ChildComponent } from './providers/child.component';
 import { ParentComponent } from './providers/parent.component';
 import { SimpleService } from './services/simple.service';
 import { HolderComponent } from './providers/holder.component';
 import { SearchService } from './services/search.service';
-import { LoginComponent } from './_ui/login.component';
 import { AuthService } from './services/auth.service';
 import { appReducers } from './ngrxstore/reducers/app.reducers';
 import { AccountEffects } from './ngrxstore/effects/account.effects';
-import { AccountService } from './services/account.service';
 import { APIInterceptor } from './services/api.interceptor';
-import { AuthGuard } from './services/authguard';
+import { AuthGuard } from './services/auth.guard';
 import { WineryService } from './services/winery.service';
 import { WineryComponent } from './winery/winery.component';
 import { NgModelformModule } from 'ngmodelform';
+import { HeaderComponent } from './layout/header.component';
+import { LoginComponent } from './layout/login.component';
+import { FormPackageComponent } from './packages/form-package.component';
+import { DataGridPackageComponent } from './packages/datagrid-package.component';
+import { AccountService } from './services/account.service';
 import { NgDataGridModule } from '@nikxsh/ngdatagrid';
 
 /**
@@ -57,7 +59,6 @@ import { NgDataGridModule } from '@nikxsh/ngdatagrid';
 		HeaderComponent,
 		BasicComponent,
 		CardHoverDirective,
-		FormsComponent,
 		DefaultPipe,
 		ModelformComponent,
 		ReactivemodelformComponent,
@@ -67,7 +68,9 @@ import { NgDataGridModule } from '@nikxsh/ngdatagrid';
 		HolderComponent,
 		LoginComponent,
 		NgrxstoreComponent,
-		WineryComponent
+		WineryComponent,
+		FormPackageComponent,
+		DataGridPackageComponent
 	],
 	/**
 	 * The other Angular Modules that export material we need in this Angular Module. Almost every
@@ -122,9 +125,9 @@ import { NgDataGridModule } from '@nikxsh/ngdatagrid';
 		SimpleService,
 		SearchService,
 		AuthService,
-		AccountService,
 		AuthGuard,
 		WineryService,
+		AccountService,
 		//Intercepts and handles an HttpRequest or HttpResponse.
 		{
 			provide: HTTP_INTERCEPTORS,

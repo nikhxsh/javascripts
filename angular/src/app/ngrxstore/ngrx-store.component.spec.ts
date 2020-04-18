@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgPaginationComponent } from './ngpagination.component';
+import { NgrxstoreComponent } from './ngrx-store.component';
 
-describe('NgPaginationComponent', () => {
-	let component: NgPaginationComponent;
-	let fixture: ComponentFixture<NgPaginationComponent>;
+describe('NgrxstoreComponent', () => {
+	let component: NgrxstoreComponent;
+	let fixture: ComponentFixture<NgrxstoreComponent>;
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [NgPaginationComponent]
+			declarations: [NgrxstoreComponent]
 		})
 			.compileComponents();
 	}));
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(NgPaginationComponent);
+		fixture = TestBed.createComponent(NgrxstoreComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

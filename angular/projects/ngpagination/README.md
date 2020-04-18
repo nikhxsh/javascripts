@@ -6,16 +6,25 @@ This package is used to implement pagination with default bootstrap design but a
 2. Add below mentioned selector tag in your `component's html template`
 
 ```html
- <ngpagination 
-	[totalItems]="totalItems" 
-	[itemsPerPage]="itemsPerPage" 
+ <pagination
+	[totalItems]="totalItems"
+	[itemsPerPage]="itemsPerPage"
 	[maxSize]="maxSize"
-	[disable]="loading" 
-	[reset]="resetPagination" 
+	[disable]="loading"
+	[reset]="resetPagination"
 	[firstPageText]="firstPageText"
-	[prevPageText]="prevPageText" 
-	[nextPageText]="nextPageText" 
+	[prevPageText]="prevPageText"
+	[nextPageText]="nextPageText"
 	[lastPageText]="lastPageText"
 	(onPageChanged)="onPageChanged($event)">
- </ngpagination>
+ </pagination>
+```
+Default style set would be bootstrap ^4.0 but you can customize it by providing following inputs & these inputs are nothing but placeholder for css class name.
+
+```html
+
+	[pageListStyle]="pageListStyle"
+	[pageStyle]="pageStyle"
+	[pageLinkStyle]="pageLinkStyle"
+
 ```

@@ -31,7 +31,7 @@ export class AccountEffects {
 	getAccount$ = this.action$.pipe(
 		ofType<GetAccount>(AccountActions.GetAccount),
 		map(action => action.payload),
-		withLatestFrom(this.store.pipe(select(accountsSelector))),		
+		withLatestFrom(this.store.pipe(select(accountsSelector))),
 		switchMap(([accountNumber, accounts]) => {
 			const selectedAccount = accounts.filter(account => account.accountNumber === +accountNumber)[0];
 			return of(new GetAccountResponse(selectedAccount));

@@ -3,8 +3,8 @@ import { Joke } from "./Joke";
 import { JokeComponent } from './joke.component';
 
 @Component({
-	selector: 'jokelist',
-	templateUrl: './jokelist.component.html'
+	selector: 'joke-list',
+	templateUrl: './joke-list.component.html'
 })
 export class JokelistComponent implements AfterViewInit, AfterContentInit {
 	jokes: Joke[];

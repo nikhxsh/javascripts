@@ -1,13 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Signup } from './signup';
 
 @Component({
-	selector: 'templateform',
-	templateUrl: './templateform.component.html'
+	selector: 'template-form',
+	templateUrl: './template-form.component.html'
 })
 export class TemplateformComponent {
 	@ViewChild('f', { static: false }) form: any;
-	model: Signup;
 	langs: string[] = [
 		'Hindi',
 		'English',
@@ -23,7 +21,6 @@ export class TemplateformComponent {
 	 * the template versus code in the component.
 	 */
 	constructor() {
-		this.model = new Signup()
 	}
 
 	onSubmit() {

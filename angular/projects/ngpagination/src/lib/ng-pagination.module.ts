@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgPaginationComponent } from './ngpagination.component';
+import { NgPaginationComponent } from './ng-pagination.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

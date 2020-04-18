@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ngdatagrid.model';
-import { Page } from '@nikxsh/ngpagination';
+import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ng-data-grid.model';
+import { Page } from 'ngpagination';
 
 @Component({
-	selector: 'ngdatagrid',
-	templateUrl: './ngdatagrid.component.html',
-	styleUrls: ['./ngdatagrid.component.css']
+	selector: 'data-grid',
+	templateUrl: './ng-data-grid.component.html',
+	styleUrls: ['./ng-data-grid.component.css']
 })
 export class NgDataGridComponent {
 
@@ -18,13 +18,25 @@ export class NgDataGridComponent {
 	@Input() totalItems: number = 0;
 	@Input() maxSize: number = 10;
 	@Input() itemsPerPage: number = 10;
+
 	@Input() headers: TableHeader[];
 	@Input() records: any[] = [];
+
 	@Input() enableAdd: boolean = false;
 	@Input() enableEdit: boolean = false;
 	@Input() enableDelete: boolean = false;
 	@Input() loading: boolean = false;
 	@Input() blinkRowOnSelect: boolean = false;
+
+	@Input() tableStyle: string = 'table table-sm';
+	@Input() buttonStyle: string = 'btn btn-sm btn-light';
+	@Input() buttonGroupStyle: string = 'btn-group mr-2';
+	@Input() dropDownStyle: string = 'btn btn-sm btn-light dropdown-toggle';
+	@Input() inputStyle: string = 'form-control form-control-sm';
+	@Input() pageListStyle: string = 'pagination justify-content-center';
+	@Input() pageStyle: string = 'page-item';
+	@Input() pageLinkStyle: string = 'page-link';
+
 	@Input() firstPageText: string;
 	@Input() prevPageText: string;
 	@Input() nextPageText: string;
@@ -45,17 +57,20 @@ export class NgDataGridComponent {
 	}
 
 	onPageSizeChanged(Size: number): void {
+		this.resetPagination = false;
 		this.itemsPerPage = Size;
 		var pageRequest = new PageRequest(1, this.itemsPerPage);
 		this.onPageSizeChange.emit(pageRequest);
 	}
 
 	onPageChanged(event: Page): void {
+		this.resetPagination = false;
 		var pageRequest = new PageRequest(event.currentPage, this.itemsPerPage);
 		this.onPageChange.emit(pageRequest);
 	}
 
 	sortClick(columName: string): void {
+		this.resetPagination = true;
 		let selectedHeader = this.headers.find(x => x.key === columName);
 		selectedHeader.sort = (selectedHeader.sort + 1) % 3;
 
@@ -69,7 +84,6 @@ export class NgDataGridComponent {
 	}
 
 	searchClick(token: string): void {
-		this.resetPagination = true;
 		let searchRequest = new SearchRequest(
 			1,
 			this.itemsPerPage,
@@ -79,7 +93,6 @@ export class NgDataGridComponent {
 	}
 
 	filterClick(i: number): void {
-		this.resetPagination = true;
 		let filterRequest = new FilterRequest(
 			1,
 			this.itemsPerPage,

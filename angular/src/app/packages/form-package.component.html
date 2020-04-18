@@ -1,0 +1,9 @@
+<div class="card card-body">
+	<ngmodelform
+		[formFields]="modelFormFields"
+		[reset]="resetForm"
+		(onSubmit)="onFormSubmit($event)">
+	</ngmodelform>
+	<br />
+	<pre>{{formValues | json}}</pre>
+</div>

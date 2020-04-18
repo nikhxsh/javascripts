@@ -1,4 +1,4 @@
-<ngdatagrid
+<data-grid
 	[totalItems]="totalItems"
 	[maxSize]="10"
 	[itemsPerPage]="request.take"
@@ -19,7 +19,7 @@
 	(onView)="openModal(ViewTemplate, 1, $event)"
 	(onEdit)="openModal(EditTemplate, 2, $event)"
 	(onDelete)="openModal(DeleteTemplate, 3, $event)">
-</ngdatagrid>
+</data-grid>
 
 <!-- previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" -->
 <ng-template #ViewTemplate>
