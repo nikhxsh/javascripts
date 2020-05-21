@@ -1,15 +1,22 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { TextField } from './ngmodelform.model';
+import { FormGroup } from '@angular/forms';
 @Component({
 	selector: 'nginputfield',
 	templateUrl: './nginputfield.component.html'
 })
 export class NgInputFieldComponent {
-	@Input() label: string;
+
+	@Input() group: FormGroup;
+	@Input() textField: TextField;
 	@Input() type: string;
-	@Input() name: string;
-	@Input() group: string;
-	@Input() control: FormControl;
-	@Input() validText: string;
-	@Input() placeholder: string;
+
+	getErrors(): string[] {
+		let errors = [];
+		if (this.textField.field.control.errors.required)
+			errors.push(`${this.textField.label} is required.`);
+		if (this.textField.field.control.errors.pattern)
+			errors.push(`${this.textField.label} is non-compliant with pattern.`);
+		return errors;
+	}
 }
