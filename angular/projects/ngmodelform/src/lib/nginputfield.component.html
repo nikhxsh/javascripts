@@ -4,6 +4,7 @@
 		class="{{textField.fieldClass}}"
 		type="{{type}}"
 		formControlName="{{textField.field.name}}"
+		placeholder="{{placeholder}}"
 		[ngClass]="{
 			'is-invalid' : textField.field.control.invalid && (textField.field.control.dirty || textField.field.control.touched),
 			'is-valid'   : textField.field.control.valid && (textField.field.control.dirty || textField.field.control.touched)

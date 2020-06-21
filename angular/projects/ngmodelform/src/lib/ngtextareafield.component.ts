@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms';
 export class NgTextAreaFieldComponent {
 	@Input() label: string;
 	@Input() type: string;
+	@Input() rows: string;
 	@Input() name: string;
 	@Input() group: string;
 	@Input() control: FormControl;

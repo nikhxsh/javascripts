@@ -18,6 +18,7 @@
 					*ngSwitchCase="2"
 					[group]="formGroup"
 					[label]="item.label"
+					[rows]="item.rows"
 					[type]="'password'"
 					[name]="item.field.name"
 					[control]="item.field.control"
@@ -51,6 +52,12 @@
 					[values]="item.values"
 					[checked]="item.checked">
 				</ngradiofield>
+				<nginputfield
+					*ngSwitchCase="6"
+					[group]="formGroup"
+					[textField]="item"
+					[type]="'email'">
+				</nginputfield>
 			</ng-container>
 		</ng-container>
 	</fieldset>

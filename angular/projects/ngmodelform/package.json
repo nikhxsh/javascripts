@@ -4,5 +4,13 @@
 	"peerDependencies": {
 		"@angular/common": "^8.2.14",
 		"@angular/core": "^8.2.14"
-	}
+	},
+	"license": "ISC",
+	"keywords": [
+		"angular",
+		"angular 8",
+		"modelform",
+		"model form",
+		"angular model form"
+	]
 }

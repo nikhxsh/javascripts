@@ -75,7 +75,7 @@ export class EmailField extends InputField {
 		helpText: string = '') {
 		super(label, field, validText, placeHolder, helpText);
 		this.defaultDomains = defaultDomains;
-		this.type = FieldType.Password;
+		this.type = FieldType.Email;
 	}
 }
 
@@ -145,4 +145,4 @@ export class RadioField extends FormField {
 	}
 }
 
-export enum FieldType { Text, Password, TextArea, Select, CheckBox, Radio };
+export enum FieldType { Text, Password, TextArea, Select, CheckBox, Radio, Email };

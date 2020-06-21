@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ng-data-grid.model';
-import { Page } from 'ngpagination';
+import { Page } from '@nikxsh/ngpagination';
 
 @Component({
 	selector: 'data-grid',
