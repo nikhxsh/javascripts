@@ -5,143 +5,97 @@ export interface FormFieldControl {
 	control: FormControl;
 }
 
-export abstract class FormField {
+export class FormField {
 	label: string;
 	field: FormFieldControl;
 	type: FieldType;
 	helpText: string;
 	validText: string;
 	invalidText: string;
+	placeHolder: string;
+	masked: boolean;
+	checked: boolean;
+	defaultDomains: string[];
+	rows: string;
+	options: any[];
+	multiple: boolean;
+	values: string[];
 	formGroupClass: string = 'form-group';
 	fieldClass: string = 'form-control form-control-sm';
 	validClass: string = 'is-valid';
 	invalidClass: string = 'is-invalid';
 	validFeedbackClass: string = 'valid-feedback';
 	invalidFeedbackClass: string = 'invalid-feedback';
-}
 
-export class InputField extends FormField {
-	placeHolder: string;
-	constructor(
-		label: string,
-		field: FormFieldControl,
-		validText: string = '',
-		placeHolder: string = '',
-		helpText: string = '') {
-		super();
-		this.label = label;
-		this.field = field;
-		this.validText = validText;
-		this.placeHolder = placeHolder;
-		this.helpText = helpText;
+	constructor(obj: Partial<FormField>) {
+		Object.assign(this, obj);
 	}
-}
 
-export class TextField extends InputField {
-	constructor(
-		label: string,
+	InputField(
 		field: FormFieldControl,
-		validText: string = '',
-		placeHolder: string = '',
-		helpText: string = '') {
-		super(label, field, validText, placeHolder, helpText);
-		this.type = FieldType.Text;
+		validText?: string,
+		placeHolder?: string,
+		helpText?: string) {
+		return Object.assign(this, new FormField({ field: field, validText: validText, placeHolder: placeHolder, helpText: helpText }))
 	}
-}
 
-export class PasswordField extends InputField {
-	masked: boolean;
-	constructor(
-		label: string,
+	TextField(
+		field: FormFieldControl,
+		validText?: string,
+		placeHolder?: string,
+		helpText?: string) {
+		return Object.assign(this, new FormField({ field: field, validText: validText, placeHolder: placeHolder, helpText: helpText, type: FieldType.Text }))
+	}
+
+	PasswordField(
 		field: FormFieldControl,
 		masked: boolean = true,
 		validText: string = '',
 		placeHolder: string = '',
 		helpText: string = '') {
-		super(label, field, validText, placeHolder, helpText);
-		this.masked = masked;
-		this.type = FieldType.Password;
+		return Object.assign(this, new FormField({ field: field, validText: validText, placeHolder: placeHolder, helpText: helpText, type: FieldType.Password, masked: masked }))
 	}
-}
 
-export class EmailField extends InputField {
-	defaultDomains: string[];
-	constructor(
-		label: string,
+	EmailField(
 		field: FormFieldControl,
-		defaultDomains: string[] = [],
 		validText: string = '',
 		placeHolder: string = '',
 		helpText: string = '') {
-		super(label, field, validText, placeHolder, helpText);
-		this.defaultDomains = defaultDomains;
-		this.type = FieldType.Email;
+		return Object.assign(this, new FormField({ field: field, validText: validText, placeHolder: placeHolder, helpText: helpText, type: FieldType.Email }))
 	}
-}
 
-export class TextAreaField extends InputField {
-	rows: number;
-	constructor(
-		label: string,
+	TextAreaField(
 		field: FormFieldControl,
-		rows: number = 3,
+		rows: string = "3",
 		validText: string = '',
 		helpText: string = '') {
-		super(label, field, validText, helpText);
-		this.rows = rows;
-		this.type = FieldType.TextArea;
+		return Object.assign(this, new FormField({ field: field, validText: validText, helpText: helpText, type: FieldType.TextArea, rows: rows }))
 	}
-}
 
-export class SelectField extends FormField {
-	options: any[];
-	multiple: boolean;
-	constructor(
-		label: string,
+	SelectField(
 		field: FormFieldControl,
 		options: any[],
 		multiple: boolean = false,
 		validText: string = '',
 		helpText: string = '') {
-		super();
-		this.label = label;
-		this.field = field;
-		this.validText = validText;
-		this.helpText = helpText;
-		this.type = FieldType.Select;
-		this.options = options;
-		this.multiple = multiple;
+		this.options = []
+		return Object.assign(this, new FormField({ field: field, validText: validText, helpText: helpText, type: FieldType.Select, options: options, multiple: multiple }))
 	}
-}
 
-export class CheckBoxField extends FormField {
-	constructor(
-		label: string,
+	CheckBoxField (
 		field: FormFieldControl,
 		validText: string = '',
 		helpText: string = '') {
-		super();
-		this.label = label;
-		this.field = field;
-		this.validText = validText;
-		this.helpText = helpText;
-		this.type = FieldType.CheckBox;
+		this.options = []
+		return Object.assign(this, new FormField({ field: field, validText: validText, helpText: helpText, type: FieldType.CheckBox }))
 	}
-}
 
-export class RadioField extends FormField {
-	values: string[];
-	constructor(
-		label: string,
+	RadioField  (
 		field: FormFieldControl,
 		values: string[],
 		helpText: string = '') {
-		super();
-		this.label = label;
-		this.field = field;
-		this.values = values;
-		this.helpText = helpText;
-		this.type = FieldType.Radio;
+		this.values = []
+		return Object.assign(this, new FormField({ field: field, helpText: helpText, type: FieldType.Radio, values: values }))
 	}
 }
 

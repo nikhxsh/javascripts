@@ -15,11 +15,12 @@
 	(onSort)="sort($event)"
 	(onFilter)="filterRecord($event)"
 	(onReset)="resetAll()"
-	(onAdd)="openModal(ViewTemplate, 0)"
 	(onView)="openModal(ViewTemplate, 1, $event)"
 	(onEdit)="openModal(EditTemplate, 2, $event)"
 	(onDelete)="openModal(DeleteTemplate, 3, $event)">
 </data-grid>
+
+<!-- (onAdd)="openModal(ViewTemplate, 0)" -->
 
 <!-- previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" -->
 <ng-template #ViewTemplate>

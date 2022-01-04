@@ -11,7 +11,7 @@ import {
 	AfterViewInit,
 	AfterViewChecked
 } from '@angular/core';
-import { Joke } from "./Joke";
+import { Joke } from "./joke";
 
 /**
  * > Normally if we change a css class the effect is seen throughout an application, something special is

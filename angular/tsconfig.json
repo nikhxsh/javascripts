@@ -1,64 +1,47 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
+    "paths": {
+      "ngdatagrid": [
+        "dist/ngdatagrid/ngdatagrid",
+        "dist/ngdatagrid"
+      ],
+      "ngmodelform": [
+        "dist/ngmodelform/ngmodelform",
+        "dist/ngmodelform"
+      ],
+      "ngpagination": [
+        "dist/ngpagination/ngpagination",
+        "dist/ngpagination"
+      ]
+    },
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "strictNullChecks":false,
+    "target": "es2017",
+    "module": "es2020",
     "lib": [
-      "es2018",
+      "es2020",
       "dom"
-    ],
-    "paths": {
-      "customdatatable": [
-        "dist/customdatatable"
-      ],
-      "customdatatable/*": [
-        "dist/customdatatable/*"
-      ],
-      "ngdatagrid": [
-        "dist/ngdatagrid"
-      ],
-      "ngdatagrid/*": [
-        "dist/ngdatagrid/*"
-      ],
-      "ng-model-form": [
-        "dist/ng-model-form"
-      ],
-      "ng-model-form/*": [
-        "dist/ng-model-form/*"
-      ],
-      "ngmodelform": [
-        "dist/ngmodelform"
-      ],
-      "ngmodelform/*": [
-        "dist/ngmodelform/*"
-      ],
-      "ng-pagination": [
-        "dist/ng-pagination"
-      ],
-      "ng-pagination/*": [
-        "dist/ng-pagination/*"
-      ],
-      "ngpagination": [
-        "dist/ngpagination"
-      ],
-      "ngpagination/*": [
-        "dist/ngpagination/*"
-      ]
-    }
+    ]
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

@@ -1,70 +1,50 @@
 <form [formGroup]="formGroup" novalidate>
-	<fieldset>
-		<ng-container *ngFor="let item of formFields">
-			<ng-container [ngSwitch]="item.type">
-				<nginputfield
-					*ngSwitchCase="0"
-					[group]="formGroup"
-					[textField]="item"
-					[type]="'text'">
-				</nginputfield>
-				<nginputfield
-					*ngSwitchCase="1"
-					[group]="formGroup"
-					[textField]="item"
-					[type]="'password'">
-				</nginputfield>
-				<ngtextareafield
-					*ngSwitchCase="2"
-					[group]="formGroup"
-					[label]="item.label"
-					[rows]="item.rows"
-					[type]="'password'"
-					[name]="item.field.name"
-					[control]="item.field.control"
-					[validText]="item.validText">
-				</ngtextareafield>
-				<ngselectfield
-					*ngSwitchCase="3"
-					[group]="formGroup"
-					[label]="item.label"
-					[name]="item.field.name"
-					[control]="item.field.control"
-					[options]="item.options"
-					[multiple]="item.multiple"
-					[validText]="item.validText"
-					[placeholder]="item.placeholder">
-				</ngselectfield>
-				<ngcheckboxfield
-					*ngSwitchCase="4"
-					[group]="formGroup"
-					[label]="item.label"
-					[name]="item.field.name"
-					[control]="item.field.control"
-					[validText]="item.validText">
-				</ngcheckboxfield>
-				<ngradiofield
-					*ngSwitchCase="5"
-					[group]="formGroup"
-					[label]="item.label"
-					[name]="item.field.name"
-					[control]="item.field.control"
-					[values]="item.values"
-					[checked]="item.checked">
-				</ngradiofield>
-				<nginputfield
-					*ngSwitchCase="6"
-					[group]="formGroup"
-					[textField]="item"
-					[type]="'email'">
-				</nginputfield>
-			</ng-container>
+	<ng-container *ngFor="let item of formFields">
+		<ng-container [ngSwitch]="item.type">
+			<nginputfield
+				*ngSwitchCase="0"
+				[formGroup]="formGroup"
+				[textField]="item"
+				[inputType]="'text'">
+			</nginputfield>
+			<nginputfield
+				*ngSwitchCase="1"
+				[formGroup]="formGroup"
+				[textField]="item"
+				[inputType]="'password'">
+			</nginputfield>
+			<ngtextareafield
+				*ngSwitchCase="2"
+				[formGroup]="formGroup"
+				[textAreaField]="item">
+			</ngtextareafield>
+			<ngselectfield
+				*ngSwitchCase="3"
+				[formGroup]="formGroup"
+				[selectField]="item">
+			</ngselectfield>
+			<ngcheckboxfield
+				*ngSwitchCase="4"
+				[formGroup]="formGroup"
+				[checkBoxField]="item">
+			</ngcheckboxfield>
+			<ngradiofield
+				*ngSwitchCase="5"
+				[formGroup]="formGroup"
+				[radioField]="item">
+			</ngradiofield>
+			<nginputfield
+				*ngSwitchCase="6"
+				[formGroup]="formGroup"
+				[textField]="item"
+				[inputType]="'email'">
+			</nginputfield>
 		</ng-container>
-	</fieldset>
+	</ng-container>
+	<button
+		class="btn btn-info"
+		[disabled]="formGroup.invalid"
+		(click)="onSubmitClick()">
+		{{submitText}}
+	</button>
 </form>
-<button
-	class="btn btn-info"
-	[disabled]="formGroup.invalid"
-	(click)="onSubmitClick()">
-	{{submitText}}
-</button>

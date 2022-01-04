@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Joke } from "./Joke";
+import { Joke } from "./joke";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({

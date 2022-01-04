@@ -1,25 +1,25 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ng-data-grid.model';
-import { Page } from '@nikxsh/ngpagination';
+import { TableHeader, SortRequest, FilterRequest, PageRequest, SortOrder, SearchRequest } from './ng-datagrid.model';
+import { Page } from 'ngpagination';
 
 @Component({
 	selector: 'data-grid',
-	templateUrl: './ng-data-grid.component.html',
-	styleUrls: ['./ng-data-grid.component.css']
+	templateUrl: './ng-datagrid.component.html',
+	styleUrls: ['./ng-datagrid.component.css']
 })
 export class NgDataGridComponent {
 
 	filterSelected = false;
-	searchToken: string;
+	searchToken: string = "";
 	blinkRowId: string = '';
-	initPagination: boolean;
-	resetPagination: boolean;
+	initPagination: boolean = false;
+	resetPagination: boolean = false;
 
 	@Input() totalItems: number = 0;
 	@Input() maxSize: number = 10;
 	@Input() itemsPerPage: number = 10;
 
-	@Input() headers: TableHeader[];
+	@Input() headers: TableHeader[] = [];
 	@Input() records: any[] = [];
 
 	@Input() enableAdd: boolean = false;
@@ -37,10 +37,10 @@ export class NgDataGridComponent {
 	@Input() pageStyle: string = 'page-item';
 	@Input() pageLinkStyle: string = 'page-link';
 
-	@Input() firstPageText: string;
-	@Input() prevPageText: string;
-	@Input() nextPageText: string;
-	@Input() lastPageText: string;
+	@Input() firstPageText!: string;
+	@Input() prevPageText!: string;
+	@Input() nextPageText!: string;
+	@Input() lastPageText!: string;
 
 	@Output() onSort: EventEmitter<SortRequest> = new EventEmitter<SortRequest>();
 	@Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
@@ -72,14 +72,14 @@ export class NgDataGridComponent {
 	sortClick(columName: string): void {
 		this.resetPagination = true;
 		let selectedHeader = this.headers.find(x => x.key === columName);
-		selectedHeader.sort = (selectedHeader.sort + 1) % 3;
+		selectedHeader!.sort = (selectedHeader!.sort + 1) % 3;
 
 		this.headers.forEach(x => {
 			if (x.key !== columName)
 				x.sort = SortOrder.None;
 		});
 
-		let sortRequest = new SortRequest(columName, selectedHeader.sort);
+		let sortRequest = new SortRequest(columName, selectedHeader!.sort);
 		this.onSort.emit(sortRequest);
 	}
 

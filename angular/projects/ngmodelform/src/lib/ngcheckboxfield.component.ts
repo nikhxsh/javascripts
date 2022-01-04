@@ -1,13 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FormField } from './ngmodelform.model';
 @Component({
 	selector: 'ngcheckboxfield',
 	templateUrl: './ngcheckboxfield.component.html'
 })
 export class NgCheckBoxFieldComponent {
-	@Input() label: string;
-	@Input() name: string;
-	@Input() group: string;
-	@Input() control: FormControl;
-	@Input() validText: string;
+	@Input() formGroup: FormGroup;
+	@Input() checkBoxField: FormField;
 }

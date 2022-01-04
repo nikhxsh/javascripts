@@ -32,7 +32,7 @@ export class NgrxstoreComponent implements OnInit {
 		});
 	}
 
-	getAccount(id) {
+	getAccount(id: any) {
 		this.store.dispatch(new GetAccount(id));
 		this.store.pipe(select(accountSelector)).subscribe(x => {
 			this.account = x;

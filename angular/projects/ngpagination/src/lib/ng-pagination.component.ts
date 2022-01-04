@@ -7,9 +7,9 @@ import { Page } from './ng-pagination.model';
 })
 export class NgPaginationComponent implements OnInit {
 
-	pageModel: Page;
+	pageModel?: Page;
 	pages: number[] = [];
-	totalPages: number;
+	totalPages: number = 0;
 
 	@Input() maxSize: number = 10;
 	@Input() disable: boolean = false;

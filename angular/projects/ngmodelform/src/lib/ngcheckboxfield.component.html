@@ -1,14 +1,11 @@
-<div class="form-group" [formGroup]="group">
+<div class="form-group" [formGroup]="formGroup"  style="padding-top: 0.3rem; padding-bottom: 0.3rem;">
 	<div class="form-check">
-		<input
-			class="form-check-input"
-			type="checkbox"
-			formControlName="{{name}}" />
-		<label class="form-check-label" for="invalidCheck">
-			{{label}}
+		<input class="form-check-input" type="checkbox" formControlName="{{checkBoxField.field.name}}" />
+		<label class="form-check-label">
+			{{checkBoxField.label}}
 		</label>
 		<div class="invalid-feedback">
-			You must check {{label}} before submitting.
+			You must check {{checkBoxField.label}} before submitting.
 		</div>
 	</div>
 </div>

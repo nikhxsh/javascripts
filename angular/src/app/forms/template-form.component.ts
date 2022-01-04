@@ -6,6 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 })
 export class TemplateformComponent {
 	@ViewChild('f', { static: false }) form: any;
+	model: any = {}
 	langs: string[] = [
 		'Hindi',
 		'English',

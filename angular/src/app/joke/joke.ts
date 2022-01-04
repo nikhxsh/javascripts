@@ -9,7 +9,7 @@
  * > Knowing this we can actually dynamically add a function to our Joke class by using the
  * Object.defineProperty function
  */
-function Version(target) {
+function Version(target: any) {
     Object.defineProperty(target.prototype, 'version', { value: () => "4" });
 }
 /**
@@ -17,8 +17,8 @@ function Version(target) {
  *   1. We pass a config object to the outer Course function.
  *   2. Then use that config in the returned inner decorator function.
  */
-function VersionX(config) {
-    return function (target) {
+function VersionX(config: any) {
+    return function (target: any) {
         Object.defineProperty(target.prototype, 'version', { value: () => config.version });
     }
 }
@@ -46,6 +46,10 @@ class Joke implements IJoke {
 
     toggle() {
         this.hide = !this.hide;
+    }
+
+    version() {
+       return;
     }
 }
 

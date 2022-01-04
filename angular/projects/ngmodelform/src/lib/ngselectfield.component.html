@@ -1,39 +1,39 @@
-<div class="form-group" [formGroup]="group">
-	<label>{{label}}</label>
+<div class="form-group" [formGroup]="formGroup" style="padding-top: 0.3rem; padding-bottom: 0.3rem;">
+	<label>{{selectField.label}}</label>
 	<select
-		*ngIf="!multiple"
-		class="form-control form-control-sm"
-		formControlName="{{name}}"
+		*ngIf="!selectField.multiple"
+		class="form-select"
+		formControlName="{{selectField.field.name}}"
 		[ngClass]="{
-			'is-invalid' : control.invalid && control.touched,
-			'is-valid'   : control.valid && control.touched
+			'is-invalid' : selectField.field.control.invalid && selectField.field.control.touched,
+			'is-valid'   : selectField.field.control.valid && selectField.field.control.touched
 		}">
-		<option *ngFor="let option of options" [value]="option">
+		<option *ngFor="let option of selectField.options" [value]="option">
 			{{option}}
 		</option>
 	</select>
 	<select
-		*ngIf="multiple"
+		*ngIf="selectField.multiple"
 		multiple
-		class="form-control form-control-sm"
-		formControlName="{{name}}"
+		class="form-select"
+		formControlName="{{selectField.field.name}}"
 		[ngClass]="{
-		'is-invalid' : control.invalid && control.touched,
-		'is-valid'   : control.valid && control.touched
+		'is-invalid' : selectField.field.control.invalid && selectField.field.control.touched,
+		'is-valid'   : selectField.field.control.valid && selectField.field.control.touched
 		}">
-		<option *ngFor="let option of options" [value]="option">
+		<option *ngFor="let option of selectField.options" [value]="option">
 			{{option}}
 		</option>
 	</select>
 	<div class="valid-feedback">
-		{{validText}}
+		{{selectField.validText}}
 	</div>
-	<div class="invalid-feedback" *ngIf="control.invalid &&	(control.dirty || control.touched)">
-		<p *ngIf="control.errors.required">
-			{{label}} is required.
+	<div class="invalid-feedback" *ngIf="selectField.field.control.invalid &&	(selectField.field.control.dirty || selectField.field.control.touched)">
+		<p *ngIf="selectField.field.control.errors['required']">
+			{{selectField.label}} is required.
 		</p>
-		<p *ngIf="control.errors.pattern">
-			{{label}} is Non-compliant with pattern.
+		<p *ngIf="selectField.field.control.errors['pattern']">
+			{{selectField.label}} is Non-compliant with pattern.
 		</p>
 	</div>
 </div>

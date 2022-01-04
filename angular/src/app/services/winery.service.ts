@@ -30,7 +30,7 @@ export class WineryService {
 	}
 
 	public fetchById(wineId: any): Observable<Wine> {
-		return this.http.get(`${environment.wineryApiBase}/api/wines/${wineId}`)
+		return this.http.get(`${environment.mockUsersApiBase}/api/wines/${wineId}`)
 			.pipe(
 				map((response: any) => response.results as Wine)
 			);

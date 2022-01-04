@@ -1,24 +1,23 @@
-<div class="form-group" [formGroup]="group">
-	<label>{{label}}</label>
+<div class="form-group" [formGroup]="formGroup" style="padding-top: 0.3rem; padding-bottom: 0.3rem;">
+	<label class="form-label">{{textAreaField.label}}</label>
 	<textarea
-		class="form-control form-control-sm"
-		rows="{{rows}}"
-		type="type"
-		formControlName="{{name}}"
+		class="form-control"
+		rows="{{textAreaField.rows}}"
+		formControlName="{{textAreaField.field.name}}"
 		[ngClass]="{
-			'is-invalid' : control.invalid && control.touched,
-			'is-valid'   : control.valid && control.touched
+			'is-invalid' : textAreaField.field.control.invalid && textAreaField.field.control.touched,
+			'is-valid'   : textAreaField.field.control.valid && textAreaField.field.control.touched
 		}">
 	</textarea>
 	<div class="valid-feedback">
-		{{validText}}
+		{{textAreaField.validText}}
 	</div>
-	<div class="invalid-feedback" *ngIf="control.invalid &&	(control.dirty || control.touched)">
-		<p *ngIf="control.errors.required">
-			{{label}} is required.
+	<div class="invalid-feedback" *ngIf="textAreaField.field.control.invalid &&	(textAreaField.field.control.dirty || textAreaField.field.control.touched)">
+		<p *ngIf="textAreaField.field.control.errors['required']">
+			{{textAreaField.label}} is required.
 		</p>
-		<p *ngIf="control.errors.pattern">
-			{{label}} is Non-compliant with pattern.
+		<p *ngIf="textAreaField.field.control.errors['pattern']">
+			{{textAreaField.label}} is Non-compliant with pattern.
 		</p>
 	</div>
 </div>

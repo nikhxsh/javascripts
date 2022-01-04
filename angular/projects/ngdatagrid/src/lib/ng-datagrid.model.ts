@@ -5,7 +5,7 @@ export class TableHeader {
 	filterable: boolean = false
 	sort: SortOrder = SortOrder.None
 	filterToken: string = ''
-	width: number
+	width: number = 0
 
 	public constructor(init?: Partial<TableHeader>) {
 		Object.assign(this, init);

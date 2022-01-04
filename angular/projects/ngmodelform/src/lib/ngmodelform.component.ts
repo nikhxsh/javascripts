@@ -4,8 +4,7 @@ import { FormField, FormFieldControl } from './ngmodelform.model';
 
 @Component({
 	selector: 'ngmodelform',
-	templateUrl: './ngmodelform.component.html',
-	styles: []
+	templateUrl: './ngmodelform.component.html'
 })
 export class NgModelFormComponent {
 

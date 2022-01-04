@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormField, TextField, PasswordField, EmailField, TextAreaField, SelectField, RadioField, CheckBoxField } from 'ngmodelform';
+import { FormField } from 'ngmodelform';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class FormPackageComponent implements OnInit {
 	modelFormFields: FormField[] = [];
 	formValues: string;
+	resetForm: false;
 
 	constructor() {
 	}
@@ -18,30 +19,30 @@ export class FormPackageComponent implements OnInit {
 		let cities = ['Pune', 'Berlin', 'Tokyo'];
 		let genders = ["Male", "Female", "Other"];
 		this.modelFormFields = [
-			new TextField("Name", {
+			new FormField({ label: "Name" }).TextField({
 				name: "name",
 				control: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(10)])
 			}),
-			new PasswordField("Password", {
+			new FormField({ label: "Password" }).PasswordField({
 				name: "password", control: new FormControl('', [Validators.required, Validators.minLength(3)])
 			}),
-			new EmailField("Email", {
+			new FormField({ label: "Email" }).EmailField({
 				name: "email", control: new FormControl('', [Validators.required, Validators.email])
 			}),
-			new SelectField("Country", {
+			new FormField({ label: "Country" }).SelectField({
 				name: "country", control: new FormControl('', Validators.required)
 			}, countries),
-			new SelectField("Cities", {
+			new FormField({ label: "Cities" }).SelectField({
 				name: "cities", control: new FormControl('', Validators.required)
 			}, cities, true),
-			new RadioField("Gender", {
+			new FormField({ label: "Gender" }).RadioField({
 				name: "gender", control: new FormControl(genders[2], Validators.required)
 			}, genders),
-			new TextAreaField("Notes", {
-				name: "notes", control: new FormControl('', Validators.maxLength(15))
+			new FormField({ label: "Notes" }).TextAreaField({
+				name: "notes", control: new FormControl('', [Validators.maxLength(15), Validators.required])
 			}),
-			new CheckBoxField("Terms & Conditions", {
-				name: "tnc", control: new FormControl('', Validators.requiredTrue)
+			new FormField({ label: "Terms & Conditions" }).CheckBoxField({
+				name: "tnc", control: new FormControl('', Validators.required)
 			})
 		];
 	}

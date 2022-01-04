@@ -12,7 +12,7 @@ export class DataGridPackageComponent implements OnInit {
 	totalItems = 0;
 	selectedDescription = '';
 
-	tableStyle = 'table table-bordered table-sm';
+	tableStyle = 'table table-bordered';
 	pageListStyle = 'pagination justify-content-center';
 	pageStyle = 'page-item';
 	pageLinkStyle = 'page-link';
@@ -131,6 +131,10 @@ export class DataGridPackageComponent implements OnInit {
 	public setSkipTake(event: any) {
 		this.request.skip = (event.page - 1) * event.size;
 		this.request.take = event.size;
+	}
+
+	public customeMethod(event: any){
+		//Implementation
 	}
 
 	public resetAll() {

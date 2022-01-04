@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ViewChildren, QueryList, ElementRef, ContentChild, AfterContentInit } from '@angular/core';
-import { Joke } from "./Joke";
+import { Joke } from "./joke";
 import { JokeComponent } from './joke.component';
 
 @Component({
@@ -66,7 +66,7 @@ export class JokelistComponent implements AfterViewInit, AfterContentInit {
 		console.log(`ngAfterContentInit - jokeContentChild is ${this.jokeContentChild}`);
 	}
 
-	addJoke(joke) {
+	addJoke(joke: any) {
 		this.jokes.unshift(joke);
 	}
 

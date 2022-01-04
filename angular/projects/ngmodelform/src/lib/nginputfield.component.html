@@ -1,19 +1,19 @@
-<div class="{{textField.formGroupClass}}" [formGroup]="group">
-	<label>{{textField.label}}</label>
+<div class="form-group" [formGroup]="formGroup" style="padding-top: 0.3rem; padding-bottom: 0.3rem;">
+	<label class="form-label">{{textField.label}}</label>
 	<input
-		class="{{textField.fieldClass}}"
-		type="{{type}}"
+		class="form-control"
+		type="{{inputType}}"
 		formControlName="{{textField.field.name}}"
-		placeholder="{{placeholder}}"
+		placeholder="{{textField.placeHolder}}"
 		[ngClass]="{
 			'is-invalid' : textField.field.control.invalid && (textField.field.control.dirty || textField.field.control.touched),
 			'is-valid'   : textField.field.control.valid && (textField.field.control.dirty || textField.field.control.touched)
 		}" />
-	<div class="{{textField.validFeedbackClass}}">
+	<div class="valid-feedback">
 		{{textField.validText}}
 	</div>
 	<div *ngIf="textField.field.control.invalid && (textField.field.control.dirty || textField.field.control.touched)"
-		class="{{textField.invalidFeedbackClass}}">
+		class="invalid-feedback">
 		<p *ngFor="let error of getErrors()">
 			{{error}}
 		</p>

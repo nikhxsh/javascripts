@@ -78,7 +78,7 @@ export class BasicComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	getColor(country) {
+	getColor(country: any) {
 		switch (country) {
 			case 'UK':
 				return 'green';
@@ -86,6 +86,8 @@ export class BasicComponent implements OnInit {
 				return 'blue';
 			case 'HK':
 				return 'red';
+			default:
+				return '';
 		}
 	}
 

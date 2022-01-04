@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgDataGridComponent } from './ng-data-grid.component';
+import { NgDataGridComponent } from './ng-datagrid.component';
 
 describe('NgdatagridComponent', () => {
 	let component: NgDataGridComponent;

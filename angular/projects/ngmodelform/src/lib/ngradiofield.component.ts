@@ -1,14 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FormField } from './ngmodelform.model';
 @Component({
 	selector: 'ngradiofield',
 	templateUrl: './ngradiofield.component.html'
 })
 export class NgRadioFieldComponent {
-	@Input() label: string;
-	@Input() name: string;
-	@Input() group: string;
-	@Input() control: FormControl;
-	@Input() values: string[];
-	@Input() checked: number;
+	@Input() radioField: FormField;
+	@Input() formGroup: FormGroup;
 }

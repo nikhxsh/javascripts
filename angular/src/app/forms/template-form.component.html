@@ -31,18 +31,18 @@
           'is-valid': firstName.valid && (firstName.dirty || firstName.touched)
           }">
 			<div class="invalid-feedback">
-				<p *ngIf="firstName.errors?.required">First name is required</p>
+				<p *ngIf="firstName.errors && firstName.errors['required']">First name is required</p>
 			</div>
 		</div>
 		<div class="form-group">
 			<label>Last Name</label>
-			<input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" required #lastName="ngModel"
-				[ngClass]="{
+			<input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" required
+				#lastName="ngModel" [ngClass]="{
         'is-invalid': lastName.invalid && (lastName.dirty || lastName.touched),
         'is-valid': lastName.valid && (lastName.dirty || lastName.touched)
         }">
 			<div class="invalid-feedback">
-				<p *ngIf="lastName.errors?.required">Last name is required</p>
+				<p *ngIf="lastName.errors && lastName.errors['required']">Last name is required</p>
 			</div>
 		</div>
 	</fieldset>
@@ -54,8 +54,8 @@
         'is-valid': email.valid && (email.dirty || email.touched)
         }">
 		<div class="invalid-feedback">
-			<p *ngIf="email.errors?.required">Email is required</p>
-			<p *ngIf="email.errors?.pattern">Email must contain at least the @
+			<p *ngIf="email.errors && email.errors['required']">Email is required</p>
+			<p *ngIf="email.errors && email.errors['pattern']">Email must contain at least the @
 				character</p>
 		</div>
 	</div>
@@ -67,8 +67,8 @@
         'is-valid': password.valid && (password.dirty || password.touched)
         }">
 		<div class="invalid-feedback">
-			<p *ngIf="password.errors?.required">Password is required</p>
-			<p *ngIf="password.errors?.minlength">Password must be at least 8
+			<p *ngIf="password.errors && password.errors['required']">Password is required</p>
+			<p *ngIf="password.errors && password.errors['pattern']">Password must be at least 8
 				characters long</p>
 		</div>
 	</div>
@@ -80,7 +80,9 @@
 			</option>
 		</select>
 	</div>
-	<button type="submit" class="btn btn-primary" [disabled]="f.invalid">Submit
-	</button>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit
+		</button>
+	</div>
 	<pre>{{f.value | json}}</pre>
 </form>

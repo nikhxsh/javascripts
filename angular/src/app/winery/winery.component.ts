@@ -1,13 +1,11 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { WineryService } from '../services/winery.service';
 import { HandleError } from '../helpers/error.utility';
 import { Sort, Filter, PagingRequest } from '../helpers/common.model';
 import { Wine, Type } from './winery.model';
-import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from '@nikxsh/ngdatagrid';
+import { TableHeader, SortOrder, PageRequest, SortRequest, FilterRequest, SearchRequest } from 'ngdatagrid';
 import { DatePipe, CurrencyPipe } from '@angular/common';
-import { TextField, SelectField, FormField } from 'ngmodelform';
+import { FormField } from 'ngmodelform';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -26,7 +24,7 @@ export class WineryComponent implements OnInit {
 	wines: Wine[] = [];
 	mappedWines: any[];
 
-	modalRef: BsModalRef;
+	//modalRef: BsModalRef;
 	modelFormFields: FormField[] = []
 
 	request = new PagingRequest({
@@ -38,7 +36,7 @@ export class WineryComponent implements OnInit {
 	});
 
 	constructor(private wineryServiceRef: WineryService,
-		private modalService: BsModalService,
+		//private modalService: BsModalService,
 		private datePipe: DatePipe,
 		private currencyPipe: CurrencyPipe) { }
 
@@ -141,9 +139,9 @@ export class WineryComponent implements OnInit {
 		console.log(event);
 	}
 
-	public openModal(template: TemplateRef<any>, flag, $event) {
+	public openModal(template: TemplateRef<any>, flag : any, $event: any) {
 		this.resetForm = false;
-		this.modalRef = this.modalService.show(template);
+		//this.modalRef = this.modalService.show(template);
 		switch (flag) {
 			case 1:
 				this.selectedDescription = $event.note;
@@ -166,15 +164,15 @@ export class WineryComponent implements OnInit {
 		let wine = this.wines.find(x => x.id === id);
 		let wineTypes = this.getWineTypes();
 		this.modelFormFields = [
-			new TextField("Name", { name: "name", control: new FormControl(wine.name, Validators.required) }),
-			new SelectField("Color", { name: "color", control: new FormControl(wineTypes[wine.color], Validators.required) }, wineTypes),
-			new TextField("Price", { name: "price", control: new FormControl(wine.price, Validators.required) }),
-			new TextField("Vintage", { name: "vintage", control: new FormControl(wine.vintage, Validators.required) })
+			new FormField({label: "Name"}).TextField({ name: "name", control: new FormControl(wine.name, Validators.required) }),
+			new FormField({label: "Color"}).SelectField({ name: "color", control: new FormControl(wineTypes[wine.color], Validators.required) }, wineTypes),
+			new FormField({label: "Price"}).SelectField({ name: "price", control: new FormControl(wine.price, Validators.required) }, wineTypes),
+			new FormField({label: "Vintage"}).SelectField({ name: "vintage", control: new FormControl(wine.vintage, Validators.required) }, wineTypes)
 		];
 	}
 
 	public closeModal() {
-		this.modalRef.hide();
+		//this.modalRef.hide();
 		this.blinkrow = false;
 		this.resetForm = true;
 	}

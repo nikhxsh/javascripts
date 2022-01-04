@@ -1,30 +1,24 @@
-# Angular custom pagination module (NgPaginationModule)
+# Ngpagination
 
-This package is used to implement pagination with default bootstrap design but addon angular support.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.0.
 
-1. Import `NgPaginationModule` in your `app.module`
-2. Add below mentioned selector tag in your `component's html template`
+## Code scaffolding
 
-```html
- <pagination
-	[totalItems]="totalItems"
-	[itemsPerPage]="itemsPerPage"
-	[maxSize]="maxSize"
-	[disable]="loading"
-	[reset]="resetPagination"
-	[firstPageText]="firstPageText"
-	[prevPageText]="prevPageText"
-	[nextPageText]="nextPageText"
-	[lastPageText]="lastPageText"
-	(onPageChanged)="onPageChanged($event)">
- </pagination>
-```
-Default style set would be bootstrap ^4.0 but you can customize it by providing following inputs & these inputs are nothing but placeholder for css class name.
+Run `ng generate component component-name --project ngpagination` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngpagination`.
+> Note: Don't forget to add `--project ngpagination` or else it will be added to the default project in your `angular.json` file. 
 
-```html
+## Build
 
-	[pageListStyle]="pageListStyle"
-	[pageStyle]="pageStyle"
-	[pageLinkStyle]="pageLinkStyle"
+Run `ng build ngpagination` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-```
+## Publishing
+
+After building your library with `ng build ngpagination`, go to the dist folder `cd dist/ngpagination` and run `npm publish`.
+
+## Running unit tests
+
+Run `ng test ngpagination` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

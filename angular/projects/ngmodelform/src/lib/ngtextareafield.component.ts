@@ -1,15 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FormField } from './ngmodelform.model';
 @Component({
 	selector: 'ngtextareafield',
 	templateUrl: './ngtextareafield.component.html'
 })
 export class NgTextAreaFieldComponent {
-	@Input() label: string;
-	@Input() type: string;
-	@Input() rows: string;
-	@Input() name: string;
-	@Input() group: string;
-	@Input() control: FormControl;
-	@Input() validText: string;
+	@Input() textAreaField: FormField;
+	@Input() formGroup: FormGroup;
 }

@@ -1,16 +1,13 @@
 {
-	"name": "@nikxsh/ngmodelform",
-	"version": "1.0.0",
-	"peerDependencies": {
-		"@angular/common": "^8.2.14",
-		"@angular/core": "^8.2.14"
-	},
-	"license": "ISC",
-	"keywords": [
-		"angular",
-		"angular 8",
-		"modelform",
-		"model form",
-		"angular model form"
-	]
+  "name": "ngmodelform",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^13.1.0",
+    "@angular/core": "^13.1.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.0",
+    "jquery": "^3.6.0",
+    "tslib": "^2.3.0"
+  }
 }
