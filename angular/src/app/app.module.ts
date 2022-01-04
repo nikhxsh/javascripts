@@ -36,8 +36,8 @@ import { LoginComponent } from './layout/login.component';
 import { FormPackageComponent } from './packages/form-package.component';
 import { DataGridPackageComponent } from './packages/datagrid-package.component';
 import { AccountService } from './services/account.service';
-import { NgDataGridModule } from 'ngdatagrid';
-import { NgModelformModule } from 'ngmodelform';
+import { NgDataGridModule } from '@nikxsh/ngdatagrid';
+import { NgModelformModule } from '@nikxsh/ngmodelform';
 
 /**
  * > In Angular your code is structured into packages called Angular Modules, or NgModules for short.
