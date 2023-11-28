@@ -52,4 +52,18 @@ async function ApiFetchGenre() {
     }
 }
 
-export { ApiFetchMovies, ApiFetchGenre }
+async function ApiLikeMovie(date, title, released) {
+    try {
+        const headers = {
+            method: "GET"
+        };
+        
+        const response = await fetch(`${baseurl}/movies/like?date=${date}&title=${title}&released=${released}`, headers);
+        return handleResponse(response);
+
+    } catch (error) {
+        return handleError(error);
+    }
+}
+
+export { ApiFetchMovies, ApiFetchGenre, ApiLikeMovie }

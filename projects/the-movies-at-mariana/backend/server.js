@@ -60,8 +60,14 @@ app.get('/movies', function (req, res, next) {
     });
   }
 
+  response = response.filter(x => x.movies.length > 0);
+
+  response.forEach(e => {
+    e.movies.sort((a, b) => b.year.toString().localeCompare(a.year.toString()))
+  })
+
   res.status(200);
-  res.json(response.filter(x => x.movies.length > 0));
+  res.json(response);
 });
 
 app.get('/genre', function (req, res, next) {
@@ -71,10 +77,71 @@ app.get('/genre', function (req, res, next) {
   res.json(genrs);
 });
 
+app.get('/movies/like', function (req, res, next) {
+
+  const filePath = `${__dirname}/movies/index.json`;
+  const existingData = readJsonFile(filePath);
+
+  const date = req.query.date;
+  const title = req.query.title;
+  const released = req.query.released;
+
+  let response = [];
+
+  if (date && title && released) {
+    response = existingData.map(event => {
+      if (event.date === date) {
+        const objectToUpdate = event.movies.find(y => y.title === title && y.released === released);
+        if (objectToUpdate) {
+          const updatedObject = { ...objectToUpdate, like: objectToUpdate.like ? !objectToUpdate.like : true }
+          return {
+            date: event.date,
+            movies: event.movies.map(m => {
+              if (m.title === title && m.released === released) {
+                return updatedObject;
+              } else {
+                return m;
+              }
+            })
+          }
+        }
+        else {
+          return event;
+        }
+      }
+      else {
+        return event;
+      }
+    })
+  }
+
+  const updatedJsonString = JSON.stringify(response, null, 2);
+  try {
+    writeJsonFile(filePath, updatedJsonString);
+    res.status(200);
+    res.json(true);
+  }
+  catch {
+    res.status(400);
+    res.json(false);
+  }
+});
+
 // Function to read JSON file
 function readJsonFile(filename) {
   const rawData = fs.readFileSync(filename);
   return JSON.parse(rawData);
+}
+
+// Function to read JSON file
+function writeJsonFile(filename, updatedJsonString) {
+  fs.writeFile(filename, updatedJsonString, 'utf8', (writeErr) => {
+    if (writeErr) {
+      console.error('Error writing to JSON file:', writeErr);
+    } else {
+      console.log('Data has been updated in the JSON file successfully.');
+    }
+  });
 }
 
 // Function to extract unique genre from JSON data
