@@ -155,8 +155,8 @@ console.code(`
         var e = "function";
         for (var i = 0; i < 5; i++) {
             let e = "block";
-        }
-        console.log(e); //prints out function as expected
+        }"
+        console.log(e); //prints "function" as expected
     }
 
     hello();

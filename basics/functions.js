@@ -89,7 +89,7 @@ const outerFunction2 = function () {
     const innerFunction = function () {
         let localVarible = 11;
         parentVarible += localVarible;
-        console.log(`>> Value 10 Increamented by ${localVarible}, new value ${parentVarible}`);
+        console.log(`>> Value 11 Increamented by ${localVarible}, new value ${parentVarible}`);
     }
     return innerFunction;
 }

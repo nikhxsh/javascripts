@@ -4,10 +4,10 @@ console.h2('Destructuring');
 console.comment(`
     - Object Destructuring is a way of extracting values into variables from data stored in objects and arrays.
 `);
-const destructuring = { first: 'Adolf', last: 'lol', age: 39 };
+const destructuring = { first: 'Mike', last: 'lol', age: 39 };
 const { first, last } = destructuring;
 console.code(`
-    const destructuring = {first: 'Adolf', last: 'lol', age: 39 };
+    const destructuring = {first: 'Mike', last: 'lol', age: 39 };
     const { first, last } = destructuring;
 `);
 console.log('first >> ' + first);
@@ -118,6 +118,7 @@ for (var value of numbers) {
 }
 
 console.h2('Decorators and forwarding, call/apply');
+const user = { name: "nik"};
 user.say = function (line) {
 	return `${this.name} says ${line}`;
 }

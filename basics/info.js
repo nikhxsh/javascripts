@@ -9,10 +9,13 @@ console.comment(`
    - It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0.
    - ECMAScript is an object-oriented programming language for performing computations and manipulating computational objects within a host environment.
    - Before ES2015, ECMAScript specifications were commonly called by their edition. So ES5 is the official name for the ECMAScript specification update published in 2009.
-   - The sixth version of ECMA Script6 is known as ES6 (it is also called as ECMA Script 2015).
-   - https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e/
-   - https://www.ecma-international.org/ecma-262/#sec-intro
-`);
+   - The sixth version of ECMA Script6 is known as ES6 (it is also called as ECMA Script 2015)   
+    - https://www.freecodecamp.org/news/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e/
+    - https://www.ecma-international.org/ecma-262/#sec-intro
+   - ES13 (ECMAScript 2022)
+    - https://www.inkoop.io/blog/new-javascript-features-for-ecmascript-2022/
+    - https://262.ecma-international.org/13.0/
+  `);
 
 console.h2('Modules');
 console.comment(`

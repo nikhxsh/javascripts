@@ -61,6 +61,9 @@ console.log(`  NaN == NaN = ${NaN == NaN}`);
 console.h2('DataSet');
 let sequence = [1, 2, 3, 4, 5];
 let statement = 'O,k,a,y!';
+console.log(`  let sequence = [1, 2, 3, 4, 5];`);
+console.log(`  let statement = 'O,k,a,y!';`);
+
 console.log(`  sequence = ${sequence}`);
 console.log(`  sequence[0] = ${sequence[0]}`);
 console.log(`  sequence.length = ${sequence.length}`);
@@ -75,8 +78,8 @@ console.log(`  Math.max(...sequence) = ${Math.max(...sequence)}`, 'Rest paramete
 console.h2('Strings');
 console.log(`  'Okay!  '.trim() = ${'  Okay!  '.trim()}`);
 console.log(`  String(6).padStart(3, "0")) = ${String(6).padStart(3, "0")}`);
-console.log(`  statement.split(' ') = ${statement.split(',')}`);
-console.log(`  sequence.join(' ') = ${sequence.join(',')}`);
+console.log(`  statement.split(',') = ${statement.split(',')}`);
+console.log(`  sequence.join(',') = ${sequence.join(',')}`);
 console.log(`  'Fuck Off!'.repeat(5) = ${'Fuck Off!'.repeat(5)}`);
 
 console.h2('Map & Set');
